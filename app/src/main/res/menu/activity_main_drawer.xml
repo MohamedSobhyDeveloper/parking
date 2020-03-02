@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/myprofie"
+            android:icon="@drawable/user"
+            android:title="My Profile" />
+        <item
+            android:id="@+id/parkingfinder"
+            android:icon="@drawable/placeholder"
+            android:title="Park Finder" />
+        <item
+            android:id="@+id/car"
+            android:icon="@drawable/cara"
+            android:title="Where is my car" />
+        <item
+            android:id="@+id/history"
+            android:icon="@drawable/history"
+            android:title="History" />
+        <item
+            android:id="@+id/wallet"
+            android:icon="@drawable/wallet"
+            android:title="Wallet" />
+        <item
+            android:id="@+id/myticket"
+            android:icon="@drawable/parkings"
+            android:title="My Invitations" />
+        <item
+            android:id="@+id/pticket"
+            android:icon="@drawable/ticketmy"
+            android:title="My ticket" />
+    </group>
+
+
+</menu>

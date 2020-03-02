@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccentwhite">#fffeff</color>
+    <color name="colorAccentblack">#020001</color>
+    <color name="colorAccent1">#078acc</color>
+    <color name="colorAccent3">#c5c5c6</color>
+    <color name="colorAccent2">#f8fafc</color>
+    <color name="black">#000000</color>
+    <color name="gray">#808080</color>
+    <color name="white_dark">#FEFEF8</color>
+    <color name="white">#ffff</color>
+    <color name="shadow_1">#d4d4d4</color>
+    <color name="shadow_2">#dddddd</color>
+    <color name="card_background">#ffffff</color>
+    <color name="test">#221224</color>
+    <color name="defaultContentColor">@android:color/black</color>
+    <color name="defaultBorderFlagColor">@android:color/transparent</color>
+    <color name="pressed_bg">#64b7b7b7</color>
+    <color name="red">#f40b25</color>
+    <color name="green">#00ff19</color>
+    <color name="b">#00ACEE</color>
+    <color name="bm">#FFFFFF</color>
+    <color name="m1">#f5c365</color>
+    <color name="m2">#7aa377</color>
+    <color name="m3">#0b4076</color>
+
+
+
+
+
+
+
+
+
+
+</resources>

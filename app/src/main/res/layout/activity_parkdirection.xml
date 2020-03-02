@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_splash_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/map"
+        layout="@layout/map_fragment"/>
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:background="@drawable/white_rect"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/backimage"
+                android:padding="10dp"
+                android:src="@drawable/back"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Direction To Park"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="italic"
+                android:padding="10dp"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/ticketbtn"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="@drawable/roundedbuttonblue"
+        android:layout_marginLeft="80dp"
+        android:textStyle="bold"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:text="Get Ticket"
+        android:layout_alignParentBottom="true"/>
+    <RelativeLayout
+        android:id="@+id/parkpopup"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:background="@drawable/roundedbuttonblue2"
+            android:layout_width="300dp"
+            android:layout_height="150dp">
+
+            <TextView
+                android:id="@+id/parking_header"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColor="@color/white"
+                android:text="Google Navigate"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center"/>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <Button
+                android:id="@+id/cancel_book_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/black_rect"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="cancel"/>
+
+
+            <Button
+                android:id="@+id/book_btn"
+                android:layout_marginLeft="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/black_rect"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="Ok"/>
+        </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

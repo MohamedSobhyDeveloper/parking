@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.park.optech.parking">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.javapapers.currentlocationinmap.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/c2"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/c2"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".mobile" />
+        <activity
+            android:name=".verifymobile"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+        <activity
+            android:name=".MainActivity"
+            android:label="Open Park"
+            android:theme="@style/AppTheme" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBUX-Rb1Fw7cZbDWrzrZ9UMwmHTzF_LIWk" />
+
+        <activity android:name=".MapsActivity" />
+        <activity
+            android:name=".parkdirection"
+            android:noHistory="true" />
+        <activity
+            android:name=".ticketactivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".location_ticket"
+            android:noHistory="true" />
+        <activity
+            android:name=".exit_scan"
+            android:noHistory="true" />
+        <activity
+            android:name=".updatephoto"
+            android:noHistory="true" />
+        <activity
+            android:name=".updateprofile"
+            android:noHistory="true" />
+        <activity android:name=".test" />
+        <activity android:name=".makeinvitation" />
+        <activity android:name=".scand_print_ticket" >
+
+        </activity>
+        <activity android:name=".ticket_print" />
+        <activity android:name=".ticket_scan"></activity>
+    </application>
+
+</manifest>

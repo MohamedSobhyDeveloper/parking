@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_ticket"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/showlist"
+        android:visibility="gone"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:background="@drawable/roundedbuttonblue"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/parking_header"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColor="@color/white"
+                android:text="No History Yet"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/show"
+        android:visibility="gone"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:background="@drawable/white_rect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/backimage"
+                    android:padding="10dp"
+                    android:src="@drawable/back"
+                    android:background="@color/white"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show history"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="italic"
+                    android:padding="10dp"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/view1"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+
+                >
+
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+
+
+                    >
+
+                    <EditText
+                        android:id="@+id/parkname"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"
+                        android:hint="Park name:"
+                        android:enabled="false"
+                        android:textSize="15sp"
+                        android:inputType="text" />
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/view1"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+
+                >
+
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+
+
+                    >
+
+                    <EditText
+                        android:id="@+id/gatename"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"
+                        android:hint="Gate name:"
+                        android:enabled="false"
+                        android:textSize="15sp"
+                        android:inputType="text" />
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/view1"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+
+                >
+
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+
+
+                    >
+
+                    <EditText
+                        android:id="@+id/date"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"
+                        android:hint="Date:"
+                        android:enabled="false"
+                        android:textSize="15sp"
+                        android:inputType="text" />
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/view1"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+
+                >
+
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+
+
+                    >
+
+                    <EditText
+                        android:id="@+id/time"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"
+                        android:hint="Time:"
+                        android:enabled="false"
+                        android:textSize="15sp"
+                        android:inputType="text" />
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/view1"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+
+                >
+
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+
+
+                    >
+
+                    <EditText
+                        android:id="@+id/duration"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"
+                        android:hint="Duration:"
+                        android:enabled="false"
+                        android:textSize="15sp"
+                        android:inputType="text" />
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout111"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/view1"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+
+                >
+
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+
+
+                    >
+
+                    <EditText
+                        android:id="@+id/debit"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"
+                        android:hint="Debit:"
+                        android:enabled="false"
+                        android:textSize="15sp"
+                        android:inputType="text" />
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="98dp"
+                >
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/main"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:layout_below="@+id/header"
+        android:background="@color/black" />
+
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_marginTop="60dp"
+        android:dividerHeight="6dp"
+        android:layout_below="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_lay"
+        />
+    <LinearLayout
+        android:id="@+id/btn_lay"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/roundedbuttonblue2"
+            android:text="back"
+            android:textStyle="bold"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

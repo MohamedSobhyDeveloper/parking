@@ -1,0 +1,151 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.park.optech.parking.wallet">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_help"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="55dp"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/hh" />
+        <LinearLayout
+            android:id="@+id/layout111"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view1"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            >
+
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+
+
+                >
+
+                <EditText
+                    android:id="@+id/parkname"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textStyle="italic"
+                    android:textColor="@color/black"
+                    android:hint="Current Park:"
+                    android:enabled="false"
+                    android:textSize="15sp"
+                    android:inputType="text" />
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view1"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="4dp"
+
+            >
+
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+
+
+                >
+
+                <EditText
+                    android:id="@+id/gatename"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textStyle="italic"
+                    android:textColor="@color/black"
+                    android:hint="Current Gate:"
+                    android:enabled="false"
+                    android:textSize="15sp"
+                    android:inputType="text" />
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+        </LinearLayout>
+
+
+        <Button
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/scan_loc_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/roundedbuttonblue2"
+            android:textColor="@color/white"
+            android:text="Scan My Location"
+            android:textStyle="bold"
+            android:layout_below="@+id/user_email" />
+
+        <Button
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/takeme2car_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/roundedbuttonblue2"
+            android:textColor="@color/white"
+            android:text="Take Me To My Car"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/scan_loc_btn" />
+
+        <Button
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/open_exit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/roundedbuttonblue2"
+            android:textColor="@color/white"
+            android:text="Open exit gate"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/takeme2car_btn" />
+        <Button
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/roundedbuttonblue2"
+            android:textColor="@color/white"
+            android:text="Back"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/takeme2car_btn" />
+
+
+
+    </LinearLayout>
+</ScrollView>
+</FrameLayout>

@@ -22,7 +22,7 @@ public class ApiMethods {
                                  String action, String id, final String first_name, String last_name, String email, String mobile, String chr1, String chr2, String chr3, String num1, String num2, String num3, String num4, String car_brand , String model_no) {
 
 
-        Retrofit retrofit = RetrofitSingleton.getInstance();
+        Retrofit retrofit = RetrofitSingleton.getInstance(context);
         ApiInterfaces.LoginApi service = retrofit.create(ApiInterfaces.LoginApi.class);
 
         if (/*NetworkingUtils.isNetworkConnected()*/true) {
@@ -68,7 +68,7 @@ public class ApiMethods {
 
 
 
-        Retrofit retrofit = RetrofitSingleton.getInstance();
+        Retrofit retrofit = RetrofitSingleton.getInstance(context);
         ApiInterfaces.inviteapi service = retrofit.create(ApiInterfaces.inviteapi.class);
 
         if (/*NetworkingUtils.isNetworkConnected()*/true) {

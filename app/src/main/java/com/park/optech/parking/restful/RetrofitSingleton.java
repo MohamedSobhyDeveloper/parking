@@ -2,7 +2,11 @@ package com.park.optech.parking.restful;
 
 
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+
 import com.park.optech.parking.BuildConfig;
+import com.park.optech.parking.sharedpref.MySharedPref;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -18,8 +22,11 @@ public class RetrofitSingleton {
     private static OkHttpClient.Builder okHttpClientBuilder;
     private static HttpLoggingInterceptor loggingInterceptor;
 
+    @SuppressLint("StaticFieldLeak")
+    private static Context context;
 
-    public static synchronized Retrofit getInstance() {
+    public static Retrofit getInstance(Context context) {
+        RetrofitSingleton.context=context;
         if (mInstance == null) {
 
 
@@ -32,7 +39,7 @@ public class RetrofitSingleton {
             }
 
             mInstance = new Retrofit.Builder()
-                    .baseUrl(ApiUrls.BASE_URL)
+                    .baseUrl(MySharedPref.getData(context, "restful_api_url", ""))
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .client(okHttpClientBuilder.build())
                     .build();

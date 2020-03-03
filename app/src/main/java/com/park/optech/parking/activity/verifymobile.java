@@ -1,13 +1,13 @@
-package com.park.optech.parking;
+package com.park.optech.parking.activity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.RequiresApi;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.park.optech.parking.R;
 import com.park.optech.parking.model.user_profile;
 import com.park.optech.parking.sharedpref.MySharedPref;
 import com.park.optech.parking.soapapi.serviceurl;
@@ -128,7 +129,7 @@ public class verifymobile extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             if (fina_result.equals("0")||fina_result.equals(0)){
-                startActivity(new Intent(verifymobile.this,MainActivity.class));
+                startActivity(new Intent(verifymobile.this, MainActivity.class));
                 MySharedPref.saveData(verifymobile.this,"code","44");
                 MySharedPref.saveData(verifymobile.this,"car",data.getFirst_name());
                 MySharedPref.saveData(verifymobile.this,"parkname","");

@@ -1,8 +1,8 @@
-package com.park.optech.parking;
+package com.park.optech.parking.activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.park.optech.parking.R;
 import com.park.optech.parking.model.Ticket_Model;
 import com.park.optech.parking.soapapi.serviceurl;
 
@@ -119,7 +120,7 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ticket_scan.this,scand_print_ticket.class));
+                startActivity(new Intent(ticket_scan.this, scand_print_ticket.class));
                 finish();
             }
         });

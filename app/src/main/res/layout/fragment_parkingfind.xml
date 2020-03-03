@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.park.optech.parking.parkingfind">
+    tools:context="com.park.optech.parking.fragment.parkingfind">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map"

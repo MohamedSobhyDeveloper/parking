@@ -1,13 +1,12 @@
-package com.park.optech.parking;
+package com.park.optech.parking.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +17,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.park.optech.parking.another.Constants;
+import com.park.optech.parking.R;
+import com.park.optech.parking.activity.MainActivity;
+import com.park.optech.parking.activity.exit_scan;
+import com.park.optech.parking.activity.location_ticket;
 import com.park.optech.parking.model.car_model;
 import com.park.optech.parking.model.user_profile;
+import com.park.optech.parking.activity.parkdirection;
 import com.park.optech.parking.sharedpref.MySharedPref;
 import com.park.optech.parking.soapapi.serviceurl;
 import com.squareup.picasso.Picasso;
@@ -73,7 +76,7 @@ public class mycar extends Fragment {
         mb2 = MySharedPref.getData(context, "gatename", null);
 
         if (mb1.equals("")){
-            startActivity(new Intent(getActivity(),MainActivity.class));
+            startActivity(new Intent(getActivity(), MainActivity.class));
             Toast.makeText(context, "You must check in first", Toast.LENGTH_SHORT).show();
         }
 
@@ -99,13 +102,13 @@ public class mycar extends Fragment {
         slocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),location_ticket.class));
+                startActivity(new Intent(getActivity(), location_ticket.class));
             }
         });
         exitgate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),exit_scan.class));
+                startActivity(new Intent(getActivity(), exit_scan.class));
             }
         });
         findcar.setOnClickListener(new View.OnClickListener() {

@@ -1,12 +1,13 @@
-package com.park.optech.parking;
+package com.park.optech.parking.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
+
+import com.park.optech.parking.R;
 
 public class scand_print_ticket extends AppCompatActivity {
     Button b1,b2;
@@ -26,7 +27,7 @@ public class scand_print_ticket extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(scand_print_ticket.this,MainActivity.class));
+                startActivity(new Intent(scand_print_ticket.this, MainActivity.class));
                 finish();
 
             }
@@ -45,14 +46,14 @@ public class scand_print_ticket extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(scand_print_ticket.this,ticket_scan.class));
+                startActivity(new Intent(scand_print_ticket.this, ticket_scan.class));
                 finish();
             }
         });
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(scand_print_ticket.this,ticket_print.class));
+                startActivity(new Intent(scand_print_ticket.this, ticket_print.class));
                 finish();
             }
         });

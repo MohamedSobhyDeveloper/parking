@@ -17,28 +17,28 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/c2"
         android:label="@string/app_name"
         android:roundIcon="@drawable/c2"
         android:supportsRtl="true"
+        android:hardwareAccelerated="false"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".splash">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".activity.splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mobile" />
+        <activity android:name=".activity.mobile" />
         <activity
-            android:name=".verifymobile"
+            android:name=".activity.verifymobile"
             android:windowSoftInputMode="stateAlwaysVisible" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="Open Park"
             android:theme="@style/AppTheme" />
 
@@ -46,32 +46,32 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBUX-Rb1Fw7cZbDWrzrZ9UMwmHTzF_LIWk" />
 
-        <activity android:name=".MapsActivity" />
+        <activity android:name=".activity.MapsActivity" />
         <activity
-            android:name=".parkdirection"
+            android:name=".activity.parkdirection"
             android:noHistory="true" />
         <activity
-            android:name=".ticketactivity"
+            android:name=".activity.ticketactivity"
             android:noHistory="true" />
         <activity
-            android:name=".location_ticket"
+            android:name=".activity.location_ticket"
             android:noHistory="true" />
         <activity
-            android:name=".exit_scan"
+            android:name=".activity.exit_scan"
             android:noHistory="true" />
         <activity
-            android:name=".updatephoto"
+            android:name=".activity.updatephoto"
             android:noHistory="true" />
         <activity
-            android:name=".updateprofile"
+            android:name=".activity.updateprofile"
             android:noHistory="true" />
         <activity android:name=".test" />
-        <activity android:name=".makeinvitation" />
-        <activity android:name=".scand_print_ticket" >
+        <activity android:name=".activity.makeinvitation" />
+        <activity android:name=".activity.scand_print_ticket" >
 
         </activity>
-        <activity android:name=".ticket_print" />
-        <activity android:name=".ticket_scan"></activity>
+        <activity android:name=".activity.ticket_print" />
+        <activity android:name=".activity.ticket_scan"></activity>
     </application>
 
 </manifest>

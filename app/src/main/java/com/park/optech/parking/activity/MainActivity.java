@@ -1,20 +1,27 @@
-package com.park.optech.parking;
+package com.park.optech.parking.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.park.optech.parking.fragment.MyTicket;
+import com.park.optech.parking.R;
+import com.park.optech.parking.fragment.history;
+import com.park.optech.parking.fragment.mycar;
+import com.park.optech.parking.fragment.parkingfind;
+import com.park.optech.parking.fragment.printticket;
+import com.park.optech.parking.fragment.profile;
 import com.park.optech.parking.sharedpref.MySharedPref;
-import com.park.optech.parking.parkingfind;
+import com.park.optech.parking.fragment.wallet;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         if (car.equals("null")||car.equals("")||car.equals(null)){
             Toast.makeText(this, "Please Complete Your Profile", Toast.LENGTH_LONG).show();
             profile profile=new profile();
-            android.support.v4.app.FragmentTransaction fragmentTransaction=
+            FragmentTransaction fragmentTransaction=
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mm,profile);
             fragmentTransaction.commit();
@@ -46,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         }else if (car.equals("mb")){
 
             mycar mycar = new mycar();
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
+            FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mm, mycar);
             fragmentTransaction.commit();
@@ -55,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         else{
 
             parkingfind parkingfind = new parkingfind();
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
+            FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
           fragmentTransaction.replace(R.id.mm, parkingfind);
             fragmentTransaction.commit();
@@ -136,7 +143,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.myprofie) {
             profile profile=new profile();
-            android.support.v4.app.FragmentTransaction fragmentTransaction=
+            FragmentTransaction fragmentTransaction=
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mm,profile);
             fragmentTransaction.commit();
@@ -148,34 +155,34 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.car) {
             mycar mycar=new mycar();
-            android.support.v4.app.FragmentTransaction fragmentTransaction=
+            FragmentTransaction fragmentTransaction=
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mm,mycar);
             fragmentTransaction.commit();
 
         } else if (id == R.id.history) {
             history history=new history();
-            android.support.v4.app.FragmentTransaction fragmentTransaction=
+            FragmentTransaction fragmentTransaction=
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mm,history);
             fragmentTransaction.commit();
 
         } else if (id == R.id.wallet) {
             wallet wallet = new wallet();
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
+            FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mm, wallet);
             fragmentTransaction.commit();
 
         }else if (id == R.id.myticket) {
             MyTicket myTicket = new MyTicket();
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
+            FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mm, myTicket);
             fragmentTransaction.commit();
         }else if (id == R.id.pticket) {
             printticket myTicket = new printticket();
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
+            FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mm, myTicket);
             fragmentTransaction.commit();

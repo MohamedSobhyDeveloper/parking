@@ -1,4 +1,4 @@
-package com.park.optech.parking;
+package com.park.optech.parking.activity;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -9,9 +9,9 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.park.optech.parking.R;
 import com.park.optech.parking.route.drawroute;
 import com.park.optech.parking.sharedpref.MySharedPref;
 
@@ -81,7 +82,7 @@ public class parkdirection extends FragmentActivity implements OnMapReadyCallbac
         backimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(parkdirection.this,MainActivity.class));
+                startActivity(new Intent(parkdirection.this, MainActivity.class));
             }
         });
 

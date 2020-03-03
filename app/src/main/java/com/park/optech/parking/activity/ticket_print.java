@@ -1,4 +1,4 @@
-package com.park.optech.parking;
+package com.park.optech.parking.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -6,18 +6,10 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -34,6 +26,7 @@ import android.widget.Toast;
 
 import com.bixolon.printer.BixolonPrinter;
 import com.ganesh.intermecarabic.Arabic864;
+import com.park.optech.parking.R;
 import com.park.optech.parking.another.BluetoothUtil;
 import com.park.optech.parking.model.Ticket_Model;
 import com.park.optech.parking.sharedpref.MySharedPref;
@@ -51,9 +44,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
-import me.dm7.barcodescanner.zbar.Result;
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 public class ticket_print extends Activity {
 

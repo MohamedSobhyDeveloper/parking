@@ -1,36 +1,21 @@
-package com.park.optech.parking;
+package com.park.optech.parking.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.TransactionDetails;
-import com.park.optech.parking.sharedpref.MySharedPref;
-import com.park.optech.parking.util.IabHelper;
-import com.park.optech.parking.util.IabResult;
-import com.park.optech.parking.util.Inventory;
-import com.park.optech.parking.util.Purchase;
+import com.park.optech.parking.R;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
-import org.json.JSONException;
-
 import java.math.BigDecimal;
-
-import static com.park.optech.parking.wallet.PAYPAL_REQUEST_CODE;
 
 
 public class updatephoto extends AppCompatActivity {

@@ -1,12 +1,11 @@
-package com.park.optech.parking;
+package com.park.optech.parking.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import com.google.android.gms.maps.OnMapReadyCallback;
+
+import com.park.optech.parking.activity.MainActivity;
+import com.park.optech.parking.R;
 import com.park.optech.parking.adapter.ListAdapter;
 import com.park.optech.parking.model.User_history;
 import com.park.optech.parking.sharedpref.MySharedPref;
@@ -136,7 +137,7 @@ public class history extends Fragment{
             public void onClick(View view) {
 
 
-                startActivity(new Intent(getActivity(),MainActivity.class));
+                startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
         User_HistoryEvent task = new User_HistoryEvent();

@@ -1,11 +1,12 @@
-package com.park.optech.parking;
+package com.park.optech.parking.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.park.optech.parking.R;
 import com.park.optech.parking.sharedpref.MySharedPref;
 
 public class splash extends AppCompatActivity {

@@ -1,16 +1,12 @@
 package com.park.optech.parking.restful;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.park.optech.parking.restful.ApiInterfaces;
-import com.park.optech.parking.restful.RetrofitSingleton;
-import com.park.optech.parking.MainActivity;
+import com.park.optech.parking.activity.MainActivity;
 import com.park.optech.parking.sharedpref.MySharedPref;
-import com.park.optech.parking.updateprofile;
 
 import retrofit2.Call;
 import retrofit2.Callback;

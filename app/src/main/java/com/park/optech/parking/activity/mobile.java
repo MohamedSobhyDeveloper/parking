@@ -1,4 +1,4 @@
-package com.park.optech.parking;
+package com.park.optech.parking.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -7,8 +7,7 @@ import android.content.Intent;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hbb20.CountryCodePicker;
+import com.park.optech.parking.R;
 import com.park.optech.parking.sharedpref.MySharedPref;
 import com.park.optech.parking.soapapi.serviceurl;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -61,6 +61,7 @@ public class mobile extends AppCompatActivity {
 
     };
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,7 +170,7 @@ public class mobile extends AppCompatActivity {
 
                 Toast.makeText(mobile.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
             }else {
-                startActivity(new Intent(mobile.this,verifymobile.class));
+                startActivity(new Intent(mobile.this, verifymobile.class));
                 MySharedPref.saveData(mobile.this, "id", final_result);
                 finish();
 

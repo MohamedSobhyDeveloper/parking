@@ -1,10 +1,8 @@
-package com.park.optech.parking;
+package com.park.optech.parking.activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -16,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.park.optech.parking.R;
 import com.park.optech.parking.model.user_profile;
 import com.park.optech.parking.restful.ApiMethods;
 import com.park.optech.parking.sharedpref.MySharedPref;
@@ -30,12 +29,7 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.net.sip.SipErrorCode.TIME_OUT;
 
 public class updateprofile extends AppCompatActivity  {
     Button b1,b2;
@@ -77,7 +71,7 @@ public class updateprofile extends AppCompatActivity  {
 b2.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(updateprofile.this,MainActivity.class));
+        startActivity(new Intent(updateprofile.this, MainActivity.class));
     }
 });
 b1.setOnClickListener(new View.OnClickListener() {

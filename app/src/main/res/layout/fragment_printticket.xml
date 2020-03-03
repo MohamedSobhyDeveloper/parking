@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.park.optech.parking.printticket">
+    tools:context="com.park.optech.parking.fragment.printticket">
 
     <RelativeLayout
         android:id="@+id/showinvitation1"

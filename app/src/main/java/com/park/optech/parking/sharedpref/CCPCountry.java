@@ -1,7 +1,7 @@
 package com.park.optech.parking.sharedpref;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.park.optech.parking.R;

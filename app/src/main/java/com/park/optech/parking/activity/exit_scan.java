@@ -198,10 +198,10 @@ public class exit_scan extends AppCompatActivity implements ZBarScannerView.Resu
     }
 
     public String scan_ticket() {
-        String SOAP_ACTION = serviceurl.URL + "/Exit_Event/";
+        String SOAP_ACTION = serviceurl.getInstance(this).URL + "/Exit_Event/";
         String METHOD_NAME = "Exit_Event";
-        String NAMESPACE = serviceurl.URL + "/";
-        String URL = serviceurl.URL;
+        String NAMESPACE = serviceurl.getInstance(this).URL + "/";
+        String URL = serviceurl.getInstance(this).URL;
         String response = "";
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);

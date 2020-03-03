@@ -185,7 +185,7 @@ public class mobile extends AppCompatActivity {
         String NAMESPACE = serviceurl.URL+"/";
         String URL = serviceurl.URL;
         String response="";
-        System.out.println(""+SOAP_ACTION);
+        System.out.println("Calll"+SOAP_ACTION);
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
             Request.addProperty("mobile",MySharedPref.getData(mobile.this, "cmobile", null));

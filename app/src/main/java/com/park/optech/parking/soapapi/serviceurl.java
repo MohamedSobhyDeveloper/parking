@@ -12,5 +12,4 @@ public class serviceurl {
 
     public final static String URL2= MySharedPref.getData(myApplication.getAppContext(), "printer_soap_api_url", "");
 
-
 }

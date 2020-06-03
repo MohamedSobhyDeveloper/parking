@@ -27,7 +27,7 @@ public class scand_print_ticket extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(scand_print_ticket.this, MainActivity.class));
+//                startActivity(new Intent(scand_print_ticket.this, MainActivity.class));
                 finish();
 
             }
@@ -38,7 +38,7 @@ public class scand_print_ticket extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(scand_print_ticket.this,MainActivity.class));
+//                startActivity(new Intent(scand_print_ticket.this,MainActivity.class));
                 finish();
             }
         });
@@ -65,7 +65,7 @@ public class scand_print_ticket extends AppCompatActivity {
 
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(scand_print_ticket.this,MainActivity.class));
+//        startActivity(new Intent(scand_print_ticket.this,MainActivity.class));
         finish();
     }
 }

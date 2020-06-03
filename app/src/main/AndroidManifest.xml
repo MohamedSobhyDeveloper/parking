@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.park.optech.parking">
-
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -17,17 +16,19 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
+        android:name=".myApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/c2"
         android:label="@string/app_name"
         android:roundIcon="@drawable/c2"
-        android:name=".myApplication"
         android:supportsRtl="true"
-        android:hardwareAccelerated="false"
-        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".printticket.PrintTicketActivity"></activity>
         <activity android:name=".activity.splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,11 +70,9 @@
             android:noHistory="true" />
         <activity android:name=".test" />
         <activity android:name=".activity.makeinvitation" />
-        <activity android:name=".activity.scand_print_ticket" >
-
-        </activity>
+        <activity android:name=".activity.scand_print_ticket"></activity>
         <activity android:name=".activity.ticket_print" />
-        <activity android:name=".activity.ticket_scan"></activity>
+        <activity android:name=".activity.ticket_scan" />
     </application>
 
 </manifest>

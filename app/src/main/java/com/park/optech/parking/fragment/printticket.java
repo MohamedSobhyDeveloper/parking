@@ -26,6 +26,7 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.util.Objects;
 
 
 public class printticket extends Fragment {
@@ -54,13 +55,7 @@ public class printticket extends Fragment {
 
 
 
-        backimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              startActivity(new Intent(getActivity(), MainActivity.class));
-
-            }
-        });
+        backimage.setOnClickListener(view1 -> Objects.requireNonNull(getActivity()).finish());
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -112,10 +107,9 @@ public class printticket extends Fragment {
                 pd.dismiss();
 
             }else {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         pd.dismiss();
+                MySharedPref.saveData(Objects.requireNonNull(getActivity()),"idadmin",final_result);
+                pd.dismiss();
                 startActivity(new Intent(getActivity(), scand_print_ticket.class));
-                MySharedPref.saveData(getActivity(),"idadmin",final_result);
-
 
             }
 

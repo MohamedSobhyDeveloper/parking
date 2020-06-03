@@ -22,6 +22,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.park.optech.parking.BuildConfig;
 import com.park.optech.parking.R;
 import com.park.optech.parking.model.callFirebaseModel;
+import com.park.optech.parking.printticket.PrintTicketActivity;
 import com.park.optech.parking.sharedpref.MySharedPref;
 
 public class splash extends AppCompatActivity {
@@ -66,18 +67,18 @@ public class splash extends AppCompatActivity {
                         MySharedPref.saveData(splash.this,"base_soap_api_url",base_soap_api_url);
 
                  new Handler().postDelayed(() -> {
-                    if (login == null) {
-                        System.out.println("------------NEW Login-----------------");
-                        Intent intent = new Intent(splash.this, mobile.class);
-                        startActivity(intent);
-                        finish();
-
-                    } else {
+//                    if (login == null) {
+//                        System.out.println("------------NEW Login-----------------");
+//                        Intent intent = new Intent(splash.this, mobile.class);
+//                        startActivity(intent);
+//                        finish();
+//
+//                    } else {
                         System.out.println("------------OLD Login-----------------");
-                        Intent intent = new Intent(splash.this, MainActivity.class);
+                        Intent intent = new Intent(splash.this, PrintTicketActivity.class);
                         startActivity(intent);
                         finish();
-                    }
+//                    }
 
                 },500);
 

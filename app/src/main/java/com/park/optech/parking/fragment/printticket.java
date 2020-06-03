@@ -110,6 +110,7 @@ public class printticket extends Fragment {
                 MySharedPref.saveData(Objects.requireNonNull(getActivity()),"idadmin",final_result);
                 pd.dismiss();
                 startActivity(new Intent(getActivity(), scand_print_ticket.class));
+                getActivity().finish();
 
             }
 

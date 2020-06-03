@@ -261,7 +261,11 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
         return response;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ticket_scan.this, scand_print_ticket.class));
+        finish();
+    }
 
     //end
 

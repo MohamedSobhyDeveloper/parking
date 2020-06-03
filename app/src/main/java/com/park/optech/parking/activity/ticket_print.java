@@ -917,4 +917,12 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ticket_print.this, scand_print_ticket.class)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        System.exit(0);
+    }
 }

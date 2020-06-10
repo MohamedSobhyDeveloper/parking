@@ -1,5 +1,6 @@
 package com.park.optech.parking.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,28 +28,32 @@ import org.ksoap2.transport.HttpTransportSE;
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
-public class exit_scan extends AppCompatActivity implements ZBarScannerView.ResultHandler {
+public class ticketactivity extends AppCompatActivity implements ZBarScannerView.ResultHandler {
+
     private ZBarScannerView mScannerView;
     private static final int REQUEST_GET_ACCOUNT = 112;
     private static final int PERMISSION_REQUEST_CODE = 200;    //camera permission is needed.
     TextView msg;
     String final_id = null, final_code = null, final_status = null;
-    TextView t1,t2,t3,t4,t5,t6,t7;
+    TextView t1,t2,t3,t4,t5,t6;
     scan_model data=new scan_model();
     RelativeLayout ticket;
+    ImageButton backimage;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exit_scan);
+        setContentView(R.layout.activity_ticketactivity);
+        final_id = MySharedPref.getData(ticketactivity.this, "id", null);
 
-        //initalize
 
-        final_id = MySharedPref.getData(exit_scan.this, "id", null);
         mScannerView = (ZBarScannerView) findViewById(R.id.scannerview);
         ticket=(RelativeLayout)findViewById(R.id.ticket_popup);
+
+        // Programmatically initialize the scanner view
         Button scan_btn = (Button) findViewById(R.id.scanbtn);
-        ImageButton cancel_btn = (ImageButton) findViewById(R.id.backimage);
         Button cancel=(Button)findViewById(R.id.cancel_btn);
         t1=(TextView)findViewById(R.id.parkname);
         t2=(TextView)findViewById(R.id.username);
@@ -56,27 +61,32 @@ public class exit_scan extends AppCompatActivity implements ZBarScannerView.Resu
         t4=(TextView)findViewById(R.id.brand);
         t5=(TextView)findViewById(R.id.model);
         t6=(TextView)findViewById(R.id.date);
-        t7=(TextView)findViewById(R.id.payamount);
-        mScannerView.setResultHandler(exit_scan.this);
+        backimage=(ImageButton)findViewById(R.id.backimage);
+
+        mScannerView.setResultHandler(ticketactivity.this);
         mScannerView.startCamera();
-        //end
 
 
-        cancel.setOnClickListener(new View.OnClickListener() {
+cancel.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+
+        ticket.setVisibility(View.GONE);
+        onBackPressed();
+        MySharedPref.saveData(ticketactivity.this,"car","mb");
+        startActivity(new Intent(ticketactivity.this, MainActivity.class));
+
+
+
+
+
+    }
+});
+        backimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                ticket.setVisibility(View.GONE);
                 onBackPressed();
-                finish();
-
-            }
-        });
-        cancel_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-                finish();
+                startActivity(new Intent(ticketactivity.this,MainActivity.class));
 
             }
         });
@@ -84,7 +94,7 @@ public class exit_scan extends AppCompatActivity implements ZBarScannerView.Resu
         scan_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mScannerView.setResultHandler(exit_scan.this);
+                mScannerView.setResultHandler(ticketactivity.this);
                 mScannerView.startCamera();
             }
         });
@@ -108,9 +118,6 @@ public class exit_scan extends AppCompatActivity implements ZBarScannerView.Resu
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
-
-
 
     //start web service
     //soap service
@@ -136,12 +143,13 @@ public class exit_scan extends AppCompatActivity implements ZBarScannerView.Resu
                         System.out.println("--------" + i + "-------- " + obj);
                         data.setEvent_ID(obj.get("Event_ID")+"");
                         data.setPlate_No(obj.get("Plate_No")+"");
-                        data.setPayAmount(obj.get("PayAmount")+"");
                         data.setTrx_Date(obj.get("Trx_Date")+"");
                         data.setPark_name(obj.get("parking_name")+"");
                         data.setUser(obj.get("user")+"");
                         data.setBrand(obj.get("brand")+"");
                         data.setModel(obj.get("model")+"");
+                        data.setGate(obj.get("gate")+"");
+
 
 
 
@@ -166,16 +174,16 @@ public class exit_scan extends AppCompatActivity implements ZBarScannerView.Resu
 
         @Override
         protected void onPostExecute(Void result) {
-            if (final_result.equals("-1") || final_result.equals(-1)) {
-                Toast.makeText(exit_scan.this, "This is Entry Gate", Toast.LENGTH_SHORT).show();
+            if (final_result.equals(2)||final_result.equals("2")) {
+                Toast.makeText(ticketactivity.this, "This Is Exit Gate", Toast.LENGTH_SHORT).show();
             } else {
 
-                if (final_result.equals("") || final_result.equals("[[]]") || final_result.equals(null) || final_result.equals("null")) {
-                    Toast.makeText(exit_scan.this, "Some Thing go Wrong", Toast.LENGTH_LONG).show();
+                if (final_result.equals(-1) || final_result.equals("-1") || final_result.equals("") || final_result.equals("[[]]") || final_result.equals(null) || final_result.equals("null")) {
+                    Toast.makeText(ticketactivity.this, "Your Balance Not Enough", Toast.LENGTH_LONG).show();
 
                 } else {
 
-                    Toast.makeText(exit_scan.this, "success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ticketactivity.this, "success", Toast.LENGTH_SHORT).show();
                     System.out.println("mm " + data.getPark_name());
                     ticket.setVisibility(View.VISIBLE);
                     t1.setText(data.getPark_name());
@@ -184,10 +192,8 @@ public class exit_scan extends AppCompatActivity implements ZBarScannerView.Resu
                     t4.setText(data.getBrand());
                     t5.setText(data.getModel());
                     t6.setText(data.getTrx_Date());
-                    t7.setText(data.getPayAmount());
-                    MySharedPref.saveData(exit_scan.this,"parkname","");
-                    MySharedPref.saveData(exit_scan.this,"gatename","");
-
+                    MySharedPref.saveData(ticketactivity.this,"parkname",data.getPark_name());
+                    MySharedPref.saveData(ticketactivity.this,"gatename",data.getGate());
 
                 }
 
@@ -195,11 +201,11 @@ public class exit_scan extends AppCompatActivity implements ZBarScannerView.Resu
             }
         }
 
-    }
+        }
 
     public String scan_ticket() {
-        String SOAP_ACTION = serviceurl.URL + "/Exit_Event/";
-        String METHOD_NAME = "Exit_Event";
+        String SOAP_ACTION = serviceurl.URL + "/Entry_Event/";
+        String METHOD_NAME = "Entry_Event";
         String NAMESPACE = serviceurl.URL + "/";
         String URL = serviceurl.URL;
         String response = "";
@@ -222,8 +228,6 @@ public class exit_scan extends AppCompatActivity implements ZBarScannerView.Resu
         }
         return response;
     }
-
-
 
 
 

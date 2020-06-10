@@ -29,7 +29,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".printticket.PrintTicketActivity" />
-        <activity android:name=".activity.splash">
+        <activity android:name=".printticket.splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,7 +54,7 @@
             android:name=".activity.parkdirection"
             android:noHistory="true" />
         <activity
-            android:name=".activity.ticketactivity"
+            android:name=".printticket.ticketactivity"
             android:noHistory="true" />
         <activity
             android:name=".activity.location_ticket"
@@ -70,9 +70,9 @@
             android:noHistory="true" />
         <activity android:name=".test" />
         <activity android:name=".activity.makeinvitation" />
-        <activity android:name=".activity.scand_print_ticket" />
-        <activity android:name=".activity.ticket_print" />
-        <activity android:name=".activity.ticket_scan" />
+        <activity android:name=".printticket.scand_print_ticket" />
+        <activity android:name=".printticket.ticket_print" />
+        <activity android:name=".printticket.ticket_scan" />
     </application>
 
 </manifest>

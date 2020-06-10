@@ -221,6 +221,7 @@ public class exit_scan extends AppCompatActivity implements ZBarScannerView.Resu
             ex.printStackTrace();
         }
         return response;
+
     }
 
 

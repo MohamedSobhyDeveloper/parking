@@ -108,9 +108,6 @@ public class ticket_print extends Activity {
         final_id = MySharedPref.getData(ticket_print.this, "idadmin", null);
 
 
-
-
-
         show1=(RelativeLayout)findViewById(R.id.show1);
         show2=(RelativeLayout)findViewById(R.id.show2);
         ticket=(RelativeLayout)findViewById(R.id.ticket_popupgreen);
@@ -865,6 +862,8 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
     private void printticket() {
+
+
 
         String text="";
         text+="ادارة نظم المعلومات";

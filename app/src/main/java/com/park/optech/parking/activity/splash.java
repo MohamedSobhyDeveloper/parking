@@ -58,7 +58,7 @@ public class splash extends AppCompatActivity {
                         // [START_EXCLUDE]
                         if (callFirebaseModel != null) {
                             file_upload_url = callFirebaseModel.file_upload_url;
-                          restful_api_url = callFirebaseModel.restful_api_url;
+                           restful_api_url = callFirebaseModel.restful_api_url;
                            printer_soap_api_url = callFirebaseModel.printer_soap_api_url;
                             base_soap_api_url = callFirebaseModel.base_soap_api_url;
                         MySharedPref.saveData(splash.this,"file_upload_url",file_upload_url);
@@ -78,7 +78,7 @@ public class splash extends AppCompatActivity {
                         Intent intent = new Intent(splash.this, PrintTicketActivity.class);
                         startActivity(intent);
                         finish();
-//                    }
+//                                   }
 
                 },500);
 

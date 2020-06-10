@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:id="@+id/show1"
-        android:visibility="gone"
+        android:visibility="visible"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -173,7 +173,7 @@
 
     <RelativeLayout
         android:id="@+id/show2"
-        android:visibility="visible"
+        android:visibility="gone"
         android:background="@drawable/black_rect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

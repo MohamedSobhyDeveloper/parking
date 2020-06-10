@@ -83,7 +83,6 @@ public class printticket extends Fragment {
     private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
         String final_result = null ;
 
-
         @Override
         protected Void doInBackground(Void... voids) {
             Log.i("", "doInBackground");

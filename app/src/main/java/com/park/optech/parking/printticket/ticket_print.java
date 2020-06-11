@@ -1,5 +1,6 @@
-package com.park.optech.parking.activity;
+package com.park.optech.parking.printticket;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothDevice;
@@ -302,7 +303,7 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
     }
 
 
-
+    @SuppressLint("HandlerLeak")
     private final Handler handler = new Handler() {
         @SuppressWarnings("unchecked")
         @Override

@@ -16,8 +16,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.park.optech.parking.R;
-import com.park.optech.parking.activity.MainActivity;
-import com.park.optech.parking.activity.scand_print_ticket;
+import com.park.optech.parking.printticket.scand_print_ticket;
 import com.park.optech.parking.sharedpref.MySharedPref;
 import com.park.optech.parking.soapapi.serviceurl;
 

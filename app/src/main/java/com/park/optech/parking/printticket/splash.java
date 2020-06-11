@@ -1,28 +1,20 @@
-package com.park.optech.parking.activity;
+package com.park.optech.parking.printticket;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-import com.park.optech.parking.BuildConfig;
 import com.park.optech.parking.R;
 import com.park.optech.parking.model.callFirebaseModel;
-import com.park.optech.parking.printticket.PrintTicketActivity;
 import com.park.optech.parking.sharedpref.MySharedPref;
 
 public class splash extends AppCompatActivity {
@@ -93,6 +85,7 @@ public class splash extends AppCompatActivity {
                         // [END_EXCLUDE]
                     }
                 });
+
 
 
 

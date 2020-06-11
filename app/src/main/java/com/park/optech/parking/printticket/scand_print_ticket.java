@@ -1,4 +1,4 @@
-package com.park.optech.parking.activity;
+package com.park.optech.parking.printticket;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package com.park.optech.parking.activity;
+package com.park.optech.parking.printticket;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.park.optech.parking.R;
 import com.park.optech.parking.model.callFirebaseModel;
-import com.park.optech.parking.printticket.PrintTicketActivity;
 import com.park.optech.parking.sharedpref.MySharedPref;
 
 public class splash extends AppCompatActivity {

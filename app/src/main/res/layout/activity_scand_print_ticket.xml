@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.park.optech.parking.fragment.printticket">
+    tools:context="com.park.optech.parking.printticket.fragment.printticket">
 
     <RelativeLayout
         android:id="@+id/showinvitation1"
@@ -35,7 +35,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Administration"
+                    android:text="نادى الصيد"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:textStyle="italic"
@@ -53,39 +53,23 @@
 
 
         </LinearLayout>
+
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:src="@drawable/manager"
+            android:src="@drawable/clublogo"
             android:layout_marginTop="80dp"
             android:id="@+id/im"
             />
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:gravity="bottom|end"
             android:layout_below="@+id/im"
-            android:id="@+id/x1"
-            android:layout_marginTop="20dp"
-            android:layout_height="60dp">
-
-            <Button
-                android:id="@+id/scan"
-                android:layout_marginLeft="3dp"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/roundedbuttonblue2"
-                android:text="Scan ticket"
-                android:textStyle="italic"
-                android:textColor="@color/white" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:gravity="bottom|end"
-            android:layout_below="@+id/x1"
+            android:id="@+id/print_layout"
             android:layout_marginTop="50dp"
             android:layout_height="60dp">
 
@@ -97,15 +81,65 @@
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:background="@drawable/roundedbuttonblue2"
-                android:text="Print ticket"
+                android:text="قراءة كارت العضوية"
                 android:textStyle="italic"
+                android:textSize="20dp"
                 android:textColor="@color/white" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_marginTop="500dp"
+            android:gravity="bottom|end"
+            android:layout_below="@+id/print_layout"
+            android:id="@+id/x1"
+            android:layout_marginTop="30dp"
+            android:layout_height="60dp">
+
+            <Button
+                android:id="@+id/scan"
+                android:layout_marginLeft="3dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/roundedbuttonblue2"
+                android:text="قراءة تذكرة"
+                android:textStyle="italic"
+                android:textSize="20dp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="bottom|end"
+            android:layout_below="@+id/x1"
+            android:id="@+id/searh_layout"
+            android:layout_marginTop="30dp"
+            android:layout_height="60dp">
+
+            <Button
+                android:id="@+id/searhBtn"
+                android:layout_marginLeft="3dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/roundedbuttonblue2"
+                android:text=" استعلام عن عضوية"
+                android:textStyle="italic"
+                android:textSize="20dp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
             android:layout_height="60dp">
 
             <Button

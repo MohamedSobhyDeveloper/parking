@@ -1,4 +1,4 @@
-package com.park.optech.parking.printticket;
+package com.park.optech.parking.printticket.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

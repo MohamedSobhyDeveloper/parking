@@ -18,7 +18,7 @@ import com.park.optech.parking.R;
 import com.park.optech.parking.fragment.history;
 import com.park.optech.parking.fragment.mycar;
 import com.park.optech.parking.fragment.parkingfind;
-import com.park.optech.parking.fragment.printticket;
+import com.park.optech.parking.printticket.fragment.printticket;
 import com.park.optech.parking.fragment.profile;
 import com.park.optech.parking.sharedpref.MySharedPref;
 import com.park.optech.parking.fragment.wallet;

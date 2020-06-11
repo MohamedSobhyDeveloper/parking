@@ -1,4 +1,4 @@
-package com.park.optech.parking.fragment;
+package com.park.optech.parking.printticket.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.park.optech.parking.R;
-import com.park.optech.parking.printticket.scand_print_ticket;
+import com.park.optech.parking.printticket.activity.scand_print_ticket;
 import com.park.optech.parking.sharedpref.MySharedPref;
 import com.park.optech.parking.soapapi.serviceurl;
 

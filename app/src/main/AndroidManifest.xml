@@ -28,8 +28,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".printticket.PrintTicketActivity" />
-        <activity android:name=".printticket.splash">
+        <activity android:name=".printticket.activity.SearchActivity"></activity>
+        <activity android:name=".printticket.activity.PrintTicketActivity" />
+        <activity android:name=".printticket.activity.splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -70,9 +71,9 @@
             android:noHistory="true" />
         <activity android:name=".test" />
         <activity android:name=".activity.makeinvitation" />
-        <activity android:name=".printticket.scand_print_ticket" />
-        <activity android:name=".printticket.ticket_print" />
-        <activity android:name=".printticket.ticket_scan" />
+        <activity android:name=".printticket.activity.scand_print_ticket" />
+        <activity android:name=".printticket.activity.ticket_print" />
+        <activity android:name=".printticket.activity.ticket_scan" />
     </application>
 
 </manifest>

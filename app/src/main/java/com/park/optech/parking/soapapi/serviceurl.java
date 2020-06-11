@@ -10,6 +10,7 @@ import com.park.optech.parking.sharedpref.MySharedPref;
 public class serviceurl {
     public final static String URL = MySharedPref.getData(myApplication.getAppContext(), "base_soap_api_url", "");
 
-    public final static String URL2= MySharedPref.getData(myApplication.getAppContext(), "printer_soap_api_url", "");
+    public final static String URL2= "http://www.parking.open-park.com/soap_server.php";
+
 
 }

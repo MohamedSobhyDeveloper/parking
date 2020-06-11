@@ -1,4 +1,4 @@
-package com.park.optech.parking.printticket;
+package com.park.optech.parking.printticket.activity;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import com.park.optech.parking.R;
 
 public class scand_print_ticket extends AppCompatActivity {
-    Button b1,b2;
+    Button b1,b2,searchBtn;
     ImageButton back;
     Button b;
 
@@ -20,6 +20,8 @@ public class scand_print_ticket extends AppCompatActivity {
         setContentView(R.layout.activity_scand_print_ticket);
         b1=(Button)findViewById(R.id.scan);
         b2=(Button)findViewById(R.id.print);
+        searchBtn=(Button)findViewById(R.id.searhBtn);
+
         back=(ImageButton)findViewById(R.id.backimage);
         b=(Button)findViewById(R.id.back);
 
@@ -55,6 +57,15 @@ public class scand_print_ticket extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(scand_print_ticket.this, ticket_print.class));
                 finish();
+            }
+        });
+
+
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(scand_print_ticket.this, SearchActivity.class));
+
             }
         });
 

@@ -18,6 +18,15 @@ public class MembersModel
     private String start_date;
     private String end_date;
     private String img_path;
+    private String ssn;
+
+    public String getSsn() {
+        return ssn;
+    }
+
+    public void setSsn(String ssn) {
+        this.ssn = ssn;
+    }
 
     public String getPk() {
         return pk;

@@ -19,7 +19,7 @@
             android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:id="@+id/mm"
+            android:id="@+id/layout_back"
             android:orientation="horizontal">
             <ImageButton
                 android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Print ticket"
+                android:text="رجوع"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="italic"
@@ -42,131 +42,42 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/view1"
+
+
+        <EditText
+            android:id="@+id/member_id_edt"
             android:layout_width="match_parent"
-            android:layout_height="0.2dp"
-            android:layout_below="@+id/header"
-            android:background="@color/black" />
-
-
-        <ListView
-            android:id="@+id/listview"
-            android:dividerHeight="6dp"
-            android:layout_below="@+id/mm"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/btn_lay"
-            />
-        <LinearLayout
-            android:id="@+id/btn_lay"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true">
-
-            <Button
-                android:id="@+id/cancel"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/roundedbuttonblue2"
-                android:text="back"
-                android:textStyle="bold"
-                android:textColor="@color/white" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-
-
-
-
-
-
-    <RelativeLayout
-        android:id="@+id/show3"
-        android:visibility="gone"
-        android:background="@color/bm"
-        android:layout_width="match_parent"
-        android:layout_marginTop="150dp"
-        android:layout_height="230dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_below="@+id/layout_back"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/roundedbuttonwhite"
+            android:hint="قراءة رقم العضوية"
+            android:padding="20dp" />
 
-            <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/member_id_edt"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select park name to get ticket type"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:textStyle="italic"
-                android:padding="10dp"
+                android:id="@+id/search_member_button"
+                android:text="بحث"
+                android:background="@drawable/roundedbuttonblue"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/white"
                 />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="20dp"
-            >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:text="Park Name"
-                android:textStyle="italic"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:textAlignment="center" />
-
-
         </LinearLayout>
 
 
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:gravity="bottom|end"
-            android:layout_below="@+id/x"
-            android:layout_marginTop="185dp"
-            android:layout_height="60dp">
-
-            <Button
-                android:id="@+id/getticket"
-                android:layout_marginLeft="3dp"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/m2"
-                android:text="Get ticket"
-                android:textStyle="italic"
-                android:textColor="@color/white" />
-
-        </LinearLayout>
 
     </RelativeLayout>
+
 
 
 
@@ -379,6 +290,7 @@
             android:orientation="vertical"
             android:layout_centerInParent="true"
             android:background="@color/m2"
+            android:id="@+id/layout_ticket"
             android:layout_width="300dp"
             android:layout_height="wrap_content">
 
@@ -387,7 +299,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:textColor="@color/white"
-                android:text="مركز مصر للمعارض الدولية"
+                android:text="نادى الصيد المصرى"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
@@ -400,7 +312,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="0dp"
-                    android:id="@+id/date"
+                    android:id="@+id/ticket_date"
                     android:layout_weight="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
@@ -425,7 +337,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="0dp"
-                    android:id="@+id/time"
+                    android:id="@+id/ticket_member_name"
                     android:layout_weight="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
@@ -440,7 +352,34 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:text="ساعة الدخول"/>
+                    android:text="اسم العضو"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:id="@+id/ticket_member_id"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:text="ملاكى"
+                    android:gravity="end" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:text="رقم العضوية"/>
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
@@ -457,7 +396,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="0dp"
-                    android:id="@+id/gatenumber"
+                    android:id="@+id/ticket_gatenumber"
                     android:layout_weight="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
@@ -474,32 +413,7 @@
                     android:textStyle="bold"
                     android:text="بوابة رقم"/>
             </LinearLayout>
-            <LinearLayout
-                android:padding="5dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="40dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="0dp"
-                    android:id="@+id/cartype"
-                    android:layout_weight="4"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textAlignment="center"
-                    android:textStyle="bold"
-                    android:text="ملاكى"
-                    android:gravity="end" />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:text="نوعة المركبة"/>
-            </LinearLayout>
+
             <LinearLayout
                 android:padding="5dp"
                 android:layout_marginLeft="20dp"
@@ -567,18 +481,141 @@
                 android:layout_height="40dp">
 
                 <Button
-                    android:id="@+id/print"
+                    android:id="@+id/printticket"
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/roundedbuttonblue"
                     android:textColor="@color/white"
                     android:textStyle="italic"
-                    android:text="Print ticket"/>
+                    android:text="طباعة تذكرة"/>
             </LinearLayout>
 
         </LinearLayout>
 
     </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/blocked_popup"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:background="@color/red"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColor="@color/white"
+                android:text="نادى الصيد المصرى"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:id="@+id/blockedmember_number"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:text="123456"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:text="رقم العضوية"/>
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:id="@+id/blockedmember_name"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:text="محمد صبحى"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:text="اسم العضو"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="________________________________________"
+                android:textSize="15sp"
+                />
+
+
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:text="العضوية غير سارية"/>
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <Button
+                    android:id="@+id/cancel_blocked"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/roundedbuttonblue"
+                    android:textColor="@color/white"
+                    android:text="رجوع"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
 
 
 

@@ -72,57 +72,38 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
         mScannerView.setResultHandler(ticket_scan.this);
         mScannerView.startCamera();
 
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mScannerView.setResultHandler(ticket_scan.this);
-                mScannerView.startCamera();
-            }
+        scan.setOnClickListener(view -> {
+            mScannerView.setResultHandler(ticket_scan.this);
+            mScannerView.startCamera();
         });
 
 
 
+        scant_ticket.setOnClickListener(view -> {
 
-        scant_ticket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            ticketred.setVisibility(View.GONE);
+            // view.setVisibility(View.VISIBLE);
 
-                ticketred.setVisibility(View.GONE);
-                // view.setVisibility(View.VISIBLE);
-
-            }
         });
 
-        pay_ticket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              //  pay_event task=new pay_event();
-               // task.execute();
+        pay_ticket.setOnClickListener(view -> {
+          //  pay_event task=new pay_event();
+           // task.execute();
 
-                Toast.makeText(ticket_scan.this, "Ticket Paid Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ticket_scan.this, "Ticket Paid Successfully", Toast.LENGTH_SHORT).show();
 
 
-            }
         });
 
 
 
-        ex.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ticket.setVisibility(View.GONE);
-            }
-        });
+        ex.setOnClickListener(view -> ticket.setVisibility(View.GONE));
 
 
 
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ticket_scan.this, scand_print_ticket.class));
-                finish();
-            }
+        back.setOnClickListener(view -> {
+            startActivity(new Intent(ticket_scan.this, scand_print_ticket.class));
+            finish();
         });
 
     }

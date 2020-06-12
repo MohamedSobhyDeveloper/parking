@@ -18,6 +18,7 @@ import com.park.optech.parking.model.user_invitation;
 import com.park.optech.parking.printticket.fragment.printticket;
 import com.park.optech.parking.printticket.models.MembersModel;
 import com.park.optech.parking.printticket.models.UsersModels;
+import com.park.optech.parking.printticket.sqlite.Database_Helper;
 import com.park.optech.parking.soapapi.serviceurl;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -33,7 +34,6 @@ import java.util.ArrayList;
 
 public class PrintTicketActivity extends AppCompatActivity {
     ArrayList<UsersModels> usersList;
-    ArrayList<MembersModel> membersList= new ArrayList<>();
     ProgressDialog pd;
 
     @SuppressLint("CheckResult")
@@ -102,7 +102,7 @@ public class PrintTicketActivity extends AppCompatActivity {
                 System.out.println("--------------result-------------- " + final_result);
                 try {
                     arr = new JSONArray(result);
-                    arr = arr.getJSONArray(0);
+//                    arr = arr.getJSONArray(0);
                     System.out.println("------------------Size---------------- " + arr.length());
                     UsersModels data = null;
                     for (int i = 0; i <= arr.length() - 1; i++) {
@@ -142,7 +142,14 @@ public class PrintTicketActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             if (final_result!=null) {
-                Toast.makeText(PrintTicketActivity.this, usersList.size()+"مستخدم", Toast.LENGTH_SHORT).show();
+//                Database_Helper database_helper=new Database_Helper(PrintTicketActivity.this);
+
+                for (int i=0;i<usersList.size();i++){
+//                    database_helper.insertUser(usersList.get(i));
+                    Database_Helper.getInstance(PrintTicketActivity.this).insertUser(usersList.get(i));
+                }
+                Toast.makeText(PrintTicketActivity.this, "تم تحميل بيانات المستخدمين بنجاح", Toast.LENGTH_SHORT).show();
+
                 pd.dismiss();
             }else {
                 Toast.makeText(PrintTicketActivity.this, "تاكد من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
@@ -157,7 +164,7 @@ public class PrintTicketActivity extends AppCompatActivity {
         String METHOD_NAME = "retrieve_all_users";
         String NAMESPACE = serviceurl.URL2 + "/";
         String URL = serviceurl.URL2;
-        String response = null;
+        String response = "";
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
             Request.addProperty("company", "2");

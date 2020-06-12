@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.park.optech.parking.printticket.models.MembersModel;
+import com.park.optech.parking.printticket.models.TicketsModel;
 import com.park.optech.parking.printticket.models.UsersModels;
 
 import java.util.ArrayList;
@@ -16,14 +18,25 @@ public class Database_Helper extends SQLiteOpenHelper
 {
 
     private static final int DATABASE_VERSION = 1;
+    private static Database_Helper databasehelper;
 
     // Database Name
     private static final String DATABASE_NAME = "tickets_db";
 
 
-    public Database_Helper(Context context) {
+    private Database_Helper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
+
+    public static Database_Helper getInstance(Context context) {
+        //instantiate a new CustomerLab if we didn't instantiate one yet
+        if (databasehelper == null) {
+            databasehelper = new Database_Helper(context);
+        }
+        return databasehelper;
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -61,7 +74,7 @@ public class Database_Helper extends SQLiteOpenHelper
         values.put(Members_Table.START_DATE,model.getStart_date());
         values.put(Members_Table.END_DATE,model.getEnd_date());
         values.put(Members_Table.MEMBERSHIP_NO,model.getMembership_no());
-//        values.put(Members_Table.SSN,model.get);
+        values.put(Members_Table.SSN,model.getSsn());
 //        values.put(Members_Table.COMPANY,model.get);
         values.put(Members_Table.IMAGE,model.getImg_path());
 
@@ -91,24 +104,23 @@ public class Database_Helper extends SQLiteOpenHelper
     }
 
 
-    public long insertTicket(String cameraNo, String timestamp, String payTime, String payAmount
-            , String payUser, String company, String paid, String trx_no, String members, String sync) {
+    public long insertTicket(TicketsModel ticketsModel) {
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         // `id` and `timestamp` will be inserted automatically.
         // no need to add them
-        values.put(Tickets_Table.CAMERA_NO,cameraNo);
-        values.put(Tickets_Table.TIMESTAMP,timestamp);
-        values.put(Tickets_Table.PAY_TIME,payTime);
-        values.put(Tickets_Table.PAY_AMOUNT,payAmount);
-        values.put(Tickets_Table.PAY_USER,payUser);
-        values.put(Tickets_Table.COMPANY,company);
-        values.put(Tickets_Table.PAID,paid);
-        values.put(Tickets_Table.TRX_NO,trx_no);
-        values.put(Tickets_Table.MEMBERS,members);
-        values.put(Tickets_Table.SYNC,sync);
+        values.put(Tickets_Table.CAMERA_NO,ticketsModel.getCameraNo());
+        values.put(Tickets_Table.TIMESTAMP,ticketsModel.getTimestamp());
+        values.put(Tickets_Table.PAY_TIME,ticketsModel.getPayTime());
+        values.put(Tickets_Table.PAY_AMOUNT,ticketsModel.getPayAmount());
+        values.put(Tickets_Table.PAY_USER,ticketsModel.getPayUser());
+        values.put(Tickets_Table.COMPANY,ticketsModel.getCompany());
+        values.put(Tickets_Table.PAID,ticketsModel.getPaid());
+        values.put(Tickets_Table.TRX_NO,ticketsModel.getTrx_no());
+        values.put(Tickets_Table.MEMBERS,ticketsModel.getMembers());
+        values.put(Tickets_Table.SYNC,ticketsModel.getSync());
 
         // insert row
         long id = db.insert(Tickets_Table.TABLE_NAME, null, values);
@@ -273,6 +285,57 @@ public class Database_Helper extends SQLiteOpenHelper
 
         return count > 0;
     }
+
+
+    public MembersModel getmember(String id) {
+        MembersModel membersModel=new MembersModel();
+        SQLiteDatabase db = this.getWritableDatabase(); //get the database that was created in this instance
+        Cursor c = db.rawQuery("select * from " + Members_Table.TABLE_NAME+" where MEMBERSHIP_NO =?", new String[]{id});
+        if (c.moveToLast()) {
+            membersModel.setMembership_no(c.getString(c.getColumnIndex(Members_Table.MEMBERSHIP_NO)));
+            membersModel.setPk(c.getString(c.getColumnIndex(Members_Table.MEMBER_PK)));
+            membersModel.setName(c.getString(c.getColumnIndex(Members_Table.MEMBER_NAME)));
+            membersModel.setStart_date(c.getString(c.getColumnIndex(Members_Table.START_DATE)));
+            membersModel.setEnd_date(c.getString(c.getColumnIndex(Members_Table.END_DATE)));
+            membersModel.setSsn(c.getString(c.getColumnIndex(Members_Table.SSN)));
+            membersModel.setImg_path(c.getString(c.getColumnIndex(Members_Table.IMAGE)));
+
+            return membersModel;
+
+        }else {
+            Log.e("error not found", "members can't be found or database empty");
+            return membersModel;
+        }
+
+    }
+
+
+    public UsersModels getusers(String email , String password) {
+        UsersModels usersModels=new UsersModels();
+        String Query = "SELECT * FROM " + Users_Table.TABLE_NAME + " WHERE "
+                + "email" + " = " + email
+                + " AND " + "password" + " = " + password;
+
+        SQLiteDatabase db = this.getWritableDatabase(); //get the database that was created in this instance
+        Cursor c = db.rawQuery(Query,null);
+
+
+        if (c.moveToLast()) {
+            usersModels.setPk(c.getString(c.getColumnIndex(Users_Table.USER_PK)));
+            usersModels.setName(c.getString(c.getColumnIndex(Users_Table.USER_NAME)));
+            usersModels.setEmail(c.getString(c.getColumnIndex(Users_Table.EMAIL)));
+            usersModels.setPassword(c.getString(c.getColumnIndex(Users_Table.PASSWORD)));
+
+            return usersModels;
+
+        }else {
+            Log.e("error not found", "members can't be found or database empty");
+            return usersModels;
+        }
+
+    }
+
+
 
 
 }

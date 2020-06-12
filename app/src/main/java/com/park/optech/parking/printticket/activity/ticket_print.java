@@ -4,24 +4,22 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +28,9 @@ import com.ganesh.intermecarabic.Arabic864;
 import com.park.optech.parking.R;
 import com.park.optech.parking.another.BluetoothUtil;
 import com.park.optech.parking.model.Ticket_Model;
+import com.park.optech.parking.printticket.models.MembersModel;
+import com.park.optech.parking.printticket.models.TicketsModel;
+import com.park.optech.parking.printticket.sqlite.Database_Helper;
 import com.park.optech.parking.sharedpref.MySharedPref;
 import com.park.optech.parking.soapapi.serviceurl;
 
@@ -41,23 +42,62 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ticket_print extends Activity {
-
-    private final int LINE_CHARS = 50; // Bixolon 200II
-
-
-    private static final long PRINTING_SLEEP_TIME = 300;
-
-    private static final long PRINTING_TIME = 4000;
 
 
     static final int MESSAGE_START_WORK = Integer.MAX_VALUE - 2;
     static final int MESSAGE_END_WORK = Integer.MAX_VALUE - 3;
+    @BindView(R.id.backimage)
+    ImageButton backimage;
+    @BindView(R.id.member_id_edt)
+    EditText memberIdEdt;
+    @BindView(R.id.search_member_button)
+    Button searchMemberButton;
+    @BindView(R.id.show1)
+    RelativeLayout show1;
+    @BindView(R.id.show2)
+    RelativeLayout show2;
+    @BindView(R.id.parking_header)
+    TextView parkingHeader;
+    @BindView(R.id.ticket_date)
+    TextView ticketDate;
+    @BindView(R.id.ticket_member_name)
+    TextView ticketMemberName;
+    @BindView(R.id.ticket_member_id)
+    TextView ticketMemberId;
+    @BindView(R.id.ticket_gatenumber)
+    TextView ticketGatenumber;
+    @BindView(R.id.ticketprice)
+    TextView ticketprice;
+    @BindView(R.id.ticketnumber)
+    TextView ticketnumber;
+    @BindView(R.id.printticket)
+    Button printticket;
+    @BindView(R.id.ticket_popupgreen)
+    RelativeLayout ticketPopupgreen;
+    @BindView(R.id.blockedmember_number)
+    TextView blockedmemberNumber;
+    @BindView(R.id.blockedmember_name)
+    TextView blockedmemberName;
+    @BindView(R.id.cancel_blocked)
+    Button cancelBlocked;
+    @BindView(R.id.blocked_popup)
+    RelativeLayout blockedPopup;
+    @BindView(R.id.activity_ticket)
+    RelativeLayout activityTicket;
 
 
     private List<String> pairedPrinters = new ArrayList<String>();
@@ -70,32 +110,21 @@ public class ticket_print extends Activity {
     private View layoutThereArentPairedPrinters;
     private View layoutPrinterReady;
     private TextView debugTextView = null; //A hidden TextView where you can test things
-    private Button printButton = null; //Guess it :P
     ProgressDialog pd;
 
     String final_id;
-    String type="";
+    String type = "";
     ArrayList<String> x = new ArrayList<>();
-    Context context;
-   String selecteditem;
+    String selecteditem;
 
-    RelativeLayout show1,show2,show3;
-    ImageButton backimage;
-    Button back,cancel,getticket;
     ListView l1;
-    Spinner spinner;
     String[] spinnerArray;
     String[] spinnerArray2;
-    HashMap<Integer,String> spinnerMap;
-    HashMap<Integer,String> spinnerMapname;
-    HashMap<Integer,String> spinnerMap2;
-    Ticket_Model data=new Ticket_Model();
-    String parkname;
-    TextView t1,t2,t3,t4,t5,t6,t7;
-    RelativeLayout ticket;
-    Button print_btn;
-    Bitmap bPrintmap;
-    Bitmap Printmap;
+    HashMap<Integer, String> spinnerMap;
+    HashMap<Integer, String> spinnerMapname;
+    HashMap<Integer, String> spinnerMap2;
+
+    Ticket_Model data = new Ticket_Model();
 
 
     //
@@ -104,146 +133,116 @@ public class ticket_print extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_print);
-        pd = new ProgressDialog(ticket_print.this,R.style.AppCompatAlertDialogStyle);
+        ButterKnife.bind(this);
+        pd = new ProgressDialog(ticket_print.this, R.style.AppCompatAlertDialogStyle);
 
         final_id = MySharedPref.getData(ticket_print.this, "idadmin", null);
 
 
-        show1=(RelativeLayout)findViewById(R.id.show1);
-        show2=(RelativeLayout)findViewById(R.id.show2);
-        ticket=(RelativeLayout)findViewById(R.id.ticket_popupgreen);
-
-
-        show3=(RelativeLayout)findViewById(R.id.show3);
-        spinner=(Spinner)findViewById(R.id.spinner);
-        getticket=(Button)findViewById(R.id.getticket);
-        print_btn=(Button)findViewById(R.id.print);
-
-
-        backimage=(ImageButton)findViewById(R.id.backimage);
-        cancel=(Button)findViewById(R.id.cancel);
-        back=(Button)findViewById(R.id.back);
-        l1=(ListView)findViewById(R.id.listview);
-        t1=(TextView)findViewById(R.id.date);
-        t2=(TextView)findViewById(R.id.time);
-        t3=(TextView)findViewById(R.id.gatenumber);
-        t4=(TextView)findViewById(R.id.cartype);
-        t5=(TextView)findViewById(R.id.ticketprice);
-        t6=(TextView)findViewById(R.id.ticketnumber);
-        t7=(TextView)findViewById(R.id.parking_header);
-
-
-
-l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        pd.setMessage("Printing Ticket...");
-        pd.show();
-        pd.setCanceledOnTouchOutside(false);
-
-        type = spinnerMap2.get(adapterView.getPositionForView(view));
-        // Toast.makeText(ticket_print.this, type, Toast.LENGTH_SHORT).show();
-
-        ticket_event task=new ticket_event();
-        task.execute();
-    }
-});
-
-
-        park_Eventlist task=new park_Eventlist();
-        task.execute();
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //  selectedItem = adapterView.getItemAtPosition(i).toString();
-                //Toast.makeText(makeinvitation.this, selectedItem, Toast.LENGTH_SHORT).show();
-                // x=adapterView.getSelectedItemPosition()+1;
-                selecteditem = spinnerMap.get(spinner.getSelectedItemPosition());
-                parkname=spinnerMapname.get(spinner.getSelectedItemPosition());
-                MySharedPref.saveData(ticket_print.this,"ptname",parkname);
-
-                //Toast.makeText(makeinvitation.this, x, Toast.LENGTH_SHORT).show();
-                //  Toast.makeText(makeinvitation.this,x , Toast.LENGTH_SHORT).show();
-                // Toast.makeText(makeinvitation.this, x+"", Toast.LENGTH_SHORT).show();
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        getticket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pd.setMessage("Loading Ticket...");
-                pd.show();
-                pd.setCanceledOnTouchOutside(false);
-
-                park_ticket task=new park_ticket();
-                task.execute();
-
-            }
+        backimage.setOnClickListener(view -> {
+            Intent intent = new Intent(ticket_print.this, scand_print_ticket.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            System.exit(0);
         });
 
 
 
-      backimage.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              Intent intent = new Intent(ticket_print.this, scand_print_ticket.class)
-                      .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-              intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              startActivity(intent);
-              System.exit(0);
-          }
-      });
+        backimage.setOnClickListener(view -> {
+            Intent intent = new Intent(ticket_print.this, scand_print_ticket.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            System.exit(0);
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ticket_print.this, scand_print_ticket.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(0);
-
-            }
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ticket_print.this, scand_print_ticket.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                System.exit(0);
 
-            }
-        });
         if (rotation == null) {
             rotation = AnimationUtils.loadAnimation(this, R.anim.rotation);
         }
 
         debugTextView = (TextView) findViewById(R.id.debug);
-
         layoutLoading = findViewById(R.id.layoutLoading);
         layoutThereArentPairedPrinters = findViewById(R.id.layoutNoExisteImpresora);
         layoutPrinterReady = findViewById(R.id.layoutImpresoraPreparada);
         updateScreenStatus(layoutLoading);
 
 
+        readMemeber();
+
+        clicks();
 
 
 
+    }
+
+    private void clicks() {
+        cancelBlocked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                blockedPopup.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void readMemeber() {
+
+        searchMemberButton.setOnClickListener(view -> {
+            if (!TextUtils.isEmpty(memberIdEdt.getText().toString())) {
+                MembersModel membersModel = Database_Helper.getInstance(ticket_print.this).getmember(memberIdEdt.getText().toString());
+
+                if (membersModel != null) {
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+                    Date strDate = null;
+                    try {
+                        strDate = sdf.parse(membersModel.getEnd_date());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (System.currentTimeMillis() > Objects.requireNonNull(strDate).getTime()) {
+                       blockedPopup.setVisibility(View.VISIBLE);
+                       blockedmemberName.setText(membersModel.getName());
+                       blockedmemberNumber.setText(membersModel.getMembership_no());
+
+                    } else {
+                        Date currentTime = Calendar.getInstance().getTime();
+
+                        TicketsModel ticketsModel=new TicketsModel();
+                        ticketsModel.setCameraNo("1");
+                        ticketsModel.setCompany("2");
+                        ticketsModel.setPaid("1");
+                        ticketsModel.setPayAmount("20");
+                        ticketsModel.setPayTime(currentTime+"");
+                        ticketsModel.setTimestamp(currentTime+"");
+                        ticketsModel.setMembers("2");
+                        ticketsModel.setPayUser("1");
+                        ticketsModel.setSync("0");
+                        ticketsModel.setTrx_no("12");
 
 
+                        //ticket.setVisibility(View.VISIBLE);
+                        //t1.setText(data.getDay()+"/"+data.getMonth()+"/"+ data.getYear());
+                        //t2.setText(data.getEntryTIME());
+                        //t3.setText(data.getGate());
+                        //t4.setText(data.getName());
+                        //t5.setText(data.getPayAmount()+"جنية ");
+                        //t6.setText(data.getPK()+"تذكرة رقم ");
+                        //t7.setText(MySharedPref.getData(ticket_print.this,"ptname",null));
 
+                    }
+
+
+                }
+
+
+            } else {
+                Toast.makeText(ticket_print.this, "ادخل رقم العضوية", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
     }
 
@@ -263,7 +262,6 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         } else if (viewToShow == layoutPrinterReady) {
             show2.setVisibility(View.GONE);
             show1.setVisibility(View.VISIBLE);
-            show3.setVisibility(View.VISIBLE);
             iconLoadingStop();
         }
 
@@ -277,7 +275,7 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         super.onResume();
 
 
-        bixolonPrinterApi = new BixolonPrinter(this, handler,null);
+        bixolonPrinterApi = new BixolonPrinter(this, handler, null);
 
         task = new PairWithPrinterTask();
         task.execute();
@@ -446,7 +444,6 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         protected Void doInBackground(Void... params) {
 
 
-
             runOnUiThread(new Runnable() {
 
                 @Override
@@ -466,7 +463,6 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     }
                 }
             });
-
 
 
             return null;
@@ -491,8 +487,6 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             }
         }
     }
-
-
 
 
     boolean animated = false;
@@ -554,11 +548,10 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     spinnerMap = new HashMap<Integer, String>();
                     spinnerMapname = new HashMap<Integer, String>();
 
-                    for (int x = 0; x <= arr.length() - 1; x++)
-                    {
+                    for (int x = 0; x <= arr.length() - 1; x++) {
                         JSONObject obj = arr.getJSONObject(x);
-                        spinnerMap.put(x,obj.getString("pk"));
-                        spinnerMapname.put(x,obj.getString("name"));
+                        spinnerMap.put(x, obj.getString("pk"));
+                        spinnerMapname.put(x, obj.getString("name"));
                         spinnerArray[x] = obj.getString("name");
                     }
 
@@ -571,7 +564,7 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     // }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    System.out.println("ex"+e);
+                    System.out.println("ex" + e);
                 }
 
             }
@@ -585,22 +578,19 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
         @Override
         protected void onPostExecute(Void result) {
-            if (final_result!=null) {
+            if (final_result != null) {
 
                 if (final_result.equals("[[]]") || final_result.equals("") || final_result.equals(null)) {
                     Toast.makeText(ticket_print.this, "Somethimg go wrong", Toast.LENGTH_SHORT).show();
                     ;
 
                 } else {
-                    ArrayAdapter<String> adapter =new ArrayAdapter<String>(ticket_print.this,android.R.layout.simple_spinner_item, spinnerArray);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ticket_print.this, android.R.layout.simple_spinner_item, spinnerArray);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(adapter);
                 }
 
 
-
-
-            }else {
+            } else {
                 Toast.makeText(ticket_print.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
             }
 
@@ -633,7 +623,6 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
     }
 
 
-
 //get ticket type
 
 
@@ -649,7 +638,7 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 final_result = result;
                 try {
                     arr = new JSONArray(result);
-                   // arr = arr.getJSONArray(0);
+                    // arr = arr.getJSONArray(0);
                     System.out.println("------------------Size---------------- " + arr.length());
 
                     //  for (int i = 0; i <= arr.length() - 1; i++) {
@@ -662,10 +651,9 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     spinnerArray2 = new String[arr.length()];
                     spinnerMap2 = new HashMap<Integer, String>();
-                    for (int x = 0; x <= arr.length() - 1; x++)
-                    {
+                    for (int x = 0; x <= arr.length() - 1; x++) {
                         JSONObject obj = arr.getJSONObject(x);
-                        spinnerMap2.put(x,obj.getString("pk"));
+                        spinnerMap2.put(x, obj.getString("pk"));
                         spinnerArray2[x] = obj.getString("name");
                     }
 
@@ -678,7 +666,7 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     // }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    System.out.println("ex"+e);
+                    System.out.println("ex" + e);
                 }
 
 
@@ -693,24 +681,21 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
         @Override
         protected void onPostExecute(Void result) {
-            if (final_result!=null) {
+            if (final_result != null) {
 
                 if (final_result.equals("[[]]") || final_result.equals("") || final_result.equals(null)) {
                     Toast.makeText(ticket_print.this, "Somethimg go wrong", Toast.LENGTH_SHORT).show();
                     ;
 
-                }else {
-                    ArrayAdapter<String> adapter =new ArrayAdapter<String>(ticket_print.this,android.R.layout.simple_list_item_1, spinnerArray2);
+                } else {
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ticket_print.this, android.R.layout.simple_list_item_1, spinnerArray2);
                     l1.setAdapter(adapter);
-                    show3.setVisibility(View.GONE);
                     pd.dismiss();
 
                 }
 
 
-
-
-            }else {
+            } else {
                 Toast.makeText(ticket_print.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
             }
 
@@ -726,7 +711,7 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         String response = null;
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            Request.addProperty("company",selecteditem);
+            Request.addProperty("company", selecteditem);
             SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             soapEnvelope.dotNet = true;
             soapEnvelope.setOutputSoapObject(Request);
@@ -758,7 +743,7 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             String result = get_ticketprint();
             if (result != null) {
-                final_result=result;
+                final_result = result;
                 System.out.println("--------------result-------------- " + result);
                 try {
                     arr = new JSONArray(result);
@@ -768,16 +753,15 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     for (int i = 0; i <= arr.length(); i++) {
                         JSONObject obj = arr.getJSONObject(i);
 
-                        data.setPK(obj.get("PK")+"");
-                        data.setGate(obj.get("gate")+"");
-                        data.setName(obj.get("name")+"");
-                        data.setPayAmount(obj.get("PayAmount")+"");
-                        data.setPaid(obj.get("paid")+"");
-                        data.setDay(obj.get("Day")+"");
-                        data.setMonth(obj.get("Month")+"");
-                        data.setYear(obj.get("Year")+"");
-                        data.setEntryTIME(obj.get("Entry_Time")+"");
-
+                        data.setPK(obj.get("PK") + "");
+                        data.setGate(obj.get("gate") + "");
+                        data.setName(obj.get("name") + "");
+                        data.setPayAmount(obj.get("PayAmount") + "");
+                        data.setPaid(obj.get("paid") + "");
+                        data.setDay(obj.get("Day") + "");
+                        data.setMonth(obj.get("Month") + "");
+                        data.setYear(obj.get("Year") + "");
+                        data.setEntryTIME(obj.get("Entry_Time") + "");
 
 
                     }
@@ -793,20 +777,19 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         }
 
 
-
-
         @Override
         protected void onPreExecute() {
 
 
         }
+
         @Override
         protected void onPostExecute(Void result) {
-            if (final_result.equals("")||final_result.equals("[]")||final_result.equals(null)) {
+            if (final_result.equals("") || final_result.equals("[]") || final_result.equals(null)) {
                 Toast.makeText(ticket_print.this, "SomeThing go Wrong", Toast.LENGTH_SHORT).show();
                 pd.dismiss();
 
-            }else {
+            } else {
                 System.out.println(data.getPK());
                 //ticket.setVisibility(View.VISIBLE);
                 //t1.setText(data.getDay()+"/"+data.getMonth()+"/"+ data.getYear());
@@ -817,9 +800,6 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 //t6.setText(data.getPK()+"تذكرة رقم ");
                 //t7.setText(MySharedPref.getData(ticket_print.this,"ptname",null));
                 printticket();
-
-
-
 
 
             }
@@ -835,8 +815,8 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         String response = "";
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            Request.addProperty("ticket_type_id",type);
-            Request.addProperty("user_id",final_id);
+            Request.addProperty("ticket_type_id", type);
+            Request.addProperty("user_id", final_id);
             SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             soapEnvelope.dotNet = true;
             soapEnvelope.setOutputSoapObject(Request);
@@ -847,52 +827,45 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             response = soapEnvelope.getResponse().toString();
             Log.i("", "Result Verification: " + soapEnvelope.getResponse());
         } catch (Exception ex) {
-            System.out.println("---------Exe------- "+ex);
+            System.out.println("---------Exe------- " + ex);
             ex.printStackTrace();
         }
         return response;
     }
 
 
-
-
-
-
     //end
-
 
 
     private void printticket() {
 
 
+        String text = "";
+        text += "ادارة نظم المعلومات";
+        text += "\n";
+        text += "فى حالة فقد التذكرة يتم دفع غرامة 20 جنية";
+        text += "\n";
+        text += "تذكرة رقم: ";
+        text += data.getPK();
 
-        String text="";
-        text+="ادارة نظم المعلومات";
-        text+="\n";
-        text+="فى حالة فقد التذكرة يتم دفع غرامة 20 جنية";
-        text+="\n";
-        text+="تذكرة رقم: ";
-        text+=data.getPK();
-
-        String strTextToPrint="";
-        strTextToPrint+="\n";
-        strTextToPrint+="التاريخ: ";
-        strTextToPrint+=data.getDay()+"/"+data.getMonth()+"/"+data.getYear();
-        strTextToPrint+="\n";
-        strTextToPrint+="ساعة الدخول: ";
-        strTextToPrint+=data.getEntryTIME();
-        strTextToPrint+="\n\n";
-        strTextToPrint+="بوابة رقم: ";
-        strTextToPrint+=data.getGate();
-        strTextToPrint+="\n";
-        strTextToPrint+="نوع المركبة: ";
-        strTextToPrint+=data.getName();
-        strTextToPrint+="\n";
-        strTextToPrint+="قيمة التذكرة: ";
-        strTextToPrint+=data.getPayAmount()+" جنية";
-        strTextToPrint+="\n\n";
-        strTextToPrint+="مركز مصر للمعارض الدولية";
-
+        String strTextToPrint = "";
+        strTextToPrint += "\n";
+        strTextToPrint += "التاريخ: ";
+        strTextToPrint += data.getDay() + "/" + data.getMonth() + "/" + data.getYear();
+        strTextToPrint += "\n";
+        strTextToPrint += "ساعة الدخول: ";
+        strTextToPrint += data.getEntryTIME();
+        strTextToPrint += "\n\n";
+        strTextToPrint += "بوابة رقم: ";
+        strTextToPrint += data.getGate();
+        strTextToPrint += "\n";
+        strTextToPrint += "نوع المركبة: ";
+        strTextToPrint += data.getName();
+        strTextToPrint += "\n";
+        strTextToPrint += "قيمة التذكرة: ";
+        strTextToPrint += data.getPayAmount() + " جنية";
+        strTextToPrint += "\n\n";
+        strTextToPrint += "مركز مصر للمعارض الدولية";
 
 
         Arabic864 arabic864 = new Arabic864();
@@ -900,19 +873,18 @@ l1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         byte[] arabicTXT2 = arabic864.Convert(text, false);
 
         //bixolonPrinterApi.printText(arabicTXT,1,0,10,false);
-        bixolonPrinterApi.printBitmap(arabicTXT,1,0,35,false);
+        bixolonPrinterApi.printBitmap(arabicTXT, 1, 0, 35, false);
 
         //Bitmap bPrintmap = printbitmap(strTextToPrint);
-      //  bixolonPrinterApi.printBitmap(bPrintmap,BixolonPrinter.ALIGNMENT_CENTER, 0,	50, false);
+        //  bixolonPrinterApi.printBitmap(bPrintmap,BixolonPrinter.ALIGNMENT_CENTER, 0,	50, false);
         bixolonPrinterApi.printQrCode(data.getPK(), BixolonPrinter.ALIGNMENT_CENTER, BixolonPrinter.QR_CODE_MODEL2, 8, false);
-       // Bitmap Printmap = printbitmap(text);
+        // Bitmap Printmap = printbitmap(text);
         // bixolonPrinterApi.printBitmap(Printmap,BixolonPrinter.ALIGNMENT_CENTER, 0,	50, false);
-        bixolonPrinterApi.printBitmap(arabicTXT2,1,0,35,false);
+        bixolonPrinterApi.printBitmap(arabicTXT2, 1, 0, 35, false);
 
         bixolonPrinterApi.lineFeed(4, false);
 
         pd.dismiss();
-
 
 
     }

@@ -1,7 +1,9 @@
 package com.park.optech.parking.printticket.models;
 
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 
 public  class UsersModels {
 
@@ -23,7 +25,8 @@ public  class UsersModels {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+
+        this.password = "123456";
     }
 
     public String getEmail() {
@@ -49,4 +52,7 @@ public  class UsersModels {
     public void setPk(String pk) {
         this.pk = pk;
     }
+
+
+
 }

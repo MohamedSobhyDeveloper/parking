@@ -9,7 +9,6 @@
         android:visibility="visible"
         android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_marginTop="60dp"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -36,7 +35,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Administration"
+                    android:text="رجوع"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:textStyle="italic"
@@ -68,12 +67,13 @@
                     <EditText
                         android:id="@+id/username"
                         android:layout_width="match_parent"
-                        android:hint="User name:"
+                        android:hint="اسم المستخدم"
                         android:layout_height="50dp"
-                        android:textStyle="italic"
                         android:textColor="@color/black"
                         android:textSize="15sp"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:textAlignment="viewEnd"
+                        android:gravity="end" />
                 </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
 
@@ -98,12 +98,13 @@
                     <EditText
                         android:id="@+id/password"
                         android:layout_width="match_parent"
-                        android:hint="password:"
+                        android:hint="كلمة المرور"
                         android:layout_height="50dp"
-                        android:textStyle="italic"
                         android:textColor="@color/black"
                         android:textSize="15sp"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:textAlignment="viewEnd"
+                        android:gravity="end" />
                 </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
 
@@ -132,8 +133,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/roundedbuttonblue2"
-                android:text="login"
-                android:textStyle="italic"
+                android:text="تسجيل الدخول"
                 android:textColor="@color/white" />
 
         </LinearLayout>

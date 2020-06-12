@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.park.optech.parking.R;
 import com.park.optech.parking.printticket.activity.scand_print_ticket;
+import com.park.optech.parking.printticket.sqlite.Database_Helper;
 import com.park.optech.parking.sharedpref.MySharedPref;
 import com.park.optech.parking.soapapi.serviceurl;
 
@@ -65,10 +66,23 @@ public class printticket extends Fragment {
                     pd.show();
                     pd.setCanceledOnTouchOutside(false);
 
-                    AsyncCallWS task=new AsyncCallWS();
-                    task.execute();
+               boolean login=Database_Helper.getInstance(getActivity()).login(uname.getText().toString(),upassword.getText().toString());
+               if (login){
+                   pd.dismiss();
+                   startActivity(new Intent(getActivity(), scand_print_ticket.class));
+                   Objects.requireNonNull(getActivity()).finish();
+                   Toast.makeText(getActivity(), "تم التسجيل بنجاح", Toast.LENGTH_SHORT).show();
+
+               }else {
+                   Toast.makeText(getActivity(), "خطا فى اسم المستخدم او كلمة المرور", Toast.LENGTH_SHORT).show();
+                   pd.dismiss();
+               }
+
+
+//                    AsyncCallWS task=new AsyncCallWS();
+//                    task.execute();
                 }else {
-                    Toast.makeText(getActivity(), "Invalid username and password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "ادخل اسم المسخدم وكلمة المرور", Toast.LENGTH_SHORT).show();
                 }
 
             }

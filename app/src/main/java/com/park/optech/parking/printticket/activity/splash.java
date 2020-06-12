@@ -32,33 +32,47 @@ public class splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         context = this;
-        login = MySharedPref.getData(context, "code", null);
+//        login = MySharedPref.getData(context, "code", null);
+//
+//
+//        mDatabase = FirebaseDatabase.getInstance().getReference();
+////        callFirebaseModel callFirebaseModel = new callFirebaseModel("1", "2","3","4");
+//
+////        mDatabase.child("parkingApi").child("openpark").setValue(callFirebaseModel);
+//
+//        mDatabase.child("parkingApi").child("openpark").addListenerForSingleValueEvent(
+//                new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        // Get user value
+//                        callFirebaseModel callFirebaseModel = dataSnapshot.getValue(callFirebaseModel.class);
+//
+//                        // [START_EXCLUDE]
+//                        if (callFirebaseModel != null) {
+//                            file_upload_url = callFirebaseModel.file_upload_url;
+//                           restful_api_url = callFirebaseModel.restful_api_url;
+//                           printer_soap_api_url = callFirebaseModel.printer_soap_api_url;
+//                            base_soap_api_url = callFirebaseModel.base_soap_api_url;
+//                        MySharedPref.saveData(splash.this,"file_upload_url",file_upload_url);
+//                        MySharedPref.saveData(splash.this,"restful_api_url",restful_api_url);
+//                        MySharedPref.saveData(splash.this,"printer_soap_api_url",printer_soap_api_url);
+//                        MySharedPref.saveData(splash.this,"base_soap_api_url",base_soap_api_url);
+//
+//
+//
+//                        }
+//
+//                        // [END_EXCLUDE]
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        // [START_EXCLUDE]
+//                        // [END_EXCLUDE]
+//                    }
+//                });
 
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-//        callFirebaseModel callFirebaseModel = new callFirebaseModel("1", "2","3","4");
-
-//        mDatabase.child("parkingApi").child("openpark").setValue(callFirebaseModel);
-
-        mDatabase.child("parkingApi").child("openpark").addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Get user value
-                        callFirebaseModel callFirebaseModel = dataSnapshot.getValue(callFirebaseModel.class);
-
-                        // [START_EXCLUDE]
-                        if (callFirebaseModel != null) {
-                            file_upload_url = callFirebaseModel.file_upload_url;
-                           restful_api_url = callFirebaseModel.restful_api_url;
-                           printer_soap_api_url = callFirebaseModel.printer_soap_api_url;
-                            base_soap_api_url = callFirebaseModel.base_soap_api_url;
-                        MySharedPref.saveData(splash.this,"file_upload_url",file_upload_url);
-                        MySharedPref.saveData(splash.this,"restful_api_url",restful_api_url);
-                        MySharedPref.saveData(splash.this,"printer_soap_api_url",printer_soap_api_url);
-                        MySharedPref.saveData(splash.this,"base_soap_api_url",base_soap_api_url);
-
-                 new Handler().postDelayed(() -> {
+        new Handler().postDelayed(() -> {
 //                    if (login == null) {
 //                        System.out.println("------------NEW Login-----------------");
 //                        Intent intent = new Intent(splash.this, mobile.class);
@@ -66,27 +80,13 @@ public class splash extends AppCompatActivity {
 //                        finish();
 //
 //                    } else {
-                        System.out.println("------------OLD Login-----------------");
-                        Intent intent = new Intent(splash.this, PrintTicketActivity.class);
-                        startActivity(intent);
-                        finish();
+            System.out.println("------------OLD Login-----------------");
+            Intent intent = new Intent(splash.this, PrintTicketActivity.class);
+            startActivity(intent);
+            finish();
 //                                   }
 
-                },500);
-
-                        }
-
-                        // [END_EXCLUDE]
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        // [START_EXCLUDE]
-                        // [END_EXCLUDE]
-                    }
-                });
-
-
+        },500);
 
 
 

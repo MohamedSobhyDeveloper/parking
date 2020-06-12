@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.park.optech.parking.R;
 import com.park.optech.parking.printticket.activity.scand_print_ticket;
+import com.park.optech.parking.printticket.models.UsersModels;
 import com.park.optech.parking.printticket.sqlite.Database_Helper;
 import com.park.optech.parking.sharedpref.MySharedPref;
 import com.park.optech.parking.soapapi.serviceurl;
@@ -66,9 +67,11 @@ public class printticket extends Fragment {
                     pd.show();
                     pd.setCanceledOnTouchOutside(false);
 
-               boolean login=Database_Helper.getInstance(getActivity()).login(uname.getText().toString(),upassword.getText().toString());
-               if (login){
+               UsersModels usersModels=Database_Helper.getInstance(getActivity()).getusers(uname.getText().toString(),upassword.getText().toString());
+               if (usersModels!=null){
                    pd.dismiss();
+                   MySharedPref.saveData(Objects.requireNonNull(getActivity()),"userid",usersModels.getPk());
+                   MySharedPref.saveData(Objects.requireNonNull(getActivity()),"username",usersModels.getName());
                    startActivity(new Intent(getActivity(), scand_print_ticket.class));
                    Objects.requireNonNull(getActivity()).finish();
                    Toast.makeText(getActivity(), "تم التسجيل بنجاح", Toast.LENGTH_SHORT).show();

@@ -89,7 +89,7 @@ public class Database_Helper extends SQLiteOpenHelper
 
             if (!(c.getCount() > 0))
             {
-                id = db.insert(Users_Table.TABLE_NAME, null, values);
+                id = db.insert(Members_Table.TABLE_NAME, null, values);
             }
         }
         catch (Exception e)
@@ -315,7 +315,11 @@ public class Database_Helper extends SQLiteOpenHelper
                 + " AND " + "password" + " = " + password;
 
         SQLiteDatabase db = this.getWritableDatabase(); //get the database that was created in this instance
-        Cursor c = db.rawQuery(Query,null);
+//        Cursor c = db.rawQuery(Query,null);
+
+        Cursor c = db.rawQuery("SELECT  * FROM " + Users_Table.TABLE_NAME + " where " +
+                Users_Table.EMAIL + "= ? And " + Users_Table.PASSWORD + " = ? " ,new String[]{email,password});
+
 
 
         if (c.moveToLast()) {

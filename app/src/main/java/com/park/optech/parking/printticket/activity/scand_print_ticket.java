@@ -79,6 +79,7 @@ public class scand_print_ticket extends AppCompatActivity {
         pd = new ProgressDialog(this,R.style.AppCompatAlertDialogStyle);
         pd.setMessage("جارى تحميل البيانات");
         pd.setCanceledOnTouchOutside(false);
+        pd.show();
 
         membersList= new ArrayList<>();
 
@@ -149,12 +150,9 @@ public class scand_print_ticket extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             if (final_result!=null) {
 //                Database_Helper database_helper=new Database_Helper(PrintTicketActivity.this);
-
-                long id;
                 for (int i=0;i<membersList.size();i++){
 //                    database_helper.insertUser(usersList.get(i));
-                     id = Database_Helper.getInstance(scand_print_ticket.this).insertMember(membersList.get(i));
-                     Log.e("ID Insert Member", "" + id);
+                    Database_Helper.getInstance(scand_print_ticket.this).insertMember(membersList.get(i));
                 }
                 Toast.makeText(scand_print_ticket.this, "تم تحميل بيانات الاعضاء بنجاح", Toast.LENGTH_SHORT).show();
                 pd.dismiss();

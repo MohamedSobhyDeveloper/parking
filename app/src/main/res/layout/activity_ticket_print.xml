@@ -114,7 +114,6 @@
                     android:textSize="@dimen/textSizeMedium"
                     android:background="@drawable/roundedbuttonblue2"
                     android:layout_marginLeft="2dp"
-                    android:textAlignment="center"
                     android:textColor="@color/white"
                     />
 
@@ -318,7 +317,6 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:textAlignment="center"
                     android:text="5/1/2018"/>
                 <TextView
                     android:layout_width="0dp"
@@ -343,7 +341,6 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:textAlignment="center"
                     android:text="5:10"/>
                 <TextView
                     android:layout_width="0dp"
@@ -368,7 +365,6 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:textAlignment="center"
                     android:textStyle="bold"
                     android:text="ملاكى"
                     android:gravity="end" />
@@ -400,7 +396,6 @@
                     android:layout_weight="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textAlignment="center"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:text="3"/>
@@ -427,7 +422,6 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:textAlignment="center"
                     android:textStyle="bold"
                     android:text="20 جنية"
                     android:gravity="end" />
@@ -467,7 +461,6 @@
                     android:layout_weight="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textAlignment="center"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:text="تذكرة رقم 111"/>

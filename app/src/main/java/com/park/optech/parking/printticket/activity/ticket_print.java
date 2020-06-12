@@ -170,7 +170,7 @@ public class ticket_print extends Activity {
         updateScreenStatus(layoutLoading);
 
 
-        readMemeber();
+//        readMemeber();
 
         clicks();
 

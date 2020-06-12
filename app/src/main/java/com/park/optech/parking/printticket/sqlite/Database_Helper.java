@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.park.optech.parking.model.Ticket_Model;
 import com.park.optech.parking.printticket.models.MembersModel;
 import com.park.optech.parking.printticket.models.TicketsModel;
 import com.park.optech.parking.printticket.models.UsersModels;
@@ -300,13 +301,10 @@ public class Database_Helper extends SQLiteOpenHelper
             membersModel.setSsn(c.getString(c.getColumnIndex(Members_Table.SSN)));
             membersModel.setImg_path(c.getString(c.getColumnIndex(Members_Table.IMAGE)));
 
-            return membersModel;
-
         }else {
             Log.e("error not found", "members can't be found or database empty");
-            return membersModel;
         }
-
+        return membersModel;
     }
 
 
@@ -335,5 +333,38 @@ public class Database_Helper extends SQLiteOpenHelper
 
     }
 
+
+    public TicketsModel getTicket()
+    {
+        TicketsModel model = new TicketsModel();
+
+        String QUERY = "SELECT * FROM "+ Tickets_Table.TABLE_NAME + " ORDER BY " +
+                Tickets_Table.TICKET_ID + " DESC LIMIT 1";
+
+        SQLiteDatabase db = this.getWritableDatabase(); //get the database that was created in this instance
+        Cursor c = db.rawQuery(QUERY,null);
+
+
+        if (c.moveToLast()) {
+            model.setPk(c.getString(c.getColumnIndex(Tickets_Table.TICKET_ID)));
+            model.setCameraNo(c.getString(c.getColumnIndex(Tickets_Table.CAMERA_NO)));
+            model.setCompany(c.getString(c.getColumnIndex(Tickets_Table.COMPANY)));
+            model.setMembers(c.getString(c.getColumnIndex(Tickets_Table.MEMBERS)));
+            model.setTimestamp(c.getString(c.getColumnIndex(Tickets_Table.TIMESTAMP)));
+            model.setPaid(c.getString(c.getColumnIndex(Tickets_Table.PAID)));
+            model.setPayAmount(c.getString(c.getColumnIndex(Tickets_Table.PAY_AMOUNT)));
+            model.setPayTime(c.getString(c.getColumnIndex(Tickets_Table.PAY_TIME)));
+            model.setPayUser(c.getString(c.getColumnIndex(Tickets_Table.PAY_USER)));
+            model.setTrx_no(c.getString(c.getColumnIndex(Tickets_Table.TRX_NO)));
+            model.setSync(c.getString(c.getColumnIndex(Tickets_Table.SYNC)));
+
+            return model;
+
+        }else {
+            Log.e("error not found", "members can't be found or database empty");
+            return model;
+        }
+
+    }
 
 }

@@ -153,6 +153,7 @@ public class scand_print_ticket extends AppCompatActivity {
                 for (int i=0;i<membersList.size();i++){
 //                    database_helper.insertUser(usersList.get(i));
                     Database_Helper.getInstance(scand_print_ticket.this).insertMember(membersList.get(i));
+                    Log.e("INser id", "" + Database_Helper.getInstance(scand_print_ticket.this).insertMember(membersList.get(i)));
                 }
                 Toast.makeText(scand_print_ticket.this, "تم تحميل بيانات الاعضاء بنجاح", Toast.LENGTH_SHORT).show();
                 pd.dismiss();

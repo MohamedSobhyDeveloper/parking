@@ -48,8 +48,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MembersModel membersModel = Database_Helper.getInstance(SearchActivity.this).getmember(editTextsearch.getText().toString());
-                List<Members_Table> membersModels = Database_Helper.getInstance(SearchActivity.this).getMembers();
-                Log.e("Data size",""+membersModels.size());
                 if (membersModel != null)
                 {
                     Log.e("Data",""+membersModel.getEnd_date());

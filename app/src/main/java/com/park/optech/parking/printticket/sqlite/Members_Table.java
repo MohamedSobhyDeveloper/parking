@@ -6,7 +6,8 @@ public class Members_Table
 
     //pk , name ,start_date,end_date,membership_no,ssn,company,img_path
 
-    public static final String MEMBER_ID = "pk";
+    public static final String MEMBER_ID = "member_id";
+    public static final String MEMBER_PK = "pk";
     public static final String MEMBER_NAME = "member_name";
     public static final String START_DATE = "start_date";
     public static final String END_DATE = "end_date";
@@ -19,6 +20,7 @@ public class Members_Table
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + "("
                     + MEMBER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + MEMBER_PK + " TEXT,"
                     + MEMBER_NAME + " TEXT,"
                     + START_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
                     + END_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
@@ -29,6 +31,7 @@ public class Members_Table
                     + ")";
 
     private int user_id;
+    private String member_pk;
     private String member_name;
     private String start_date;
     private String end_date;
@@ -58,6 +61,14 @@ public class Members_Table
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public String getMember_pk() {
+        return member_pk;
+    }
+
+    public void setMember_pk(String member_pk) {
+        this.member_pk = member_pk;
     }
 
     public String getMember_name() {

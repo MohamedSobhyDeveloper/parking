@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.park.optech.parking.printticket.models.MembersModel;
+import com.park.optech.parking.printticket.models.UsersModels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,25 +42,46 @@ public class Database_Helper extends SQLiteOpenHelper
         onCreate(db);
     }
 
-    public long insertMember(String member_name, String start_date, String end_date
-            , String membership_no, String ssn, String company, String img_path) {
+    public long insertMember(MembersModel model) {
+
+        /*
+        * String member_name, String start_date, String end_date
+            , String membership_no, String ssn, String company, String img_path
+        * */
+
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         // `id` and `timestamp` will be inserted automatically.
         // no need to add them
-        values.put(Members_Table.MEMBER_NAME,member_name);
-        values.put(Members_Table.START_DATE,start_date);
-        values.put(Members_Table.END_DATE,end_date);
-        values.put(Members_Table.MEMBERSHIP_NO,membership_no);
-        values.put(Members_Table.SSN,ssn);
-        values.put(Members_Table.COMPANY,company);
-        values.put(Members_Table.IMAGE,img_path);
+
+        values.put(Members_Table.MEMBER_PK,model.getPk());
+        values.put(Members_Table.MEMBER_NAME,model.getName());
+        values.put(Members_Table.START_DATE,model.getStart_date());
+        values.put(Members_Table.END_DATE,model.getEnd_date());
+        values.put(Members_Table.MEMBERSHIP_NO,model.getMembership_no());
+//        values.put(Members_Table.SSN,model.get);
+//        values.put(Members_Table.COMPANY,model.get);
+        values.put(Members_Table.IMAGE,model.getImg_path());
 
 
-        // insert row
-        long id = db.insert(Members_Table.TABLE_NAME, null, values);
+        long id = -1;
+
+        try {
+            Cursor c = db.rawQuery("SELECT  * FROM " + Members_Table.TABLE_NAME + " where " +
+                    Members_Table.MEMBER_PK + "=" + model.getPk(),null);
+            // insert row
+
+            if (!(c.getCount() > 0))
+            {
+                id = db.insert(Users_Table.TABLE_NAME, null, values);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         // close db connection
         db.close();
@@ -96,20 +120,34 @@ public class Database_Helper extends SQLiteOpenHelper
         return id;
     }
 
-    public long insertUser(String user_name, String email, String password) {
+    public long insertUser(UsersModels models) {
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         // `id` and `timestamp` will be inserted automatically.
         // no need to add them
-        values.put(Users_Table.USER_NAME,user_name);
-        values.put(Users_Table.EMAIL,email);
-        values.put(Users_Table.PASSWORD,password);
+        values.put(Users_Table.USER_PK,models.getPk());
+        values.put(Users_Table.USER_NAME,models.getName());
+        values.put(Users_Table.EMAIL,models.getEmail());
+        values.put(Users_Table.PASSWORD,models.getPassword());
 
+        long id = -1;
 
-        // insert row
-        long id = db.insert(Users_Table.TABLE_NAME, null, values);
+        try {
+            Cursor c = db.rawQuery("SELECT  * FROM " + Users_Table.TABLE_NAME + " where " +
+                    Users_Table.USER_PK + "=" + models.getPk(),null);
+            // insert row
+
+            if (!(c.getCount() > 0))
+            {
+                id = db.insert(Users_Table.TABLE_NAME, null, values);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         // close db connection
         db.close();
@@ -183,5 +221,58 @@ public class Database_Helper extends SQLiteOpenHelper
 
         return users;
     }
+
+    public boolean login(String email , String password)
+    {
+        String [] columns = {"email"};
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = "email=? and password = ?";
+        String[] selectionArgs = {email, password};
+
+        Cursor cursor = db.query(Users_Table.TABLE_NAME,
+                columns, selection, selectionArgs, null, null, null);
+        int count = cursor.getCount();
+
+        cursor.close();
+        close();
+
+        return count > 0;
+    }
+
+    public boolean check_ticket(String trx_no)
+    {
+        String [] columns = {"trx_no"};
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = "trx = ?";
+        String[] selectionArgs = {trx_no};
+
+        Cursor cursor = db.query(Users_Table.TABLE_NAME,
+                columns, selection, selectionArgs, null, null, null);
+        int count = cursor.getCount();
+
+        cursor.close();
+        close();
+
+        return count > 0;
+    }
+
+    //
+    public boolean check_member(String membership_no , String ssn)
+    {
+        String [] columns = {"membership_no"};
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = "membership_no=? and ssn = ?";
+        String[] selectionArgs = {membership_no,ssn};
+
+        Cursor cursor = db.query(Users_Table.TABLE_NAME,
+                columns, selection, selectionArgs, null, null, null);
+        int count = cursor.getCount();
+
+        cursor.close();
+        close();
+
+        return count > 0;
+    }
+
 
 }

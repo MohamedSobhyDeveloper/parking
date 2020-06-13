@@ -317,7 +317,10 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:text="5/1/2018"/>
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
+                    android:text="5/1/2018"
+                    />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -341,7 +344,10 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:text="5:10"/>
+                    android:text="mohamed"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
+                    />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -366,8 +372,10 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:text="ملاكى"
-                    android:gravity="end" />
+                    android:text="1213145"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
+                    />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -398,7 +406,10 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:text="3"/>
+                    android:text="3"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
+                    />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -424,7 +435,9 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:text="20 جنية"
-                    android:gravity="end" />
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
+                    />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -463,7 +476,10 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:text="تذكرة رقم 111"/>
+                    android:text="تذكرة رقم 111"
+                    android:textAlignment="center"
+
+                    />
 
             </LinearLayout>
 

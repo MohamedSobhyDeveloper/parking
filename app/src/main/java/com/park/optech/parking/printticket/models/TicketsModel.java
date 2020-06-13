@@ -35,7 +35,10 @@ public class TicketsModel {
     }
 
     public void setTimestamp(String timestamp) {
-        Timestamp = timestamp;
+        String date = timestamp;
+        String [] arr = date.split(" ", 2);
+        Timestamp = arr[0];
+
     }
 
     public String getPayTime() {

@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.park.optech.parking.model.Ticket_Model;
 import com.park.optech.parking.printticket.models.MembersModel;
 import com.park.optech.parking.printticket.models.TicketsModel;
 import com.park.optech.parking.printticket.models.UsersModels;
@@ -113,8 +112,8 @@ public class Database_Helper extends SQLiteOpenHelper
         // `id` and `timestamp` will be inserted automatically.
         // no need to add them
         values.put(Tickets_Table.CAMERA_NO,ticketsModel.getCameraNo());
-        values.put(Tickets_Table.TIMESTAMP,ticketsModel.getTimestamp());
-        values.put(Tickets_Table.PAY_TIME,ticketsModel.getPayTime());
+//        values.put(Tickets_Table.TIMESTAMP,ticketsModel.getTimestamp());
+//        values.put(Tickets_Table.PAY_TIME,ticketsModel.getPayTime());
         values.put(Tickets_Table.PAY_AMOUNT,ticketsModel.getPayAmount());
         values.put(Tickets_Table.PAY_USER,ticketsModel.getPayUser());
         values.put(Tickets_Table.COMPANY,ticketsModel.getCompany());
@@ -169,9 +168,9 @@ public class Database_Helper extends SQLiteOpenHelper
         return id;
     }
 
-    public List<Tickets_Table> getTickets()
+    public List<TicketsModel> getTickets()
     {
-        List<Tickets_Table> data = new ArrayList<>();
+        List<TicketsModel> data = new ArrayList<>();
 
         String selectQuery = "SELECT  * FROM " + Tickets_Table.TABLE_NAME + " ORDER BY " +
                 Tickets_Table.TICKET_ID + " DESC";
@@ -182,21 +181,21 @@ public class Database_Helper extends SQLiteOpenHelper
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Tickets_Table tickets_table = new Tickets_Table();
+                TicketsModel ticketsModel = new TicketsModel();
 //                data_client.setId(cursor.getInt(cursor.getColumnIndex(Data_Client.ID)));
-                tickets_table.setCameraNo(cursor.getString(cursor.getColumnIndex(Tickets_Table.CAMERA_NO)));
-                tickets_table.setTimestamp(cursor.getString(cursor.getColumnIndex(Tickets_Table.TIMESTAMP)));
-                tickets_table.setPayTime(cursor.getString(cursor.getColumnIndex(Tickets_Table.PAY_TIME)));
-                tickets_table.setPayAmount(cursor.getString(cursor.getColumnIndex(Tickets_Table.PAY_AMOUNT)));
-                tickets_table.setPayUser(cursor.getString(cursor.getColumnIndex(Tickets_Table.PAY_USER)));
-                tickets_table.setCompany(cursor.getString(cursor.getColumnIndex(Tickets_Table.COMPANY)));
-                tickets_table.setPaid(cursor.getString(cursor.getColumnIndex(Tickets_Table.PAID)));
-                tickets_table.setTrx_no(cursor.getString(cursor.getColumnIndex(Tickets_Table.TRX_NO)));
-                tickets_table.setMembers(cursor.getString(cursor.getColumnIndex(Tickets_Table.MEMBERS)));
-                tickets_table.setSync(cursor.getString(cursor.getColumnIndex(Tickets_Table.SYNC)));
+                ticketsModel.setCameraNo(cursor.getString(cursor.getColumnIndex(Tickets_Table.CAMERA_NO)));
+                ticketsModel.setTimestamp(cursor.getString(cursor.getColumnIndex(Tickets_Table.TIMESTAMP)));
+                ticketsModel.setPayTime(cursor.getString(cursor.getColumnIndex(Tickets_Table.PAY_TIME)));
+                ticketsModel.setPayAmount(cursor.getString(cursor.getColumnIndex(Tickets_Table.PAY_AMOUNT)));
+                ticketsModel.setPayUser(cursor.getString(cursor.getColumnIndex(Tickets_Table.PAY_USER)));
+                ticketsModel.setCompany(cursor.getString(cursor.getColumnIndex(Tickets_Table.COMPANY)));
+                ticketsModel.setPaid(cursor.getString(cursor.getColumnIndex(Tickets_Table.PAID)));
+                ticketsModel.setTrx_no(cursor.getString(cursor.getColumnIndex(Tickets_Table.TRX_NO)));
+                ticketsModel.setMembers(cursor.getString(cursor.getColumnIndex(Tickets_Table.MEMBERS)));
+                ticketsModel.setSync(cursor.getString(cursor.getColumnIndex(Tickets_Table.SYNC)));
 
 
-                data.add(tickets_table);
+                data.add(ticketsModel);
             } while (cursor.moveToNext());
         }
 

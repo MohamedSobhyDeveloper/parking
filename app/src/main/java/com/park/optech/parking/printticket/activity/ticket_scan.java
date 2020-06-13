@@ -1,5 +1,6 @@
 package com.park.optech.parking.printticket.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,11 @@ import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
@@ -114,8 +120,25 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
         Log.v("kkkk", result.getContents()); // Prints scan results
         Log.v("uuuu", result.getBarcodeFormat().getName());
         ticket_id = result.getContents();
-        scan_event task=new scan_event();
-        task.execute();
+//        scan_event task=new scan_event();
+//        task.execute();
+
+
+//        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date strDate = null;
+//        try {
+//            strDate = sdf.parse(membersModel.getEnd_date());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        if (System.currentTimeMillis() > Objects.requireNonNull(strDate).getTime()) {
+//
+//        }else {
+//
+//        }
+
+
+
 
 
     }

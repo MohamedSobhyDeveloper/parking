@@ -24,7 +24,7 @@ public class Tickets_Table
                     + TICKET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + CAMERA_NO + " TEXT,"
                     + TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
-                    + PAY_TIME + " TEXT,"
+                    + PAY_TIME + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
                     + PAY_AMOUNT + " TEXT,"
                     + PAY_USER + " TEXT,"
                     + COMPANY + " TEXT,"

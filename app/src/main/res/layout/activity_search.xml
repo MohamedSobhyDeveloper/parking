@@ -38,7 +38,6 @@
 
 
     <EditText
-        android:background="@drawable/roundedbuttonwhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="الرقم القومى /رقم العضوية"

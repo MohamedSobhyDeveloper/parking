@@ -57,7 +57,9 @@ public class MembersModel
     }
 
     public void setStart_date(String start_date) {
-        this.start_date = start_date;
+        String date = start_date;
+        String [] arr = date.split(" ", 2);
+        this.start_date = arr[0];
     }
 
     public String getEnd_date() {
@@ -65,7 +67,9 @@ public class MembersModel
     }
 
     public void setEnd_date(String end_date) {
-        this.end_date = end_date;
+        String date = end_date;
+        String [] arr = date.split(" ", 2);
+        this.end_date = arr[0];
     }
 
     public String getImg_path() {

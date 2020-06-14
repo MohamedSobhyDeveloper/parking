@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.park.optech.parking.model.Ticket_Model;
 import com.park.optech.parking.printticket.models.MembersModel;
 import com.park.optech.parking.printticket.models.TicketsModel;
 import com.park.optech.parking.printticket.models.UsersModels;
@@ -125,6 +126,8 @@ public class Database_Helper extends SQLiteOpenHelper
         // insert row
         long id = db.insert(Tickets_Table.TABLE_NAME, null, values);
 
+        Log.e("TICKET Insertion ", "  " + id);
+
         // close db connection
         db.close();
 
@@ -194,6 +197,10 @@ public class Database_Helper extends SQLiteOpenHelper
                 ticketsModel.setMembers(cursor.getString(cursor.getColumnIndex(Tickets_Table.MEMBERS)));
                 ticketsModel.setSync(cursor.getString(cursor.getColumnIndex(Tickets_Table.SYNC)));
 
+                Log.e("MMMM ","NOT NULL");
+                Log.e("time STAMP","  "+ticketsModel.getTimestamp());
+                String ticket = ticketsModel.getCameraNo() + " : " + ticketsModel.getPaid();
+                Log.e("TICKET",ticket + "  ");
 
                 data.add(ticketsModel);
             } while (cursor.moveToNext());
@@ -251,21 +258,35 @@ public class Database_Helper extends SQLiteOpenHelper
         return count > 0;
     }
 
-    public boolean check_ticket(String trx_no)
+    public Tickets_Table check_ticket(String trx_no)
     {
+        Tickets_Table model = new Tickets_Table();
         String [] columns = {"trx_no"};
         SQLiteDatabase db = this.getWritableDatabase();
-        String selection = "trx = ?";
+        String selection = "trx_no = ?";
         String[] selectionArgs = {trx_no};
 
-        Cursor cursor = db.query(Users_Table.TABLE_NAME,
-                columns, selection, selectionArgs, null, null, null);
-        int count = cursor.getCount();
+        Cursor c = db.rawQuery("select * from " + Tickets_Table.TABLE_NAME+" where TRX_NO =?", new String[]{trx_no});
 
-        cursor.close();
-        close();
 
-        return count > 0;
+//        Cursor cursor = db.query(Tickets_Table.TABLE_NAME,
+//                columns, selection, selectionArgs, null, null, null);
+        int count = c.getCount();
+
+        c.close();
+        if (count > 0)
+        {
+            Log.e("MMMM ","NOT NULL");
+            Log.e("time STAMP","  "+model.getTimestamp());
+            String ticket = model.getCameraNo() + " : " + model.getPaid();
+            Log.e("TICKET",ticket + "  ");
+            return model;
+        }
+        else {
+            Log.e("MMMMTTT ","NULL");
+
+            return null;
+        }
     }
 
     //
@@ -360,6 +381,8 @@ public class Database_Helper extends SQLiteOpenHelper
             model.setPayUser(c.getString(c.getColumnIndex(Tickets_Table.PAY_USER)));
             model.setTrx_no(c.getString(c.getColumnIndex(Tickets_Table.TRX_NO)));
             model.setSync(c.getString(c.getColumnIndex(Tickets_Table.SYNC)));
+
+
 
             return model;
 

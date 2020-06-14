@@ -15,6 +15,10 @@ import android.widget.Toast;
 
 import com.park.optech.parking.R;
 import com.park.optech.parking.model.Ticket_Model;
+import com.park.optech.parking.printticket.models.MembersModel;
+import com.park.optech.parking.printticket.models.TicketsModel;
+import com.park.optech.parking.printticket.sqlite.Database_Helper;
+import com.park.optech.parking.printticket.sqlite.Tickets_Table;
 import com.park.optech.parking.soapapi.serviceurl;
 
 import org.json.JSONArray;
@@ -117,26 +121,48 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
 
     @Override
     public void handleResult(Result result) {
-        Log.v("kkkk", result.getContents()); // Prints scan results
-        Log.v("uuuu", result.getBarcodeFormat().getName());
+//        Log.v("kkkk", result.getContents()); // Prints scan results
+//        Log.v("uuuu", result.getBarcodeFormat().getName());
         ticket_id = result.getContents();
 //        scan_event task=new scan_event();
 //        task.execute();
 
+        Log.e("TICK ID : ", "" + ticket_id);
 
-//        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        Date strDate = null;
-//        try {
-//            strDate = sdf.parse(membersModel.getEnd_date());
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        if (System.currentTimeMillis() > Objects.requireNonNull(strDate).getTime()) {
-//
-//        }else {
-//
-//        }
+        Tickets_Table membersModel = Database_Helper.getInstance(ticket_scan.this).check_ticket(ticket_id);
 
+        if (membersModel != null)
+        {
+            String time = membersModel.getTimestamp();
+            String ticket = membersModel.getCameraNo() + " : " + membersModel.getPaid();
+            Log.e("TICKET",ticket + "  ");
+            Log.e("TIME",time + "  ");
+
+            @SuppressLint("SimpleDateFormat")
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Date strDate;
+            try {
+                if (time != null)
+                {
+                    strDate = sdf.parse(time);
+                    if (System.currentTimeMillis() > Objects.requireNonNull(strDate).getTime()) {
+                        Toast.makeText(this, "Valid Ticket", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(this, "Not Valid Ticket", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else
+                    Toast.makeText(this, "Invalid Data", Toast.LENGTH_SHORT).show();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        else
+        {
+            Toast.makeText(this, "Wrong Index", Toast.LENGTH_SHORT).show();
+        }
 
 
 

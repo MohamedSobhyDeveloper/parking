@@ -35,9 +35,7 @@ public class TicketsModel {
     }
 
     public void setTimestamp(String timestamp) {
-        String date = timestamp;
-        String [] arr = date.split(" ", 2);
-        Timestamp = arr[0];
+        this.Timestamp = timestamp;
 
     }
 

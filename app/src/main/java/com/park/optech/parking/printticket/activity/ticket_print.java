@@ -224,7 +224,8 @@ public class ticket_print extends Activity {
                     } else {
 //                        Date currentTime = Calendar.getInstance().getTime();
                         Date currentTime = Calendar.getInstance().getTime();
-                        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                        @SuppressLint("SimpleDateFormat")
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                         String formattedDate = df.format(currentTime);
                         formattedDate = formattedDate.replace("-", "");
 
@@ -238,8 +239,16 @@ public class ticket_print extends Activity {
                         ticketsModel.setMembers(membersModel.getPk());
                         ticketsModel.setPayUser(userid);
                         ticketsModel.setSync("0");
+
+                        Date currentTime2 = Calendar.getInstance().getTime();
+                        @SuppressLint("SimpleDateFormat")
+                        SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");
+                        String formattedDate2 = df.format(currentTime);
+
+                        ticketsModel.setTimestamp(formattedDate2);
                         List<TicketsModel> ticketsModelList = new ArrayList<>();
                         ticketsModelList = Database_Helper.getInstance(ticket_print.this).getTickets();
+
 
                         String trxNumber = "20010020" + formattedDate + ticketsModelList.size();
 
@@ -247,6 +256,7 @@ public class ticket_print extends Activity {
 
                         Database_Helper.getInstance(ticket_print.this).insertTicket(ticketsModel);
 
+                        Log.e("TRX_NO",trxNumber +"     :   " + String.valueOf(System.currentTimeMillis()));
 
                         TicketsModel data=Database_Helper.getInstance(ticket_print.this).getTicket();
 

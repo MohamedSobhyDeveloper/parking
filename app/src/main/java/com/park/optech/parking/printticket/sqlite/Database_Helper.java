@@ -273,8 +273,7 @@ public class Database_Helper extends SQLiteOpenHelper
 //                columns, selection, selectionArgs, null, null, null);
         int count = c.getCount();
 
-        c.close();
-        if (count > 0)
+        if (c.moveToLast())
         {
             model.setPk(c.getString(c.getColumnIndex(Tickets_Table.TICKET_ID)));
             model.setCameraNo(c.getString(c.getColumnIndex(Tickets_Table.CAMERA_NO)));
@@ -287,16 +286,13 @@ public class Database_Helper extends SQLiteOpenHelper
             model.setPayUser(c.getString(c.getColumnIndex(Tickets_Table.PAY_USER)));
             model.setTrx_no(c.getString(c.getColumnIndex(Tickets_Table.TRX_NO)));
             model.setSync(c.getString(c.getColumnIndex(Tickets_Table.SYNC)));
-
-
-
-            return model;
         }
         else {
             Log.e("MMMMTTT ","NULL");
 
-            return model;
         }
+        c.close();
+        return model;
     }
 
     //

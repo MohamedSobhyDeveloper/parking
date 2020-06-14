@@ -2,6 +2,7 @@ package com.park.optech.parking.printticket.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +49,8 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
     RelativeLayout ticket,view,ticketred,ticket_popup;
     Button scan;
 
+    LinearLayout layout_ticket;
+
 
 
     @Override
@@ -56,23 +60,24 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
 
         mScannerView = (ZBarScannerView) findViewById(R.id.scannerview);
         back = (ImageButton) findViewById(R.id.backimage);
-        t1=(TextView)findViewById(R.id.date);
-        t2=(TextView)findViewById(R.id.time);
-        t3=(TextView)findViewById(R.id.gatenumber);
-        t4=(TextView)findViewById(R.id.cartype);
+        t1=(TextView)findViewById(R.id.ticket_date);
+        t2=(TextView)findViewById(R.id.ticket_member_name);
+        t3=(TextView)findViewById(R.id.ticket_member_id);
+        t4=(TextView)findViewById(R.id.ticketnumber);
         t5=(TextView)findViewById(R.id.ticketprice);
-        t6=(TextView)findViewById(R.id.status);
-        t11=(TextView)findViewById(R.id.date1);
-        t22=(TextView)findViewById(R.id.time1);
-        t33=(TextView)findViewById(R.id.gatenumber1);
-        t44=(TextView)findViewById(R.id.cartype1);
-        t55=(TextView)findViewById(R.id.ticketprice1);
-        t66=(TextView)findViewById(R.id.status1);
-        Button ex=(Button)findViewById(R.id.exit);
+//        t6=(TextView)findViewById(R.id.status);
+//        t11=(TextView)findViewById(R.id.date1);
+//        t22=(TextView)findViewById(R.id.time1);
+        t33=(TextView)findViewById(R.id.ticket_gatenumber);
+//        t44=(TextView)findViewById(R.id.cartype1);
+//        t55=(TextView)findViewById(R.id.ticketprice1);
+//        t66=(TextView)findViewById(R.id.status1);
+        Button ex=(Button)findViewById(R.id.printticket);
         Button scant_ticket=(Button)findViewById(R.id.scanticket);
         Button pay_ticket=(Button)findViewById(R.id.payticket);
         ticket=(RelativeLayout)findViewById(R.id.ticket_popupgreen);
         ticketred=(RelativeLayout)findViewById(R.id.ticket_popupred);
+        layout_ticket = findViewById(R.id.layout_ticket);
         scan=(Button)findViewById(R.id.scanbtn);
         // view=(RelativeLayout)findViewById(R.id.view_popup) ;
 
@@ -107,7 +112,9 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
 
 
 
-        ex.setOnClickListener(view -> ticket.setVisibility(View.GONE));
+        ticket.setVisibility(View.GONE);
+
+        ex.setOnClickListener(view -> onBackPressed());
 
 
 
@@ -134,10 +141,13 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
         if (ticketsModel.getTrx_no() != null)
         {
             String time = ticketsModel.getTimestamp();
-            String ticket = ticketsModel.getCameraNo() + " : " + ticketsModel.getPaid();
-            Log.e("TICKET",ticket + "  ");
+            String ticket_txt = ticketsModel.getCameraNo() + " : " + ticketsModel.getPaid();
+            Log.e("TICKET",ticket_txt + "  ");
             Log.e("TIME",time + "  ");
 
+            MembersModel model = Database_Helper.getInstance(ticket_scan.this).getmember(ticketsModel.getMembers());
+            Log.e("MEM",model.getMembership_no() + "  ");
+            Log.e("USER",ticketsModel.getPayUser());
             @SuppressLint("SimpleDateFormat")
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             Date strDate;
@@ -145,14 +155,30 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
                 if (time != null)
                 {
                     strDate = sdf.parse(time);
-                    if (System.currentTimeMillis() > Objects.requireNonNull(strDate).getTime()) {
-                        Toast.makeText(this, "Valid Ticket", Toast.LENGTH_SHORT).show();
+
+                    t1.setText(time);
+                    t2.setText(model.getName());
+                    t3.setText(model.getMembership_no());
+                    t4.setText(ticketsModel.getPk());
+                    t5.setText(ticketsModel.getPayAmount());
+                    t33.setText(ticketsModel.getCameraNo());
+
+
+                    if (System.currentTimeMillis() > Objects.requireNonNull(strDate).getTime())
+                    {
+                        ticket.setVisibility(View.VISIBLE);
                     }else {
+                        ticket.setVisibility(View.VISIBLE);
+                        ticket.setBackgroundColor(Color.parseColor("#f40b25"));
                         Toast.makeText(this, "Not Valid Ticket", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else
+                {
+                    ticket.setVisibility(View.VISIBLE);
+                    ticket.setBackgroundColor(Color.parseColor("#f40b25"));
                     Toast.makeText(this, "Invalid Data", Toast.LENGTH_SHORT).show();
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -161,6 +187,8 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
 
         else
         {
+//            ticket.setVisibility(View.VISIBLE);
+//            layout_ticket.setBackgroundColor(Color.parseColor("#f40b25"));
             Toast.makeText(this, "Wrong Index", Toast.LENGTH_SHORT).show();
         }
 

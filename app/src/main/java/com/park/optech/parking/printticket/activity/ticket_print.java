@@ -236,7 +236,7 @@ public class ticket_print extends Activity {
                         ticketsModel.setPayAmount("20");
 //                        ticketsModel.setPayTime(currentTime+"");
 //                        ticketsModel.setTimestamp(currentTime+"");
-                        ticketsModel.setMembers(membersModel.getPk());
+                        ticketsModel.setMembers(membersModel.getMembership_no());
                         ticketsModel.setPayUser(userid);
                         ticketsModel.setSync("0");
 

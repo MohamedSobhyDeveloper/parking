@@ -258,9 +258,9 @@ public class Database_Helper extends SQLiteOpenHelper
         return count > 0;
     }
 
-    public Tickets_Table check_ticket(String trx_no)
+    public TicketsModel check_ticket(String trx_no)
     {
-        Tickets_Table model = new Tickets_Table();
+        TicketsModel model = new TicketsModel();
         String [] columns = {"trx_no"};
         SQLiteDatabase db = this.getWritableDatabase();
         String selection = "trx_no = ?";
@@ -276,16 +276,26 @@ public class Database_Helper extends SQLiteOpenHelper
         c.close();
         if (count > 0)
         {
-            Log.e("MMMM ","NOT NULL");
-            Log.e("time STAMP","  "+model.getTimestamp());
-            String ticket = model.getCameraNo() + " : " + model.getPaid();
-            Log.e("TICKET",ticket + "  ");
+            model.setPk(c.getString(c.getColumnIndex(Tickets_Table.TICKET_ID)));
+            model.setCameraNo(c.getString(c.getColumnIndex(Tickets_Table.CAMERA_NO)));
+            model.setCompany(c.getString(c.getColumnIndex(Tickets_Table.COMPANY)));
+            model.setMembers(c.getString(c.getColumnIndex(Tickets_Table.MEMBERS)));
+            model.setTimestamp(c.getString(c.getColumnIndex(Tickets_Table.TIMESTAMP)));
+            model.setPaid(c.getString(c.getColumnIndex(Tickets_Table.PAID)));
+            model.setPayAmount(c.getString(c.getColumnIndex(Tickets_Table.PAY_AMOUNT)));
+            model.setPayTime(c.getString(c.getColumnIndex(Tickets_Table.PAY_TIME)));
+            model.setPayUser(c.getString(c.getColumnIndex(Tickets_Table.PAY_USER)));
+            model.setTrx_no(c.getString(c.getColumnIndex(Tickets_Table.TRX_NO)));
+            model.setSync(c.getString(c.getColumnIndex(Tickets_Table.SYNC)));
+
+
+
             return model;
         }
         else {
             Log.e("MMMMTTT ","NULL");
 
-            return null;
+            return model;
         }
     }
 

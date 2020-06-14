@@ -237,7 +237,7 @@
 
     <RelativeLayout
         android:id="@+id/ticket_popupgreen"
-        android:visibility="visible"
+        android:visibility="gone"
         android:background="@mipmap/bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -129,12 +129,12 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
 
         Log.e("TICK ID : ", "" + ticket_id);
 
-        Tickets_Table membersModel = Database_Helper.getInstance(ticket_scan.this).check_ticket(ticket_id);
+        TicketsModel ticketsModel = Database_Helper.getInstance(ticket_scan.this).check_ticket(ticket_id);
 
-        if (membersModel != null)
+        if (ticketsModel.getTrx_no() != null)
         {
-            String time = membersModel.getTimestamp();
-            String ticket = membersModel.getCameraNo() + " : " + membersModel.getPaid();
+            String time = ticketsModel.getTimestamp();
+            String ticket = ticketsModel.getCameraNo() + " : " + ticketsModel.getPaid();
             Log.e("TICKET",ticket + "  ");
             Log.e("TIME",time + "  ");
 

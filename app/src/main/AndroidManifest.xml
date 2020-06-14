@@ -28,7 +28,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".printticket.activity.SearchActivity"></activity>
+        <activity android:name=".printticket.CradActivity"></activity>
+        <activity android:name=".printticket.activity.SearchActivity" />
         <activity android:name=".printticket.activity.PrintTicketActivity" />
         <activity android:name=".printticket.activity.splash">
             <intent-filter>

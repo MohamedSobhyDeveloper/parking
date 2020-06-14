@@ -202,8 +202,6 @@ public class ticket_print extends Activity {
             pd.setCanceledOnTouchOutside(false);
 
 
-
-
             if (!TextUtils.isEmpty(memberIdEdt.getText().toString())) {
                  membersModel = Database_Helper.getInstance(ticket_print.this).getmember(memberIdEdt.getText().toString());
 

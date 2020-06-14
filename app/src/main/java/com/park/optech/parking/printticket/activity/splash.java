@@ -7,15 +7,10 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.park.optech.parking.R;
-import com.park.optech.parking.model.callFirebaseModel;
-import com.park.optech.parking.sharedpref.MySharedPref;
+import com.park.optech.parking.printticket.CradActivity;
 
 public class splash extends AppCompatActivity {
     String login ;

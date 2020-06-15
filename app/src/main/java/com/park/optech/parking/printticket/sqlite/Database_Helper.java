@@ -399,4 +399,15 @@ public class Database_Helper extends SQLiteOpenHelper
 
     }
 
+    public boolean updateTicket(String id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Tickets_Table.SYNC,"1");
+
+        return db.update(Tickets_Table.TABLE_NAME,values
+                , Tickets_Table.TICKET_ID + "=" + id ,null) > 0;
+
+    }
+
 }

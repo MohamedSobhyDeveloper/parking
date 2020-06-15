@@ -135,6 +135,8 @@ public class Database_Helper extends SQLiteOpenHelper
         return id;
     }
 
+
+
     public long insertUser(UsersModels models) {
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
@@ -398,6 +400,8 @@ public class Database_Helper extends SQLiteOpenHelper
         }
 
     }
+
+
 
     public boolean updateTicket(String id)
     {

@@ -150,6 +150,8 @@ dependencies {
     implementation 'com.scottyab:aescrypt:0.0.1'
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    implementation 'com.google.guava:guava:23.3-android'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

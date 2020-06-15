@@ -189,7 +189,7 @@ public class parkingfind extends Fragment implements OnMapReadyCallback, GoogleM
         mMap.setOnMarkerDragListener(this);
         mMap.setOnMapLongClickListener(this);
         mMap.setOnMarkerClickListener(this);
-       // mMap.getUiSettings().setZoomControlsEnabled(true);
+//        mMap.getUiSettings().setZoomControlsEnabled(true);
         //LatLng latLng=new LatLng(latitudevalue,longitudevalue);
        // mMap.addMarker(new MarkerOptions().position(latLng).title("parking").icon(BitmapDescriptorFactory.fromResource(R.drawable.car1)));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));

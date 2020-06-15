@@ -2,13 +2,22 @@ package com.park.optech.parking.printticket.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.MifareClassic;
+import android.nfc.tech.MifareUltralight;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +40,8 @@ import com.park.optech.parking.another.BluetoothUtil;
 import com.park.optech.parking.model.Ticket_Model;
 import com.park.optech.parking.printticket.models.MembersModel;
 import com.park.optech.parking.printticket.models.TicketsModel;
+import com.park.optech.parking.printticket.readcard.NdefMessageParser;
+import com.park.optech.parking.printticket.readcard.ParsedNdefRecord;
 import com.park.optech.parking.printticket.sqlite.Database_Helper;
 import com.park.optech.parking.sharedpref.MySharedPref;
 import com.park.optech.parking.soapapi.serviceurl;
@@ -63,10 +74,6 @@ public class ticket_print extends Activity {
     static final int MESSAGE_END_WORK = Integer.MAX_VALUE - 3;
     @BindView(R.id.backimage)
     ImageButton backimage;
-    @BindView(R.id.member_id_edt)
-    EditText memberIdEdt;
-    @BindView(R.id.search_member_button)
-    Button searchMemberButton;
     @BindView(R.id.show1)
     RelativeLayout show1;
     @BindView(R.id.show2)
@@ -114,7 +121,6 @@ public class ticket_print extends Activity {
     private TextView debugTextView = null; //A hidden TextView where you can test things
     ProgressDialog pd;
 
-    String final_id;
     String type = "";
     ArrayList<String> x = new ArrayList<>();
     String selecteditem;
@@ -132,15 +138,27 @@ public class ticket_print extends Activity {
     TicketsModel data;
     //
 
+    NfcAdapter nfcAdapter;
+    PendingIntent pendingIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_print);
         ButterKnife.bind(this);
-        pd = new ProgressDialog(ticket_print.this, R.style.AppCompatAlertDialogStyle);
 
-        final_id = MySharedPref.getData(ticket_print.this, "idadmin", null);
 
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        if (nfcAdapter == null) {
+            Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        pendingIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, this.getClass())
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
         backimage.setOnClickListener(view -> {
             Intent intent = new Intent(ticket_print.this, scand_print_ticket.class)
@@ -176,7 +194,7 @@ public class ticket_print extends Activity {
         username = MySharedPref.getData(ticket_print.this, "username", null);
 
 
-        readMemeber();
+//        readMemeber();
 
         clicks();
 
@@ -190,104 +208,6 @@ public class ticket_print extends Activity {
                 blockedPopup.setVisibility(View.GONE);
             }
         });
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void readMemeber() {
-
-        searchMemberButton.setOnClickListener(view -> {
-
-            pd.setMessage("Loading...");
-            pd.show();
-            pd.setCanceledOnTouchOutside(false);
-
-
-            if (!TextUtils.isEmpty(memberIdEdt.getText().toString())) {
-                 membersModel = Database_Helper.getInstance(ticket_print.this).getmember(memberIdEdt.getText().toString());
-
-                if (membersModel.getMembership_no() != null) {
-
-                    @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    Date strDate = null;
-                    try {
-                        strDate = sdf.parse(membersModel.getEnd_date());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    if (System.currentTimeMillis() > Objects.requireNonNull(strDate).getTime()) {
-                        blockedPopup.setVisibility(View.VISIBLE);
-                        blockedmemberName.setText(membersModel.getName());
-                        blockedmemberNumber.setText(membersModel.getMembership_no());
-
-                    } else {
-//                        Date currentTime = Calendar.getInstance().getTime();
-                        Date currentTime = Calendar.getInstance().getTime();
-                        @SuppressLint("SimpleDateFormat")
-                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                        String formattedDate = df.format(currentTime);
-                        formattedDate = formattedDate.replace("-", "");
-
-                        TicketsModel ticketsModel = new TicketsModel();
-                        ticketsModel.setCameraNo("1");
-                        ticketsModel.setCompany("2");
-                        ticketsModel.setPaid("1");
-                        ticketsModel.setPayAmount("20");
-//                        ticketsModel.setPayTime(currentTime+"");
-//                        ticketsModel.setTimestamp(currentTime+"");
-                        ticketsModel.setMembers(membersModel.getMembership_no());
-                        ticketsModel.setPayUser(userid);
-                        ticketsModel.setSync("0");
-
-                        Date currentTime2 = Calendar.getInstance().getTime();
-                        @SuppressLint("SimpleDateFormat")
-                        SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");
-                        String formattedDate2 = df.format(currentTime);
-
-                        ticketsModel.setTimestamp(formattedDate2);
-                        List<TicketsModel> ticketsModelList = new ArrayList<>();
-                        ticketsModelList = Database_Helper.getInstance(ticket_print.this).getTickets();
-
-
-                        String trxNumber = "20010020" + formattedDate + ticketsModelList.size();
-
-                        ticketsModel.setTrx_no(trxNumber);
-
-                        Database_Helper.getInstance(ticket_print.this).insertTicket(ticketsModel);
-
-                        Log.e("TRX_NO",trxNumber +"     :   " + String.valueOf(System.currentTimeMillis()));
-
-                        TicketsModel data=Database_Helper.getInstance(ticket_print.this).getTicket();
-
-
-                        ticketPopupgreen.setVisibility(View.VISIBLE);
-                        ticketDate.setText(data.getTimestamp());
-                        ticketMemberName.setText(membersModel.getName());
-                        ticketMemberId.setText(membersModel.getMembership_no());
-                        ticketGatenumber.setText(data.getCameraNo());
-                        ticketprice.setText(data.getPayAmount() + " جنية ");
-                        ticketnumber.setText("  تذكرة رقم  "+data.getPk() );
-
-                        printticket.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ticketPopupgreen.setVisibility(View.GONE);
-                            }
-                        });
-
-                    }
-
-
-                }
-                pd.dismiss();
-
-
-            } else {
-                Toast.makeText(ticket_print.this, "ادخل رقم العضوية", Toast.LENGTH_SHORT).show();
-                pd.dismiss();
-
-            }
-        });
-
     }
 
 
@@ -344,6 +264,22 @@ public class ticket_print extends Activity {
     }
 
 
+
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        if (nfcAdapter != null) {
+//            if (!nfcAdapter.isEnabled())
+//                showWirelessSettings();
+//
+//            nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+//        }
+//    }
+
+
+
     //connect with printer
     private void updateScreenStatus(View viewToShow) {
         if (viewToShow == layoutLoading) {
@@ -379,6 +315,13 @@ public class ticket_print extends Activity {
 
         updatePrintButtonState();
         BluetoothUtil.startBluetooth();
+
+//        if (nfcAdapter != null) {
+//            if (!nfcAdapter.isEnabled())
+//                showWirelessSettings();
+//
+//            nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+//        }
 
     }
 
@@ -964,4 +907,324 @@ public class ticket_print extends Activity {
         startActivity(intent);
         System.exit(0);
     }
+
+
+
+
+    //region start read card
+    private void showWirelessSettings() {
+        Toast.makeText(this, "You need to enable NFC", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+        startActivity(intent);
+    }
+
+
+    private String dumpTagData(Tag tag) {
+        StringBuilder sb = new StringBuilder();
+        byte[] id = tag.getId();
+        sb.append("ID (hex): ").append(toHex(id)).append('\n');
+        sb.append("ID (reversed hex): ").append(toReversedHex(id)).append('\n');
+        sb.append("ID (dec): ").append(toDec(id)).append('\n');
+        sb.append("ID (reversed dec): ").append(toReversedDec(id)).append('\n');
+
+        String prefix = "android.nfc.tech.";
+        sb.append("Technologies: ");
+        for (String tech : tag.getTechList()) {
+            sb.append(tech.substring(prefix.length()));
+            sb.append(", ");
+        }
+
+        sb.delete(sb.length() - 2, sb.length());
+
+        for (String tech : tag.getTechList()) {
+            if (tech.equals(MifareClassic.class.getName())) {
+                sb.append('\n');
+                String type = "Unknown";
+
+                try {
+                    MifareClassic mifareTag = MifareClassic.get(tag);
+
+                    switch (mifareTag.getType()) {
+                        case MifareClassic.TYPE_CLASSIC:
+                            type = "Classic";
+                            break;
+                        case MifareClassic.TYPE_PLUS:
+                            type = "Plus";
+                            break;
+                        case MifareClassic.TYPE_PRO:
+                            type = "Pro";
+                            break;
+                    }
+                    sb.append("Mifare Classic type: ");
+                    sb.append(type);
+                    sb.append('\n');
+
+                    sb.append("Mifare size: ");
+                    sb.append(mifareTag.getSize() + " bytes");
+                    sb.append('\n');
+
+                    sb.append("Mifare sectors: ");
+                    sb.append(mifareTag.getSectorCount());
+                    sb.append('\n');
+
+                    sb.append("Mifare blocks: ");
+                    sb.append(mifareTag.getBlockCount());
+                } catch (Exception e) {
+                    sb.append("Mifare classic error: " + e.getMessage());
+                }
+            }
+
+            if (tech.equals(MifareUltralight.class.getName())) {
+                sb.append('\n');
+                MifareUltralight mifareUlTag = MifareUltralight.get(tag);
+                String type = "Unknown";
+                switch (mifareUlTag.getType()) {
+                    case MifareUltralight.TYPE_ULTRALIGHT:
+                        type = "Ultralight";
+                        break;
+                    case MifareUltralight.TYPE_ULTRALIGHT_C:
+                        type = "Ultralight C";
+                        break;
+                }
+                sb.append("Mifare Ultralight type: ");
+                sb.append(type);
+            }
+        }
+
+        return sb.toString();
+    }
+
+
+    private String toHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = bytes.length - 1; i >= 0; --i) {
+            int b = bytes[i] & 0xff;
+            if (b < 0x10)
+                sb.append('0');
+            sb.append(Integer.toHexString(b));
+            if (i > 0) {
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
+    }
+
+
+    private String toReversedHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bytes.length; ++i) {
+            if (i > 0) {
+                sb.append(" ");
+            }
+            int b = bytes[i] & 0xff;
+            if (b < 0x10)
+                sb.append('0');
+            sb.append(Integer.toHexString(b));
+        }
+        return sb.toString();
+    }
+
+    private long toDec(byte[] bytes) {
+        long result = 0;
+        long factor = 1;
+        for (int i = 0; i < bytes.length; ++i) {
+            long value = bytes[i] & 0xffl;
+            result += value * factor;
+            factor *= 256l;
+        }
+        return result;
+    }
+
+    private long toReversedDec(byte[] bytes) {
+        long result = 0;
+        long factor = 1;
+        for (int i = bytes.length - 1; i >= 0; --i) {
+            long value = bytes[i] & 0xffl;
+            result += value * factor;
+            factor *= 256l;
+        }
+        return result;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        resolveIntent(intent);
+    }
+
+    private void resolveIntent(Intent intent) {
+        String action = intent.getAction();
+
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
+                || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
+                || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+            Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            NdefMessage[] msgs;
+
+            if (rawMsgs != null) {
+                msgs = new NdefMessage[rawMsgs.length];
+
+                for (int i = 0; i < rawMsgs.length; i++) {
+                    msgs[i] = (NdefMessage) rawMsgs[i];
+                }
+
+            } else {
+                byte[] empty = new byte[0];
+                byte[] id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
+                Tag tag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+                byte[] payload = dumpTagData(tag).getBytes();
+                NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload);
+                NdefMessage msg = new NdefMessage(new NdefRecord[] {record});
+                msgs = new NdefMessage[] {msg};
+            }
+
+            displayMsgs(msgs);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void displayMsgs(NdefMessage[] msgs) {
+        if (msgs == null || msgs.length == 0)
+            return;
+
+        StringBuilder builder = new StringBuilder();
+        List<ParsedNdefRecord> records = NdefMessageParser.parse(msgs[0]);
+        final int size = records.size();
+        String str = null;
+        for (int i = 0; i < size; i++) {
+            ParsedNdefRecord record = records.get(i);
+            str = record.str();
+            builder.append(str).append("\n");
+        }
+
+//        ParsedNdefRecord record = records.get(2);
+//        String str = record.str();
+//        str=str.replace(" ","");
+//        str=str.replace("ID(dec):","");
+//
+//        ParsedNdefRecord record2 = records.get(3);
+//        String str2 = record2.str();
+//        str2=str2.replace(" ","");
+//        str2=str2.replace("ID(reversed dec):","");
+//
+//        String memberId=str+str2;
+//        memberId=memberId.replace(" ","");
+
+        String[] separated = str.split(":");
+
+        String id1=separated[3];
+        id1=id1.replace(" ","");
+        id1=id1.replace("ID(reverseddec)","");
+
+        String id2=separated[4];
+        id2=id2.replace(" ","");
+        id2=id2.replace("Technologies","");
+
+        String memberId=id1+id2;
+
+        memberId=memberId.replaceAll("\n","");
+
+
+
+        if (!memberId.equals("")) {
+
+                membersModel = Database_Helper.getInstance(ticket_print.this).getmember(memberId);
+
+                if (membersModel.getMembership_no() != null) {
+
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date strDate = null;
+                    try {
+                        strDate = sdf.parse(membersModel.getEnd_date());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (System.currentTimeMillis() > Objects.requireNonNull(strDate).getTime()) {
+                        blockedPopup.setVisibility(View.VISIBLE);
+                        ticketPopupgreen.setVisibility(View.GONE);
+                        blockedmemberName.setText(membersModel.getName());
+                        blockedmemberNumber.setText(membersModel.getMembership_no());
+
+                    } else {
+//                        Date currentTime = Calendar.getInstance().getTime();
+                        Date currentTime = Calendar.getInstance().getTime();
+                        @SuppressLint("SimpleDateFormat")
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                        String formattedDate = df.format(currentTime);
+                        formattedDate = formattedDate.replace("-", "");
+
+                        TicketsModel ticketsModel = new TicketsModel();
+                        ticketsModel.setCameraNo("1");
+                        ticketsModel.setCompany("2");
+                        ticketsModel.setPaid("1");
+                        ticketsModel.setPayAmount("20");
+//                        ticketsModel.setPayTime(currentTime+"");
+//                        ticketsModel.setTimestamp(currentTime+"");
+                        ticketsModel.setMembers(membersModel.getMembership_no());
+                        ticketsModel.setPayUser(userid);
+                        ticketsModel.setSync("0");
+
+                        Date currentTime2 = Calendar.getInstance().getTime();
+                        @SuppressLint("SimpleDateFormat")
+                        SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");
+                        String formattedDate2 = df.format(currentTime);
+
+                        ticketsModel.setTimestamp(formattedDate2);
+                        List<TicketsModel> ticketsModelList = new ArrayList<>();
+                        ticketsModelList = Database_Helper.getInstance(ticket_print.this).getTickets();
+
+
+                        String trxNumber = "20010020" + formattedDate + ticketsModelList.size();
+
+                        ticketsModel.setTrx_no(trxNumber);
+
+                        Database_Helper.getInstance(ticket_print.this).insertTicket(ticketsModel);
+
+                        Log.e("TRX_NO",trxNumber +"     :   " + String.valueOf(System.currentTimeMillis()));
+
+                        TicketsModel data=Database_Helper.getInstance(ticket_print.this).getTicket();
+
+
+                        ticketPopupgreen.setVisibility(View.VISIBLE);
+                        blockedPopup.setVisibility(View.GONE);
+                        ticketDate.setText(data.getTimestamp());
+                        ticketMemberName.setText(membersModel.getName());
+                        ticketMemberId.setText(membersModel.getMembership_no());
+                        ticketGatenumber.setText(data.getCameraNo());
+                        ticketprice.setText(data.getPayAmount() + " جنية ");
+                        ticketnumber.setText(data.getTrx_no());
+
+                        printticket.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ticketPopupgreen.setVisibility(View.GONE);
+                                pd.setMessage("Printing...");
+                                pd.show();
+                                pd.setCanceledOnTouchOutside(false);
+                                printticket();
+                            }
+                        });
+
+                    }
+
+
+                }
+//                pd.dismiss();
+
+
+            } else {
+                Toast.makeText(ticket_print.this, "ادخل رقم العضوية", Toast.LENGTH_SHORT).show();
+
+            }
+
+
+
+
+
+//        text.setText(memberId);
+    }
+
+    //endregion
+
+
 }

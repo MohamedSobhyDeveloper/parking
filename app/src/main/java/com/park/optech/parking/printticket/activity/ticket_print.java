@@ -265,22 +265,54 @@ public class ticket_print extends Activity {
 
 
 
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        if (nfcAdapter != null) {
-//            if (!nfcAdapter.isEnabled())
-//                showWirelessSettings();
-//
-//            nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
-//        }
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
 
 
+        bixolonPrinterApi = new BixolonPrinter(this, handler, null);
 
-    //connect with printer
+        task = new PairWithPrinterTask();
+        task.execute();
+
+        updatePrintButtonState();
+        BluetoothUtil.startBluetooth();
+
+
+        if (nfcAdapter != null) {
+            if (!nfcAdapter.isEnabled())
+                showWirelessSettings();
+
+            nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+        }
+
+
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ticket_print.this, scand_print_ticket.class)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        System.exit(0);
+    }
+
+
+
+
+    //region connect with printer
+
     private void updateScreenStatus(View viewToShow) {
         if (viewToShow == layoutLoading) {
             layoutLoading.setVisibility(View.VISIBLE);
@@ -303,37 +335,6 @@ public class ticket_print extends Activity {
 
     PairWithPrinterTask task = null;
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-        bixolonPrinterApi = new BixolonPrinter(this, handler, null);
-
-        task = new PairWithPrinterTask();
-        task.execute();
-
-        updatePrintButtonState();
-        BluetoothUtil.startBluetooth();
-
-//        if (nfcAdapter != null) {
-//            if (!nfcAdapter.isEnabled())
-//                showWirelessSettings();
-//
-//            nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
-//        }
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
 
     private void updatePrintButtonState() {
 
@@ -556,358 +557,7 @@ public class ticket_print extends Activity {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //start web services
-
-
-//    private class park_Eventlist extends AsyncTask<Void, Void, Void> {
-//        String final_result = null;
-//        JSONArray arr = null;
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//
-//            String result = get_parklist();
-//            if (result != null) {
-//                final_result = result;
-//
-//                System.out.println("--------------result-------------- " + final_result);
-//                try {
-//                    arr = new JSONArray(result);
-//                    arr = arr.getJSONArray(0);
-//                    System.out.println("------------------Size---------------- " + arr.length());
-//
-//                    //  for (int i = 0; i <= arr.length() - 1; i++) {
-//                    //  data1 = new user_park();
-//                    //  JSONObject obj = arr.getJSONObject(i);
-//                    //   System.out.println("------------obj------------- " + obj);
-//                    //    mylist.add(obj.getString("name"));
-//                    //    mylist.add(obj.getString("pk"));
-//                    //  data1.setPk(obj.getString("pk"));
-//
-//                    spinnerArray = new String[arr.length()];
-//                    spinnerMap = new HashMap<Integer, String>();
-//                    spinnerMapname = new HashMap<Integer, String>();
-//
-//                    for (int x = 0; x <= arr.length() - 1; x++) {
-//                        JSONObject obj = arr.getJSONObject(x);
-//                        spinnerMap.put(x, obj.getString("pk"));
-//                        spinnerMapname.put(x, obj.getString("name"));
-//                        spinnerArray[x] = obj.getString("name");
-//                    }
-//
-//
-//                    //data1.setName(obj.getString("name"));
-//                    // parklist.add(data1);
-//
-//                    // Log.e("size >> ", "" + parklist.size());
-//
-//                    // }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    System.out.println("ex" + e);
-//                }
-//
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void result) {
-//            if (final_result != null) {
-//
-//                if (final_result.equals("[[]]") || final_result.equals("") || final_result.equals(null)) {
-//                    Toast.makeText(ticket_print.this, "Somethimg go wrong", Toast.LENGTH_SHORT).show();
-//                    ;
-//
-//                } else {
-//                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ticket_print.this, android.R.layout.simple_spinner_item, spinnerArray);
-//                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                }
-//
-//
-//            } else {
-//                Toast.makeText(ticket_print.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
-//            }
-//
-//
-//        }
-//    }
-
-//    public String get_parklist() {
-//        String SOAP_ACTION = serviceurl.URL + "/View_Bark/";
-//        String METHOD_NAME = "View_Bark";
-//        String NAMESPACE = serviceurl.URL + "/";
-//        String URL = serviceurl.URL;
-//        String response = null;
-//        try {
-//            SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-//            SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-//            soapEnvelope.dotNet = true;
-//            soapEnvelope.setOutputSoapObject(Request);
-//            HttpTransportSE transport = new HttpTransportSE(URL);
-//            transport.debug = true;
-//            transport.call(SOAP_ACTION, soapEnvelope);
-//            System.out.println("-------Response-------- " + soapEnvelope.getResponse());
-//            response = soapEnvelope.getResponse().toString();
-//            Log.i("", "Result Verification: " + soapEnvelope.getResponse());
-//        } catch (Exception ex) {
-////            System.out.println("---------Exe------- "+ex);
-//            ex.printStackTrace();
-//        }
-//        return response;
-//    }
-
-
-//get ticket type
-
-
-//    private class park_ticket extends AsyncTask<Void, Void, Void> {
-//        String final_result = null;
-//        JSONArray arr = null;
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//
-//            String result = get_ticket();
-//            if (result != null) {
-//                final_result = result;
-//                try {
-//                    arr = new JSONArray(result);
-//                    // arr = arr.getJSONArray(0);
-//                    System.out.println("------------------Size---------------- " + arr.length());
-//
-//                    //  for (int i = 0; i <= arr.length() - 1; i++) {
-//                    //  data1 = new user_park();
-//                    //  JSONObject obj = arr.getJSONObject(i);
-//                    //   System.out.println("------------obj------------- " + obj);
-//                    //    mylist.add(obj.getString("name"));
-//                    //    mylist.add(obj.getString("pk"));
-//                    //  data1.setPk(obj.getString("pk"));
-//
-//                    spinnerArray2 = new String[arr.length()];
-//                    spinnerMap2 = new HashMap<Integer, String>();
-//                    for (int x = 0; x <= arr.length() - 1; x++) {
-//                        JSONObject obj = arr.getJSONObject(x);
-//                        spinnerMap2.put(x, obj.getString("pk"));
-//                        spinnerArray2[x] = obj.getString("name");
-//                    }
-//
-//
-//                    //data1.setName(obj.getString("name"));
-//                    // parklist.add(data1);
-//
-//                    // Log.e("size >> ", "" + parklist.size());
-//
-//                    // }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    System.out.println("ex" + e);
-//                }
-//
-//
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void result) {
-//            if (final_result != null) {
-//
-//                if (final_result.equals("[[]]") || final_result.equals("") || final_result.equals(null)) {
-//                    Toast.makeText(ticket_print.this, "Somethimg go wrong", Toast.LENGTH_SHORT).show();
-//                    ;
-//
-//                } else {
-//                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ticket_print.this, android.R.layout.simple_list_item_1, spinnerArray2);
-//                    l1.setAdapter(adapter);
-//                    pd.dismiss();
-//
-//                }
-//
-//
-//            } else {
-//                Toast.makeText(ticket_print.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
-//            }
-//
-//
-//        }
-//    }
-
-//    public String get_ticket() {
-//        String SOAP_ACTION = serviceurl.URL2 + "/retrieve_all_tickets/";
-//        String METHOD_NAME = "retrieve_all_tickets";
-//        String NAMESPACE = serviceurl.URL2 + "/";
-//        String URL = serviceurl.URL2;
-//        String response = null;
-//        try {
-//            SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-//            Request.addProperty("company", selecteditem);
-//            SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-//            soapEnvelope.dotNet = true;
-//            soapEnvelope.setOutputSoapObject(Request);
-//            HttpTransportSE transport = new HttpTransportSE(URL);
-//            transport.debug = true;
-//            transport.call(SOAP_ACTION, soapEnvelope);
-//            System.out.println("-------Response-------- " + soapEnvelope.getResponse());
-//            response = soapEnvelope.getResponse().toString();
-//            Log.i("", "Result Verification: " + soapEnvelope.getResponse());
-//        } catch (Exception ex) {
-////            System.out.println("---------Exe------- "+ex);
-//            ex.printStackTrace();
-//        }
-//        return response;
-//    }
-
-
-//print ticket
-
-//    private class ticket_event extends AsyncTask<Void, Void, Void> {
-//        String final_result = null;
-//        JSONArray arr = null;
-//        boolean running = true;
-//
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-////            System.out.println("-------------AsyncCallWS--------------- ");
-//
-//            String result = get_ticketprint();
-//            if (result != null) {
-//                final_result = result;
-//                System.out.println("--------------result-------------- " + result);
-//                try {
-//                    arr = new JSONArray(result);
-//                    //arr = arr.getJSONArray(0);
-//                    System.out.println("------------------Size---------------- " + arr.length());
-//                    System.out.println(final_id);
-//                    for (int i = 0; i <= arr.length(); i++) {
-//                        JSONObject obj = arr.getJSONObject(i);
-//
-//                        data.setPK(obj.get("PK") + "");
-//                        data.setGate(obj.get("gate") + "");
-//                        data.setName(obj.get("name") + "");
-//                        data.setPayAmount(obj.get("PayAmount") + "");
-//                        data.setPaid(obj.get("paid") + "");
-//                        data.setDay(obj.get("Day") + "");
-//                        data.setMonth(obj.get("Month") + "");
-//                        data.setYear(obj.get("Year") + "");
-//                        data.setEntryTIME(obj.get("Entry_Time") + "");
-//
-//
-//                    }
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    System.out.println(e);
-//                }
-//            }
-//
-//            return null;
-//        }
-//
-//
-//        @Override
-//        protected void onPreExecute() {
-//
-//
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void result) {
-//            if (final_result.equals("") || final_result.equals("[]") || final_result.equals(null)) {
-//                Toast.makeText(ticket_print.this, "SomeThing go Wrong", Toast.LENGTH_SHORT).show();
-//                pd.dismiss();
-//
-//            } else {
-//                System.out.println(data.getPK());
-//                //ticket.setVisibility(View.VISIBLE);
-//                //t1.setText(data.getDay()+"/"+data.getMonth()+"/"+ data.getYear());
-//                //t2.setText(data.getEntryTIME());
-//                //t3.setText(data.getGate());
-//                //t4.setText(data.getName());
-//                //t5.setText(data.getPayAmount()+"جنية ");
-//                //t6.setText(data.getPK()+"تذكرة رقم ");
-//                //t7.setText(MySharedPref.getData(ticket_print.this,"ptname",null));
-//                printticket();
-//
-//
-//            }
-//        }
-//    }
-//
-//
-//    public String get_ticketprint() {
-//        String SOAP_ACTION = serviceurl.URL2 + "/get_ticket/";
-//        String METHOD_NAME = "get_ticket";
-//        String NAMESPACE = serviceurl.URL2 + "/";
-//        String URL = serviceurl.URL2;
-//        String response = "";
-//        try {
-//            SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-//            Request.addProperty("ticket_type_id", type);
-//            Request.addProperty("user_id", final_id);
-//            SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-//            soapEnvelope.dotNet = true;
-//            soapEnvelope.setOutputSoapObject(Request);
-//            HttpTransportSE transport = new HttpTransportSE(URL);
-//            transport.debug = true;
-//            transport.call(SOAP_ACTION, soapEnvelope);
-//            System.out.println("-------Response-------- " + soapEnvelope.getResponse());
-//            response = soapEnvelope.getResponse().toString();
-//            Log.i("", "Result Verification: " + soapEnvelope.getResponse());
-//        } catch (Exception ex) {
-//            System.out.println("---------Exe------- " + ex);
-//            ex.printStackTrace();
-//        }
-//        return response;
-//    }
-
-
-    //end
-
-
-//
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(ticket_print.this, scand_print_ticket.class)
-                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        System.exit(0);
-    }
-
+    //endregion
 
 
 

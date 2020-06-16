@@ -119,7 +119,6 @@ public class ticket_print extends Activity {
     private View layoutThereArentPairedPrinters;
     private View layoutPrinterReady;
     private TextView debugTextView = null; //A hidden TextView where you can test things
-    ProgressDialog pd;
 
     String type = "";
     ArrayList<String> x = new ArrayList<>();
@@ -219,7 +218,7 @@ public class ticket_print extends Activity {
         text += "\n";
         text += "يرجى الاحتفاظ بالتذكرة طول فترة الزيارة";
         text += "\n";
-        text += "تذكرة رقم: ";
+//        text += ".";
         text += data.getTrx_no();
 
         String strTextToPrint = "";
@@ -258,7 +257,6 @@ public class ticket_print extends Activity {
 
         bixolonPrinterApi.lineFeed(4, false);
 
-        pd.dismiss();
 
 
     }
@@ -848,9 +846,6 @@ public class ticket_print extends Activity {
                             @Override
                             public void onClick(View view) {
                                 ticketPopupgreen.setVisibility(View.GONE);
-                                pd.setMessage("Printing...");
-                                pd.show();
-                                pd.setCanceledOnTouchOutside(false);
                                 printticket();
                             }
                         });
@@ -859,7 +854,6 @@ public class ticket_print extends Activity {
 
 
                 }
-//                pd.dismiss();
 
 
             } else {

@@ -95,6 +95,7 @@
                 android:padding="5dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="40dp"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -177,12 +178,7 @@
                 android:textAlignment="viewStart"
                 android:gravity="start"
                 />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="________________________________________"
-                android:textSize="15sp"
-                />
+
 
             <LinearLayout
                 android:padding="5dp"
@@ -375,12 +371,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:text="123456"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="________________________________________"
-                android:textSize="15sp"
-                />
+
             <LinearLayout
                 android:padding="5dp"
                 android:layout_marginLeft="20dp"

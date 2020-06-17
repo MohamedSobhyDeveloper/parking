@@ -45,8 +45,6 @@ public class PrintActivity extends AppCompatActivity {
     ImageButton backimage;
     @BindView(R.id.show1)
     RelativeLayout show1;
-    @BindView(R.id.show2)
-    RelativeLayout show2;
     @BindView(R.id.parking_header)
     TextView parkingHeader;
     @BindView(R.id.ticket_date)
@@ -83,6 +81,7 @@ public class PrintActivity extends AppCompatActivity {
 
     NfcAdapter nfcAdapter;
     PendingIntent pendingIntent;
+
     @BindView(R.id.blockedmember_startdate)
     TextView blockedmemberStartdate;
     @BindView(R.id.blockedmember_enddate)
@@ -440,7 +439,7 @@ public class PrintActivity extends AppCompatActivity {
 
                     ticketPopupgreen.setVisibility(View.VISIBLE);
                     blockedPopup.setVisibility(View.GONE);
-                    ticketDate.setText(currentTime + "");
+//                    ticketDate.setText(currentTime + "");
                     ticketMemberName.setText(membersModel.getName());
                     ticketMemberId.setText(membersModel.getMembership_no());
                     ticketGatenumber.setText(membersModel.getStart_date() + "");

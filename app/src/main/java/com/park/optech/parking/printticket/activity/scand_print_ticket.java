@@ -48,7 +48,7 @@ public class scand_print_ticket extends AppCompatActivity {
             finish();
         });
         printBtn.setOnClickListener(view -> {
-            startActivity(new Intent(scand_print_ticket.this, ticket_print.class));
+            startActivity(new Intent(scand_print_ticket.this, PrintActivity.class));
             finish();
         });
 

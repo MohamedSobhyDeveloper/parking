@@ -105,6 +105,8 @@ public class scand_print_ticket extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
+
           
 
 

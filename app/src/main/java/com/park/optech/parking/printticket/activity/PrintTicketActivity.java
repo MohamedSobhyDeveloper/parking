@@ -200,6 +200,7 @@ public class PrintTicketActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             String result = getMembdersList();
+
             if (result != null) {
                 final_result = result;
 
@@ -264,6 +265,7 @@ public class PrintTicketActivity extends AppCompatActivity {
 
         }
     }
+
 
     public String getMembdersList() {
         String SOAP_ACTION = serviceurl.URL2 + "/retrieve_all_members/";

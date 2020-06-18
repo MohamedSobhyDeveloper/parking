@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/com.wrapp.floatlabelededittext-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/com.wrapp.floatlabelededittext-app.iml" group="parking/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.wrapp.floatlabelededittext-parking.iml" filepath="$PROJECT_DIR$/.idea/modules/com.wrapp.floatlabelededittext-parking.iml" group="parking" />
       <module fileurl="file://$PROJECT_DIR$/parking.iml" filepath="$PROJECT_DIR$/parking.iml" />
     </modules>
   </component>

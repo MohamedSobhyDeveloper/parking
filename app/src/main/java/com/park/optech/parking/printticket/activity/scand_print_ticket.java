@@ -104,18 +104,18 @@ public class scand_print_ticket extends AppCompatActivity {
 //        if (SyncList!=null&&SyncList.size()>0){
             JSONArray jsonArray = new JSONArray();
             JSONObject obj = null;
-            for (int i=0;i<5;i++){
+            for (int i=0;i<1;i++){
                  obj = new JSONObject();
 
                 try {
                     obj.put("cameraNo", "1")
-                            .put("Timestamp", "2020-6-15")
-                            .put("PayTime", "2020-6-15")
+                            .put("Timestamp", "2020-6-15 12:08:56")
+                            .put("PayTime", "2020-6-15 12:08:56")
                             .put("PayAmount", "20")
                             .put("PayUser", "1")
                             .put("company", "2")
                             .put("paid", "1")
-                            .put("trx_no", "23245484874878")
+                            .put("trx_no", "2001002020061812")
                             .put("members", "2")
                             .put("sync", "1");
 
@@ -132,7 +132,6 @@ public class scand_print_ticket extends AppCompatActivity {
 
 // Encodes the JSONArray as a compact JSON string
              jsonText = jsonArray.toString();
-            String jsonTextd = jsonArray.toString();
 //        }
     }
 
@@ -156,36 +155,6 @@ public class scand_print_ticket extends AppCompatActivity {
             if (result != null) {
                 final_result = result;
                 System.out.println("--------------result-------------- " + final_result);
-                try {
-                    arr = new JSONArray(result);
-//                    arr = arr.getJSONArray(0);
-                    System.out.println("------------------Size---------------- " + arr.length());
-                    MembersModel data = null;
-                    for (int i = 0; i <= arr.length() - 1; i++) {
-
-                        data = new MembersModel();
-                        JSONObject obj = arr.getJSONObject(i);
-                        System.out.println("------------obj------------- " + obj);
-                        data.setPk(obj.getString("pk"));
-                        data.setName(obj.getString("name"));
-                        data.setSsn(obj.getString("ssn"));
-                        data.setStart_date(obj.getString("start_date"));
-                        data.setEnd_date(obj.getString("end_date"));
-                        data.setImg_path(obj.getString("img_path"));
-                        data.setMembership_no(obj.getString("membership_no"));
-
-//                        SyncList.add(data);
-
-//                        Log.e("size >> ", "" + dataList1.size());
-
-                    }
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    System.out.println("ex"+e);
-                }
 
             }
             else

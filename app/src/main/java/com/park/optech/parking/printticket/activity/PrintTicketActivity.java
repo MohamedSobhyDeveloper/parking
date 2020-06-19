@@ -222,6 +222,7 @@ public class PrintTicketActivity extends AppCompatActivity {
                         data.setEnd_date(obj.getString("end_date"));
                         data.setImg_path(obj.getString("img_path"));
                         data.setMembership_no(obj.getString("membership_no"));
+                        data.setTag_id(obj.getString("tag_id"));
 
                         membersList.add(data);
 

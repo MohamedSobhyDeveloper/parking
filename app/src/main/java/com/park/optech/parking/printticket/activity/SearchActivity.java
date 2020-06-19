@@ -1,8 +1,11 @@
 package com.park.optech.parking.printticket.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -51,6 +54,7 @@ public class SearchActivity extends AppCompatActivity {
     NfcAdapter nfcAdapter;
     PendingIntent pendingIntent;
 
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -353,6 +357,9 @@ public class SearchActivity extends AppCompatActivity {
                 end_date_tv.setText(membersModel.getEnd_date());
                 member_card.setVisibility(View.VISIBLE);
             } else {
+
+                showWelcomDialog();
+
                 Toast.makeText(SearchActivity.this, "خطا فى رقم العضوية", Toast.LENGTH_SHORT).show();
                 Log.e("Data", "null");
                 member_card.setVisibility(View.GONE);
@@ -370,6 +377,30 @@ public class SearchActivity extends AppCompatActivity {
 
 //        text.setText(memberId);
     }
+
+    public void showWelcomDialog()
+    {
+        TextView timer;
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.welcom_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.dismiss();
+
+        timer =dialog.findViewById(R.id.timer);
+        timer.setText(" كارت غير معلوم ");
+
+        Button btn_Cancel = dialog.findViewById(R.id.Cancel);
+        btn_Cancel.setEnabled(true);
+        btn_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
 
     //endregion
 

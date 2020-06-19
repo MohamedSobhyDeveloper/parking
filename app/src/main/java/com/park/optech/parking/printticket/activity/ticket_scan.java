@@ -1,9 +1,14 @@
 package com.park.optech.parking.printticket.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +38,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -51,6 +57,7 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
 
     LinearLayout layout_ticket;
 
+    private Dialog dialog;
 
 
     @Override
@@ -163,7 +170,6 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
                     t5.setText(ticketsModel.getPayAmount());
                     t33.setText(ticketsModel.getCameraNo());
 
-
                     if (System.currentTimeMillis() > Objects.requireNonNull(strDate).getTime())
                     {
                         ticket.setVisibility(View.VISIBLE);
@@ -187,13 +193,11 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
 
         else
         {
+            showWelcomDialog();
 //            ticket.setVisibility(View.VISIBLE);
 //            layout_ticket.setBackgroundColor(Color.parseColor("#f40b25"));
             Toast.makeText(this, "Wrong Index", Toast.LENGTH_SHORT).show();
         }
-
-
-
 
     }
 
@@ -324,6 +328,31 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
         startActivity(new Intent(ticket_scan.this, scand_print_ticket.class));
         finish();
     }
+
+
+    public void showWelcomDialog()
+    {
+        TextView timer;
+
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.welcom_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.dismiss();
+
+        timer =dialog.findViewById(R.id.timer);
+
+        Button btn_Cancel = dialog.findViewById(R.id.Cancel);
+        btn_Cancel.setEnabled(true);
+        btn_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
 
     //end
 

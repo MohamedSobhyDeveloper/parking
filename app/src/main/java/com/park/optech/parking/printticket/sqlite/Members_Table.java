@@ -15,6 +15,7 @@ public class Members_Table
     public static final String SSN = "ssn";
     public static final String COMPANY = "company";
     public static final String IMAGE = "img_path";
+    public static final String TAG_ID = "tag_id";
 
 
     public static final String CREATE_TABLE =
@@ -39,6 +40,9 @@ public class Members_Table
     private String ssn;
     private String company;
     private String img_path;
+
+
+    private String tag_id;
 
     public Members_Table() {
     }
@@ -125,5 +129,13 @@ public class Members_Table
 
     public void setImg_path(String img_path) {
         this.img_path = img_path;
+    }
+
+    public String getTag_id() {
+        return tag_id;
+    }
+
+    public void setTag_id(String tag_id) {
+        this.tag_id = tag_id;
     }
 }

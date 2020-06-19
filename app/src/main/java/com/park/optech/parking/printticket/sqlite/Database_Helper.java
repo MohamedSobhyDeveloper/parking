@@ -78,6 +78,7 @@ public class Database_Helper extends SQLiteOpenHelper
         values.put(Members_Table.SSN,model.getSsn());
 //        values.put(Members_Table.COMPANY,model.get);
         values.put(Members_Table.IMAGE,model.getImg_path());
+        values.put(Members_Table.TAG_ID,model.getTag_id());
 
 
         long id = -1;

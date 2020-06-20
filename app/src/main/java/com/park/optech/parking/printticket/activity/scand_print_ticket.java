@@ -175,7 +175,7 @@ public class scand_print_ticket extends AppCompatActivity {
                 }
                 Toast.makeText(scand_print_ticket.this, "تم تحميل البيانات  بنجاح", Toast.LENGTH_SHORT).show();
             }else {
-                Toast.makeText(scand_print_ticket.this, "حدث خطا أثناء التحميل"+ final_result, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(scand_print_ticket.this, "حدث خطا أثناء التحميل"+ final_result, Toast.LENGTH_SHORT).show();
             }
             pd.dismiss();
 

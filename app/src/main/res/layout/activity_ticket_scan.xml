@@ -237,7 +237,7 @@
 
     <RelativeLayout
         android:id="@+id/ticket_popupgreen"
-        android:visibility="gone"
+        android:visibility="visible"
         android:background="@mipmap/bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -343,12 +343,6 @@
                     android:textStyle="bold"
                     android:text="رقم العضوية"/>
             </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="________________________________________"
-                android:textSize="15sp"
-                />
 
             <LinearLayout
                 android:padding="5dp"

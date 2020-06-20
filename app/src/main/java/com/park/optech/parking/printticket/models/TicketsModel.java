@@ -11,8 +11,16 @@ public class TicketsModel {
     private String paid;
     private String trx_no;
     private String members;
+    private String tagId;
     private String sync;
 
+    public String getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(String tagId) {
+        this.tagId = tagId;
+    }
 
     public String getPk() {
         return pk;

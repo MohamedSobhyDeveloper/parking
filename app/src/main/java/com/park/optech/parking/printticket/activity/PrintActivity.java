@@ -1,8 +1,11 @@
 package com.park.optech.parking.printticket.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -86,6 +89,7 @@ public class PrintActivity extends AppCompatActivity {
     TextView blockedmemberStartdate;
     @BindView(R.id.blockedmember_enddate)
     TextView blockedmemberEnddate;
+    private Dialog dialog;
 
 
     //
@@ -459,9 +463,11 @@ public class PrintActivity extends AppCompatActivity {
                 }
 
 
+            } else {
+                showWelcomDialog();
+                blockedPopup.setVisibility(View.GONE);
+                ticketPopupgreen.setVisibility(View.GONE);
             }
-
-
         } else {
             Toast.makeText(PrintActivity.this, "ادخل رقم العضوية", Toast.LENGTH_SHORT).show();
 
@@ -472,6 +478,27 @@ public class PrintActivity extends AppCompatActivity {
     }
 
     //endregion
+    public void showWelcomDialog()
+    {
+        TextView timer;
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.welcom_dialog);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        timer =dialog.findViewById(R.id.timer);
+        timer.setText(" كارت غير معلوم ");
+
+        Button btn_Cancel = dialog.findViewById(R.id.Cancel);
+        btn_Cancel.setEnabled(true);
+        btn_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
 
 
 }

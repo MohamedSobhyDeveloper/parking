@@ -195,8 +195,9 @@ public class ticket_print extends Activity {
                     ticketsModel.setPayAmount("20");
 //                        ticketsModel.setPayTime(currentTime+"");
 //                        ticketsModel.setTimestamp(currentTime+"");
-                    ticketsModel.setMembers(membersModel.getMembership_no());
-                    ticketsModel.setPayUser(userid);
+                    ticketsModel.setMembers(membersModel.getPk());
+                   ticketsModel.setTagId(membersModel.getTag_id());
+                   ticketsModel.setPayUser(userid);
                     ticketsModel.setSync("0");
 
                     Date currentTime2 = Calendar.getInstance().getTime();

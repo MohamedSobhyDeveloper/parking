@@ -327,7 +327,6 @@ public class SearchActivity extends AppCompatActivity {
 
 
 
-
         if (!memberId.equals("")) {
 
             MembersModel membersModel = Database_Helper.getInstance(SearchActivity.this).getmember(memberId);

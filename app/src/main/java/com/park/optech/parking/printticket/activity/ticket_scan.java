@@ -150,14 +150,17 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
         if (ticketsModel.getTrx_no() != null)
         {
             @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String formatDate = formatter.format(new Date(Long.parseLong(ticketsModel.getTimestamp())));
-            MembersModel model = Database_Helper.getInstance(ticket_scan.this).getmember(ticketsModel.getMembers());
+            String formatDate = ticketsModel.getTimestamp();
+            String [] arr = formatDate.split(" ", 2);
+            String date=arr[0];
+
+            MembersModel model = Database_Helper.getInstance(ticket_scan.this).getmember(ticketsModel.getTagId());
             @SuppressLint("SimpleDateFormat")
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date ticketdate;
             try {
 
-               ticketdate = sdf.parse(formatDate);
+               ticketdate = sdf.parse(date);
 
                 t1.setText(ticketsModel.getTimestamp());
                 t2.setText(model.getName());
@@ -167,12 +170,18 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
                 t33.setText(ticketsModel.getCameraNo());
                 ticket.setVisibility(View.VISIBLE);
 
-                if (new Date().after(ticketdate)) {
-                    ticket.setBackgroundColor(getResources().getColor(R.color.red));
+                Date c = Calendar.getInstance().getTime();
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String currentdate = df.format(c);
+                Date current=df.parse(currentdate);
+
+                if (current.after(ticketdate)) {
+                    layout_ticket.setBackgroundColor(getResources().getColor(R.color.red));
                     invalidTv.setVisibility(View.VISIBLE);
 
                 }else {
-                    ticket.setBackgroundColor(getResources().getColor(R.color.m2));
+                    layout_ticket.setBackgroundColor(getResources().getColor(R.color.m2));
+
                     invalidTv.setVisibility(View.GONE);
                 }
 

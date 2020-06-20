@@ -16,6 +16,7 @@ public class Tickets_Table
     public static final String PAID = "paid";
     public static final String TRX_NO = "trx_no";
     public static final String MEMBERS = "members";
+    public static final String Tag_id = "tag_id";
     public static final String SYNC = "sync";
 
 
@@ -23,14 +24,15 @@ public class Tickets_Table
             "CREATE TABLE " + TABLE_NAME + "("
                     + TICKET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + CAMERA_NO + " TEXT,"
-                    + TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
-                    + PAY_TIME + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
+                    + TIMESTAMP + " DATETIME DEFAULT (datetime('now','localtime')),"
+                    + PAY_TIME + " DATETIME DEFAULT (datetime('now','localtime')),"
                     + PAY_AMOUNT + " TEXT,"
                     + PAY_USER + " TEXT,"
                     + COMPANY + " TEXT,"
                     + PAID + " TEXT,"
                     + TRX_NO + " TEXT,"
                     + MEMBERS + " TEXT,"
+                    + Tag_id + " TEXT,"
                     + SYNC + " TEXT"
                     + ")";
 

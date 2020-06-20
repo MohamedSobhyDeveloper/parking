@@ -122,6 +122,7 @@ public class Database_Helper extends SQLiteOpenHelper
         values.put(Tickets_Table.PAID,ticketsModel.getPaid());
         values.put(Tickets_Table.TRX_NO,ticketsModel.getTrx_no());
         values.put(Tickets_Table.MEMBERS,ticketsModel.getMembers());
+        values.put(Tickets_Table.Tag_id,ticketsModel.getTagId());
         values.put(Tickets_Table.SYNC,ticketsModel.getSync());
 
         // insert row
@@ -189,6 +190,7 @@ public class Database_Helper extends SQLiteOpenHelper
             do {
                 TicketsModel ticketsModel = new TicketsModel();
 //                data_client.setId(cursor.getInt(cursor.getColumnIndex(Data_Client.ID)));
+                ticketsModel.setPk(cursor.getString(cursor.getColumnIndex(Tickets_Table.TICKET_ID)));
                 ticketsModel.setCameraNo(cursor.getString(cursor.getColumnIndex(Tickets_Table.CAMERA_NO)));
                 ticketsModel.setTimestamp(cursor.getString(cursor.getColumnIndex(Tickets_Table.TIMESTAMP)));
                 ticketsModel.setPayTime(cursor.getString(cursor.getColumnIndex(Tickets_Table.PAY_TIME)));
@@ -282,6 +284,7 @@ public class Database_Helper extends SQLiteOpenHelper
             model.setCameraNo(c.getString(c.getColumnIndex(Tickets_Table.CAMERA_NO)));
             model.setCompany(c.getString(c.getColumnIndex(Tickets_Table.COMPANY)));
             model.setMembers(c.getString(c.getColumnIndex(Tickets_Table.MEMBERS)));
+            model.setTagId(c.getString(c.getColumnIndex(Tickets_Table.Tag_id)));
             model.setTimestamp(c.getString(c.getColumnIndex(Tickets_Table.TIMESTAMP)));
             model.setPaid(c.getString(c.getColumnIndex(Tickets_Table.PAID)));
             model.setPayAmount(c.getString(c.getColumnIndex(Tickets_Table.PAY_AMOUNT)));
@@ -329,6 +332,8 @@ public class Database_Helper extends SQLiteOpenHelper
             membersModel.setEnd_date(c.getString(c.getColumnIndex(Members_Table.END_DATE)));
             membersModel.setSsn(c.getString(c.getColumnIndex(Members_Table.SSN)));
             membersModel.setImg_path(c.getString(c.getColumnIndex(Members_Table.IMAGE)));
+            membersModel.setTag_id(c.getString(c.getColumnIndex(Members_Table.TAG_ID)));
+
 
         }else {
             Log.e("error not found", "members can't be found or database empty");
@@ -383,6 +388,7 @@ public class Database_Helper extends SQLiteOpenHelper
             model.setCameraNo(c.getString(c.getColumnIndex(Tickets_Table.CAMERA_NO)));
             model.setCompany(c.getString(c.getColumnIndex(Tickets_Table.COMPANY)));
             model.setMembers(c.getString(c.getColumnIndex(Tickets_Table.MEMBERS)));
+            model.setTagId(c.getString(c.getColumnIndex(Tickets_Table.Tag_id)));
             model.setTimestamp(c.getString(c.getColumnIndex(Tickets_Table.TIMESTAMP)));
             model.setPaid(c.getString(c.getColumnIndex(Tickets_Table.PAID)));
             model.setPayAmount(c.getString(c.getColumnIndex(Tickets_Table.PAY_AMOUNT)));

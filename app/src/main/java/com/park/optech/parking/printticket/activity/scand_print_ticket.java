@@ -14,19 +14,22 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.park.optech.parking.R;
-import com.park.optech.parking.printticket.models.MembersModel;
 import com.park.optech.parking.printticket.models.TicketsModel;
 import com.park.optech.parking.printticket.sqlite.Database_Helper;
-import com.park.optech.parking.soapapi.serviceurl;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,13 +70,7 @@ public class scand_print_ticket extends AppCompatActivity {
         });
 
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(scand_print_ticket.this, SearchActivity.class));
-
-            }
-        });
+        searchBtn.setOnClickListener(view -> startActivity(new Intent(scand_print_ticket.this, SearchActivity.class)));
 
 
         pd = new ProgressDialog(this,R.style.AppCompatAlertDialogStyle);
@@ -82,41 +79,39 @@ public class scand_print_ticket extends AppCompatActivity {
 
 
         SyncData();
-        syncTickets();
 
 
 
     }
 
     private void SyncData() {
-        pd.show();
-        SyncList=new ArrayList<>();
-        List<TicketsModel>ticketsModelList= Database_Helper.getInstance(this).getTickets();
-        if (ticketsModelList!=null&&ticketsModelList.size()>0){
-            for (int i=0;i<ticketsModelList.size();i++){
-                if (ticketsModelList.get(i).getSync().equals("0")){
+        SyncList = new ArrayList<>();
+        List<TicketsModel> ticketsModelList = Database_Helper.getInstance(this).getTickets();
+        if (ticketsModelList != null && ticketsModelList.size() > 0) {
+            for (int i = 0; i < ticketsModelList.size(); i++) {
+                if (ticketsModelList.get(i).getSync().equals("0")) {
                     SyncList.add(ticketsModelList.get(i));
                 }
 
             }
         }
 
-//        if (SyncList!=null&&SyncList.size()>0){
+        if (SyncList != null && SyncList.size() > 0) {
             JSONArray jsonArray = new JSONArray();
             JSONObject obj = null;
-            for (int i=0;i<1;i++){
-                 obj = new JSONObject();
+            for (int i = 0; i < SyncList.size(); i++) {
+                obj = new JSONObject();
 
                 try {
-                    obj.put("cameraNo", "1")
-                            .put("Timestamp", "2020-6-15 12:08:56")
-                            .put("PayTime", "2020-6-15 12:08:56")
-                            .put("PayAmount", "20")
-                            .put("PayUser", "1")
-                            .put("company", "2")
-                            .put("paid", "1")
-                            .put("trx_no", "2001002020061812")
-                            .put("members", "2")
+                    obj.put("cameraNo", SyncList.get(i).getCameraNo())
+                            .put("Timestamp", SyncList.get(i).getTimestamp())
+                            .put("PayTime", SyncList.get(i).getPayTime())
+                            .put("PayAmount", SyncList.get(i).getPayAmount())
+                            .put("PayUser", SyncList.get(i).getPayUser())
+                            .put("company", SyncList.get(i).getCompany())
+                            .put("paid", SyncList.get(i).getPaid())
+                            .put("trx_no", SyncList.get(i).getTrx_no())
+                            .put("members", SyncList.get(i).getMembers())
                             .put("sync", "1");
 
                     jsonArray.put(obj);
@@ -127,12 +122,12 @@ public class scand_print_ticket extends AppCompatActivity {
             }
 
 
-          
+            jsonText = jsonArray.toString();
+
+            syncTickets();
 
 
-// Encodes the JSONArray as a compact JSON string
-             jsonText = jsonArray.toString();
-//        }
+        }
     }
 
 
@@ -188,37 +183,51 @@ public class scand_print_ticket extends AppCompatActivity {
     }
 
 
-    public String syncData() {
-        String SOAP_ACTION = serviceurl.URL2 + "/SyncTickets/";
-        String METHOD_NAME = "SyncTickets";
-        String NAMESPACE = serviceurl.URL2 + "/";
-        String URL = serviceurl.URL2;
-        String response = "";
-        try {
-            SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            Request.addProperty("tickets", jsonText);
-            SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            soapEnvelope.dotNet = true;
-            soapEnvelope.setOutputSoapObject(Request);
-            HttpTransportSE transport = new HttpTransportSE(URL);
-            transport.debug = true;
-            transport.call(SOAP_ACTION, soapEnvelope);
-            System.out.println("-------Response-------- " + soapEnvelope.getResponse());
-            response = soapEnvelope.getResponse().toString();
-            Log.i("", "Result Verification: " + soapEnvelope.getResponse());
-        } catch (Exception ex) {
-//            System.out.println("---------Exe------- "+ex);
-            ex.printStackTrace();
-        }
-        return response;
-    }
-
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        startActivity(new Intent(scand_print_ticket.this,MainActivity.class));
         finish();
+    }
+
+
+    public  String syncData() {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost("http://parking.open-park.com/SyncTickets.php");
+
+            httpPost.setEntity(new StringEntity(jsonText,"UTF-8"));
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+            inputStream = httpResponse.getEntity().getContent();
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        }//end of try
+        catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }//end of catch
+
+        // 11. return result
+        return result;
+    }//end of POST method
+    //-----------------------------
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while ((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
     }
 }
 

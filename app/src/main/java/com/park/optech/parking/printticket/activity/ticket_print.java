@@ -176,9 +176,9 @@ public class ticket_print extends Activity {
             if (membersModel.getMembership_no() != null) {
 
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date strDate = null;
+                Date endDate = null;
                 try {
-                    strDate = sdf.parse(membersModel.getEnd_date());
+                    endDate = sdf.parse(membersModel.getEnd_date());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -209,7 +209,7 @@ public class ticket_print extends Activity {
                     ticketsModelList = Database_Helper.getInstance(ticket_print.this).getTickets();
 
 
-                    String trxNumber = "20010020" + formattedDate + ticketsModelList.size();
+                    String trxNumber = "200100" + formattedDate + ticketsModelList.size();
 
                     ticketsModel.setTrx_no(trxNumber);
 

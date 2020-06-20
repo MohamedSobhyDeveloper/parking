@@ -51,7 +51,7 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
     String ticket_id = null, final_id = null;
     Ticket_Model data=new Ticket_Model();
     TextView t1,t2,t3,t4,t5,t6,t7,t8;
-    TextView t11,t22,t33,t44,t55,t66;
+    TextView t11,t22,t33,t44,t55,t66,invalidTv;
     RelativeLayout ticket,view,ticketred,ticket_popup;
     Button scan;
 
@@ -72,6 +72,8 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
         t3=(TextView)findViewById(R.id.ticket_member_id);
         t4=(TextView)findViewById(R.id.ticketnumber);
         t5=(TextView)findViewById(R.id.ticketprice);
+        invalidTv=(TextView)findViewById(R.id.ticket_invalid);
+
 //        t6=(TextView)findViewById(R.id.status);
 //        t11=(TextView)findViewById(R.id.date1);
 //        t22=(TextView)findViewById(R.id.time1);
@@ -147,56 +149,49 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
 
         if (ticketsModel.getTrx_no() != null)
         {
-            String time = ticketsModel.getTimestamp();
-            String ticket_txt = ticketsModel.getCameraNo() + " : " + ticketsModel.getPaid();
-            Log.e("TICKET",ticket_txt + "  ");
-            Log.e("TIME",time + "  ");
-
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String formatDate = formatter.format(new Date(Long.parseLong(ticketsModel.getTimestamp())));
             MembersModel model = Database_Helper.getInstance(ticket_scan.this).getmember(ticketsModel.getMembers());
-            Log.e("MEM",model.getMembership_no() + "  ");
-            Log.e("USER",ticketsModel.getPayUser());
             @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date strDate;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date ticketdate;
             try {
-                if (time != null)
-                {
-                    strDate = sdf.parse(time);
 
-                    t1.setText(time);
-                    t2.setText(model.getName());
-                    t3.setText(model.getMembership_no());
-                    t4.setText(ticketsModel.getPk());
-                    t5.setText(ticketsModel.getPayAmount());
-                    t33.setText(ticketsModel.getCameraNo());
+               ticketdate = sdf.parse(formatDate);
 
-                    if (System.currentTimeMillis() > Objects.requireNonNull(strDate).getTime())
-                    {
-                        ticket.setVisibility(View.VISIBLE);
-                    }else {
-                        ticket.setVisibility(View.VISIBLE);
-                        ticket.setBackgroundColor(Color.parseColor("#f40b25"));
-                        Toast.makeText(this, "Not Valid Ticket", Toast.LENGTH_SHORT).show();
-                    }
+                t1.setText(ticketsModel.getTimestamp());
+                t2.setText(model.getName());
+                t3.setText(model.getMembership_no());
+                t4.setText(ticketsModel.getPk());
+                t5.setText(ticketsModel.getPayAmount());
+                t33.setText(ticketsModel.getCameraNo());
+                ticket.setVisibility(View.VISIBLE);
+
+                if (new Date().after(ticketdate)) {
+                    ticket.setBackgroundColor(getResources().getColor(R.color.red));
+                    invalidTv.setVisibility(View.VISIBLE);
+
+                }else {
+                    ticket.setBackgroundColor(getResources().getColor(R.color.m2));
+                    invalidTv.setVisibility(View.GONE);
                 }
-                else
-                {
-                    ticket.setVisibility(View.VISIBLE);
-                    ticket.setBackgroundColor(Color.parseColor("#f40b25"));
-                    Toast.makeText(this, "Invalid Data", Toast.LENGTH_SHORT).show();
+
+
+                if (dialog!=null&&dialog.isShowing()){
+                    dialog.dismiss();
                 }
+
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-        }
-
-        else
-        {
+        }else{
             showWelcomDialog();
+            ticket.setVisibility(View.GONE);
 //            ticket.setVisibility(View.VISIBLE);
 //            layout_ticket.setBackgroundColor(Color.parseColor("#f40b25"));
-            Toast.makeText(this, "Wrong Index", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Wrong Index", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -332,14 +327,10 @@ public class ticket_scan extends AppCompatActivity implements ZBarScannerView.Re
 
     public void showWelcomDialog()
     {
-        TextView timer;
 
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.welcom_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.dismiss();
-
-        timer =dialog.findViewById(R.id.timer);
 
         Button btn_Cancel = dialog.findViewById(R.id.Cancel);
         btn_Cancel.setEnabled(true);

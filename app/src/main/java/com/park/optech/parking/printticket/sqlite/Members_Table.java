@@ -26,6 +26,7 @@ public class Members_Table
                     + START_DATE + " TEXT,"
                     + END_DATE + " TEXT,"
                     + MEMBERSHIP_NO + " TEXT,"
+                    + TAG_ID + " TEXT,"
                     + SSN + " TEXT,"
                     +COMPANY + " TEXT,"
                     +IMAGE + " TEXT"

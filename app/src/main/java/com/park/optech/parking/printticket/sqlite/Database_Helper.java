@@ -320,7 +320,7 @@ public class Database_Helper extends SQLiteOpenHelper
     public MembersModel getmember(String id) {
         MembersModel membersModel=new MembersModel();
         SQLiteDatabase db = this.getWritableDatabase(); //get the database that was created in this instance
-        Cursor c = db.rawQuery("select * from " + Members_Table.TABLE_NAME+" where MEMBERSHIP_NO =?", new String[]{id});
+        Cursor c = db.rawQuery("select * from " + Members_Table.TABLE_NAME+" where TAG_ID =?", new String[]{id});
         if (c.moveToLast()) {
             membersModel.setMembership_no(c.getString(c.getColumnIndex(Members_Table.MEMBERSHIP_NO)));
             membersModel.setPk(c.getString(c.getColumnIndex(Members_Table.MEMBER_PK)));

@@ -380,15 +380,15 @@ public class PrintActivity extends AppCompatActivity {
 
             membersModel = Database_Helper.getInstance(PrintActivity.this).getmember(memberId);
 
-            if (membersModel.getMembership_no() != null) {
+            if (membersModel.getTag_id() != null) {
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date strDate = null;
+                Date endDate = null;
                 try {
-                    strDate = sdf.parse(membersModel.getEnd_date());
+                    endDate = sdf.parse(membersModel.getEnd_date());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (System.currentTimeMillis() > Objects.requireNonNull(strDate).getTime()) {
+                if (new Date().after(endDate)) {
                     blockedPopup.setVisibility(View.VISIBLE);
                     ticketPopupgreen.setVisibility(View.GONE);
                     blockedmemberName.setText(membersModel.getName());

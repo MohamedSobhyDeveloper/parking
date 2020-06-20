@@ -203,7 +203,6 @@ public class scand_print_ticket extends AppCompatActivity {
             HttpTransportSE transport = new HttpTransportSE(URL);
             transport.debug = true;
             transport.call(SOAP_ACTION, soapEnvelope);
-            transport.setTimeout(7000);
             System.out.println("-------Response-------- " + soapEnvelope.getResponse());
             response = soapEnvelope.getResponse().toString();
             Log.i("", "Result Verification: " + soapEnvelope.getResponse());

@@ -38,6 +38,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -330,15 +331,15 @@ public class SearchActivity extends AppCompatActivity {
         if (!memberId.equals("")) {
 
             MembersModel membersModel = Database_Helper.getInstance(SearchActivity.this).getmember(memberId);
-            if (membersModel.getMembership_no() != null) {
+            if (membersModel.getTag_id() != null) {
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date strDate = null;
+                Date enddate = null;
                 try {
-                    strDate = sdf.parse(membersModel.getEnd_date());
+                    enddate = sdf.parse(membersModel.getEnd_date());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (new Date().after(strDate)) {
+                if (new Date().after(enddate)) {
 
                     layoutTicket.setBackgroundColor(getResources().getColor(R.color.red));
                     validation_tv.setText("العضوية منتهية");
@@ -356,11 +357,14 @@ public class SearchActivity extends AppCompatActivity {
                 start_date_tv.setText(membersModel.getStart_date());
                 end_date_tv.setText(membersModel.getEnd_date());
                 member_card.setVisibility(View.VISIBLE);
+                if (dialog!=null&&dialog.isShowing()){
+                    dialog.dismiss();
+                }
             } else {
 
                 showWelcomDialog();
 
-                Toast.makeText(SearchActivity.this, "خطا فى رقم العضوية", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SearchActivity.this, "خطا فى رقم العضوية", Toast.LENGTH_SHORT).show();
                 Log.e("Data", "null");
                 member_card.setVisibility(View.GONE);
 
@@ -383,8 +387,7 @@ public class SearchActivity extends AppCompatActivity {
         TextView timer;
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.welcom_dialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.dismiss();
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         timer =dialog.findViewById(R.id.timer);
         timer.setText(" كارت غير معلوم ");

@@ -6,8 +6,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -20,6 +24,8 @@ import com.park.optech.parking.printticket.models.MembersModel;
 import com.park.optech.parking.printticket.models.UsersModels;
 import com.park.optech.parking.printticket.sqlite.Database_Helper;
 import com.park.optech.parking.soapapi.serviceurl;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.json.JSONArray;
@@ -30,12 +36,16 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PrintTicketActivity extends AppCompatActivity {
     ArrayList<UsersModels> usersList;
     ArrayList<MembersModel> membersList;
-
+    MembersModel data = null;
     ProgressDialog pd;
 
     @SuppressLint("CheckResult")
@@ -209,7 +219,7 @@ public class PrintTicketActivity extends AppCompatActivity {
                     arr = new JSONArray(result);
 //                    arr = arr.getJSONArray(0);
                     System.out.println("------------------Size---------------- " + arr.length());
-                    MembersModel data = null;
+
                     for (int i = 0; i <= arr.length() - 1; i++) {
 
                         data = new MembersModel();
@@ -224,9 +234,34 @@ public class PrintTicketActivity extends AppCompatActivity {
                         data.setMembership_no(obj.getString("membership_no"));
                         data.setTag_id(obj.getString("tag_id"));
 
+                        String snapshot=obj.getString("snapshot");
+
+                        if (snapshot!=null&&!snapshot.equals("")){
+                            Picasso.with(getApplicationContext()).load(snapshot).into(new Target() {
+                                @Override
+                                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    Uri uri=getlocalBitmapUri(bitmap);
+                                    data.setSnapshot(uri.getPath());
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Drawable errorDrawable) {
+
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+                            });
+                        }else {
+                            data.setSnapshot("");
+
+                        }
+
+
                         membersList.add(data);
 
-//                        Log.e("size >> ", "" + dataList1.size());
 
                     }
 
@@ -276,7 +311,7 @@ public class PrintTicketActivity extends AppCompatActivity {
         String response = "";
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            Request.addProperty("company", "2");
+            Request.addProperty("company", "3");
             SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             soapEnvelope.dotNet = true;
             soapEnvelope.setOutputSoapObject(Request);
@@ -294,6 +329,20 @@ public class PrintTicketActivity extends AppCompatActivity {
     }
 
 
-
+    private Uri getlocalBitmapUri(Bitmap bitmap) {
+        Uri bmuri = null;
+        try {
+            File file = new File(Environment.getExternalStorageDirectory() + File.separator + "image.jpg");
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fileOutputStream);
+            fileOutputStream.close();
+            bmuri = Uri.fromFile(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
+        return bmuri;
+    }
 
 }

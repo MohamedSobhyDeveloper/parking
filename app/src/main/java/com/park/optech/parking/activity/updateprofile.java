@@ -417,11 +417,11 @@ b1.setOnClickListener(new View.OnClickListener() {
                     c2.setText("");
                     c3.setText("");
                     if (data.getPhoto().equals("null")) {
-                        Picasso.get().load(R.drawable.hh).into(circleimageview);
+                        Picasso.with(getApplicationContext()).load(R.drawable.hh).into(circleimageview);
 
 
                     } else {
-                        Picasso.get().load(data.getPhoto()).into(circleimageview);
+                        Picasso.with(getApplicationContext()).load(data.getPhoto()).into(circleimageview);
 
                     }
 
@@ -440,10 +440,10 @@ b1.setOnClickListener(new View.OnClickListener() {
                     c2.setText(data.getCharacter2());
                     c3.setText(data.getCharacter3());
                     if (data.getPhoto().equals("null")) {
-                        Picasso.get().load(R.drawable.hh).into(circleimageview);
+                        Picasso.with(getApplicationContext()).load(R.drawable.hh).into(circleimageview);
 
                     } else {
-                        Picasso.get().load(data.getPhoto()).into(circleimageview);
+                        Picasso.with(getApplicationContext()).load(data.getPhoto()).into(circleimageview);
 
 
                     }

@@ -79,6 +79,8 @@ public class Database_Helper extends SQLiteOpenHelper
 //        values.put(Members_Table.COMPANY,model.get);
         values.put(Members_Table.IMAGE,model.getImg_path());
         values.put(Members_Table.TAG_ID,model.getTag_id());
+        values.put(Members_Table.TAG_ID,model.getSnapshot());
+
 
 
         long id = -1;
@@ -124,6 +126,8 @@ public class Database_Helper extends SQLiteOpenHelper
         values.put(Tickets_Table.MEMBERS,ticketsModel.getMembers());
         values.put(Tickets_Table.Tag_id,ticketsModel.getTagId());
         values.put(Tickets_Table.SYNC,ticketsModel.getSync());
+        values.put(Tickets_Table.exit,ticketsModel.getExit());
+
 
         // insert row
         long id = db.insert(Tickets_Table.TABLE_NAME, null, values);
@@ -333,6 +337,7 @@ public class Database_Helper extends SQLiteOpenHelper
             membersModel.setSsn(c.getString(c.getColumnIndex(Members_Table.SSN)));
             membersModel.setImg_path(c.getString(c.getColumnIndex(Members_Table.IMAGE)));
             membersModel.setTag_id(c.getString(c.getColumnIndex(Members_Table.TAG_ID)));
+            membersModel.setSnapshot(c.getString(c.getColumnIndex(Members_Table.snapshot)));
 
 
         }else {

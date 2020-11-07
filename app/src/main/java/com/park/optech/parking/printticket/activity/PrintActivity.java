@@ -15,15 +15,19 @@ import android.nfc.tech.MifareUltralight;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bixolon.printer.BixolonPrinter;
+import com.ganesh.intermecarabic.Arabic864;
 import com.park.optech.parking.R;
 import com.park.optech.parking.printticket.models.MembersModel;
 import com.park.optech.parking.printticket.models.TicketsModel;
@@ -31,9 +35,11 @@ import com.park.optech.parking.printticket.readcard.NdefMessageParser;
 import com.park.optech.parking.printticket.readcard.ParsedNdefRecord;
 import com.park.optech.parking.printticket.sqlite.Database_Helper;
 import com.park.optech.parking.sharedpref.MySharedPref;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -76,6 +82,8 @@ public class PrintActivity extends AppCompatActivity {
     RelativeLayout blockedPopup;
     @BindView(R.id.activity_ticket)
     RelativeLayout activityTicket;
+    @BindView(R.id.snapshot1)
+    ImageView snapshot1;
 
     String userid, username;
 
@@ -89,6 +97,12 @@ public class PrintActivity extends AppCompatActivity {
     TextView blockedmemberStartdate;
     @BindView(R.id.blockedmember_enddate)
     TextView blockedmemberEnddate;
+    @BindView(R.id.snapshot)
+    ImageView snapshot;
+    @BindView(R.id.entrybtn)
+    Button entrybtn;
+    @BindView(R.id.exitbtn)
+    Button exitbtn;
     private Dialog dialog;
 
 
@@ -400,6 +414,13 @@ public class PrintActivity extends AppCompatActivity {
                     blockedmemberStartdate.setText(membersModel.getStart_date());
                     blockedmemberEnddate.setText(membersModel.getEnd_date());
 
+                    if (membersModel.getSnapshot()!=null&&!membersModel.getSnapshot().equals("")){
+                        Picasso.with(getApplicationContext()).load(membersModel.getSnapshot()).into(snapshot1);
+
+                    }else {
+                        snapshot1.setVisibility(View.GONE);
+                    }
+
 
                 } else {
 //                        Date currentTime = Calendar.getInstance().getTime();
@@ -448,16 +469,36 @@ public class PrintActivity extends AppCompatActivity {
                     ticketMemberId.setText(membersModel.getMembership_no());
                     ticketGatenumber.setText(membersModel.getStart_date() + "");
                     ticketprice.setText(membersModel.getEnd_date());
+                    if (membersModel.getSnapshot()!=null&&!membersModel.getSnapshot().equals("")){
+                        Picasso.with(getApplicationContext()).load(membersModel.getSnapshot()).into(snapshot);
+
+                    }else {
+                        snapshot.setVisibility(View.GONE);
+                    }
 //                    ticketnumber.setText(data.getTrx_no());
 
                     String finalMemberId = memberId;
                     printticket.setOnClickListener(view -> {
-                        ticketPopupgreen.setVisibility(View.GONE);
                         Intent intent = new Intent(PrintActivity.this, ticket_print.class);
                         intent.putExtra("memberid", finalMemberId);
                         MySharedPref.saveData(PrintActivity.this,"memberid",finalMemberId);
                         startActivity(intent);
                         finish();
+                    });
+
+                    entrybtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        entryExit(finalMemberId,"0");
+                        }
+                    });
+
+                    exitbtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            entryExit(finalMemberId,"1");
+
+                        }
                     });
 
                 }
@@ -498,6 +539,97 @@ public class PrintActivity extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+
+    private void entryExit(String memberId,String entryexitValue) {
+
+        if (!memberId.equals("")) {
+
+            membersModel = Database_Helper.getInstance(PrintActivity.this).getmember(memberId);
+
+            if (membersModel.getMembership_no() != null) {
+
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date endDate = null;
+                try {
+                    endDate = sdf.parse(membersModel.getEnd_date());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Date currentTime = Calendar.getInstance().getTime();
+                @SuppressLint("SimpleDateFormat")
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = df.format(currentTime);
+                formattedDate = formattedDate.replace("-", "");
+
+                TicketsModel ticketsModel = new TicketsModel();
+                ticketsModel.setCameraNo("1");
+                ticketsModel.setCompany("2");
+                ticketsModel.setPaid("1");
+                ticketsModel.setPayAmount("20");
+                ticketsModel.setExit(entryexitValue);
+//                        ticketsModel.setPayTime(currentTime+"");
+//                        ticketsModel.setTimestamp(currentTime+"");
+                ticketsModel.setMembers(membersModel.getPk());
+                ticketsModel.setTagId(membersModel.getTag_id());
+                ticketsModel.setPayUser(userid);
+                ticketsModel.setSync("0");
+
+                Date currentTime2 = Calendar.getInstance().getTime();
+                @SuppressLint("SimpleDateFormat")
+                SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");
+                String formattedDate2 = df.format(currentTime);
+
+                ticketsModel.setTimestamp(formattedDate2);
+                List<TicketsModel> ticketsModelList = new ArrayList<>();
+                ticketsModelList = Database_Helper.getInstance(PrintActivity.this).getTickets();
+
+
+                String trxNumber = "200100" + formattedDate + ticketsModelList.size();
+
+                ticketsModel.setTrx_no(trxNumber);
+
+                Database_Helper.getInstance(PrintActivity.this).insertTicket(ticketsModel);
+
+                ticketPopupgreen.setVisibility(View.GONE);
+
+                if (entryexitValue.equals("0")){
+                    Toast.makeText(this, "تمت عملية الدخول", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    Toast.makeText(this, "تمت عملية الخروج", Toast.LENGTH_SHORT).show();
+
+                }
+
+
+
+
+
+
+            }
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 

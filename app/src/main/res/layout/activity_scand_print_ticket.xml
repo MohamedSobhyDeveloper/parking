@@ -58,7 +58,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:src="@drawable/clublogo"
+            android:src="@drawable/logofnya"
             android:layout_marginTop="80dp"
             android:id="@+id/im"
             />
@@ -94,6 +94,7 @@
             android:gravity="bottom|end"
             android:layout_below="@+id/print_layout"
             android:id="@+id/x1"
+            android:visibility="gone"
             android:layout_marginTop="30dp"
             android:layout_height="60dp">
 

@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.park.optech.parking.printticket.models.MembersModel;
 import com.park.optech.parking.printticket.readcard.NdefMessageParser;
 import com.park.optech.parking.printticket.readcard.ParsedNdefRecord;
 import com.park.optech.parking.printticket.sqlite.Database_Helper;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,6 +52,7 @@ public class SearchActivity extends AppCompatActivity {
     CardView member_card;
     @BindView(R.id.layout_ticket)
     LinearLayout layoutTicket;
+    ImageView snapshot;
 
 
     NfcAdapter nfcAdapter;
@@ -82,6 +85,7 @@ public class SearchActivity extends AppCompatActivity {
         end_date_tv = findViewById(R.id.end_date);
         validation_tv = findViewById(R.id.validation);
         member_card = findViewById(R.id.member_card);
+        snapshot = findViewById(R.id.snapshot);
         member_card.setVisibility(View.GONE);
 
 
@@ -355,6 +359,12 @@ public class SearchActivity extends AppCompatActivity {
                 membership_no_tv.setText(membersModel.getMembership_no());
                 start_date_tv.setText(membersModel.getStart_date());
                 end_date_tv.setText(membersModel.getEnd_date());
+                if (membersModel.getSnapshot()!=null&&!membersModel.getSnapshot().equals("")){
+                    Picasso.with(getApplicationContext()).load(membersModel.getSnapshot()).into(snapshot);
+
+                }else {
+                    snapshot.setVisibility(View.GONE);
+                }
                 member_card.setVisibility(View.VISIBLE);
                 if (dialog!=null&&dialog.isShowing()){
                     dialog.dismiss();

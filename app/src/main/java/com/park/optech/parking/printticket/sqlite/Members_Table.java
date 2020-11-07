@@ -16,6 +16,8 @@ public class Members_Table
     public static final String COMPANY = "company";
     public static final String IMAGE = "img_path";
     public static final String TAG_ID = "tag_id";
+    public static final String snapshot = "snapshot";
+
 
 
     public static final String CREATE_TABLE =
@@ -27,6 +29,7 @@ public class Members_Table
                     + END_DATE + " TEXT,"
                     + MEMBERSHIP_NO + " TEXT,"
                     + TAG_ID + " TEXT,"
+                    + snapshot + " TEXT,"
                     + SSN + " TEXT,"
                     +COMPANY + " TEXT,"
                     +IMAGE + " TEXT"
@@ -41,6 +44,7 @@ public class Members_Table
     private String ssn;
     private String company;
     private String img_path;
+    private String snap_shot;
 
 
     private String tag_id;
@@ -58,6 +62,14 @@ public class Members_Table
         this.ssn = ssn;
         this.company = company;
         this.img_path = img_path;
+    }
+
+    public String getSnap_shot() {
+        return snap_shot;
+    }
+
+    public void setSnap_shot(String snap_shot) {
+        this.snap_shot = snap_shot;
     }
 
     public int getUser_id() {

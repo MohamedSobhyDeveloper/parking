@@ -18,6 +18,8 @@ public class Tickets_Table
     public static final String MEMBERS = "members";
     public static final String Tag_id = "tag_id";
     public static final String SYNC = "sync";
+    public static final String exit = "exit";
+
 
 
     public static final String CREATE_TABLE =
@@ -33,7 +35,8 @@ public class Tickets_Table
                     + TRX_NO + " TEXT,"
                     + MEMBERS + " TEXT,"
                     + Tag_id + " TEXT,"
-                    + SYNC + " TEXT"
+                    + SYNC + " TEXT,"
+                    + exit + " TEXT"
                     + ")";
 
     private int ticket_id;
@@ -47,13 +50,15 @@ public class Tickets_Table
     private String trx_no;
     private String members;
     private String sync;
+    private String exitv;
+
 
     public Tickets_Table() {
     }
 
 
     public Tickets_Table(int ticket_id, String cameraNo, String timestamp, String payTime, String payAmount
-            , String payUser, String company, String paid, String trx_no, String members, String sync) {
+            , String payUser, String company, String paid, String trx_no, String members, String sync,String exitv) {
         this.ticket_id = ticket_id;
         this.cameraNo = cameraNo;
         Timestamp = timestamp;
@@ -65,6 +70,7 @@ public class Tickets_Table
         this.trx_no = trx_no;
         this.members = members;
         this.sync = sync;
+        this.exitv=exitv;
     }
 
     public int getTicket_id() {
@@ -153,5 +159,13 @@ public class Tickets_Table
 
     public void setSync(String sync) {
         this.sync = sync;
+    }
+
+    public String getExitv() {
+        return exitv;
+    }
+
+    public void setExitv(String exitv) {
+        this.exitv = exitv;
     }
 }

@@ -86,10 +86,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:textColor="@color/white"
-                android:text="نادى الصيد المصرى"
+                android:text="الكلية الفنية العسكرية"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:id="@+id/snapshot"
+                />
 
             <LinearLayout
                 android:padding="5dp"
@@ -270,7 +276,7 @@
                     android:text="تذكرة رقم 111"
                     android:textAlignment="center"
 
-                    />
+                    tools:ignore="RtlCompat" />
 
             </LinearLayout>
 
@@ -278,6 +284,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
                 android:layout_height="40dp">
 
                 <Button
@@ -287,7 +294,27 @@
                     android:background="@drawable/roundedbuttonblue"
                     android:textColor="@color/white"
                     android:textStyle="italic"
+                    android:visibility="gone"
                     android:text="طباعة تذكرة"/>
+
+                <Button
+                    android:id="@+id/exitbtn"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/roundedbuttonblue"
+                    android:textColor="@color/white"
+                    android:textStyle="italic"
+                    android:layout_marginEnd="5dp"
+                    android:text="خروج"
+                    android:layout_marginRight="5dp" />
+                <Button
+                    android:id="@+id/entrybtn"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/roundedbuttonblue"
+                    android:textColor="@color/white"
+                    android:textStyle="italic"
+                    android:text="دخول"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -312,10 +339,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:textColor="@color/white"
-                android:text="نادى الصيد المصرى"
+                android:text="الكلية الفنية العسكرية"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:id="@+id/snapshot1"
+                />
 
             <LinearLayout
                 android:padding="5dp"
@@ -332,7 +366,8 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textAlignment="center"
-                    android:text="محمد صبحى"/>
+                    android:text="محمد صبحى"
+                    tools:ignore="RtlCompat" />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -370,7 +405,8 @@
                 android:textSize="10sp"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:text="123456"/>
+                android:text="123456"
+                tools:ignore="RtlCompat" />
 
             <LinearLayout
                 android:padding="5dp"
@@ -387,7 +423,8 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textAlignment="center"
-                    android:text="محمد صبحى"/>
+                    android:text="محمد صبحى"
+                    tools:ignore="RtlCompat" />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -413,7 +450,8 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textAlignment="center"
-                    android:text="محمد صبحى"/>
+                    android:text="محمد صبحى"
+                    tools:ignore="RtlCompat" />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -440,7 +478,8 @@
                     android:textSize="25dp"
                     android:textStyle="bold"
                     android:textAlignment="center"
-                    android:text="العضوية غير سارية"/>
+                    android:text="العضوية غير سارية"
+                    tools:ignore="RtlCompat" />
             </LinearLayout>
 
 

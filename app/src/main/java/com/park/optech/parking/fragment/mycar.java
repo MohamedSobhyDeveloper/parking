@@ -272,21 +272,21 @@ public class mycar extends Fragment {
 
                 if (data1.getLast_name().equals("null")) {
                     if (data1.getPhoto().equals("null")) {
-                        Picasso.get().load(R.drawable.hh).into(circleimageview);
+                        Picasso.with(getActivity().getApplicationContext()).load(R.drawable.hh).into(circleimageview);
 
                     } else {
 
-                        Picasso.get().load(data1.getPhoto()).into(circleimageview);
+                        Picasso.with(getActivity().getApplicationContext()).load(data1.getPhoto()).into(circleimageview);
 
 
                     }
                 } else {
 
                     if (data1.getPhoto().equals("null")) {
-                        Picasso.get().load(R.drawable.hh).into(circleimageview);
+                        Picasso.with(getActivity().getApplicationContext()).load(R.drawable.hh).into(circleimageview);
 
                     } else {
-                        Picasso.get().load(data1.getPhoto()).into(circleimageview);
+                        Picasso.with(getActivity().getApplicationContext()).load(data1.getPhoto()).into(circleimageview);
 
 
                     }

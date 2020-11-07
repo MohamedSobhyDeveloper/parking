@@ -62,11 +62,11 @@ public class scand_print_ticket extends AppCompatActivity {
 
         scanBtn.setOnClickListener(view -> {
             startActivity(new Intent(scand_print_ticket.this, ticket_scan.class));
-            finish();
+//            finish();
         });
         printBtn.setOnClickListener(view -> {
             startActivity(new Intent(scand_print_ticket.this, PrintActivity.class));
-            finish();
+//            finish();
         });
 
 
@@ -112,6 +112,7 @@ public class scand_print_ticket extends AppCompatActivity {
                             .put("paid", SyncList.get(i).getPaid())
                             .put("trx_no", SyncList.get(i).getTrx_no())
                             .put("members", SyncList.get(i).getMembers())
+                            .put("exit", SyncList.get(i).getExit())
                             .put("sync", "1");
 
                     jsonArray.put(obj);

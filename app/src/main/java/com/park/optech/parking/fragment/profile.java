@@ -689,11 +689,11 @@ public class profile extends Fragment {
                     fname.setText("");
 
                     if (data.getPhoto().equals("null")) {
-                        Picasso.get().load(R.drawable.hh).into(circleimageview);
+                        Picasso.with(getActivity().getApplicationContext()).load(R.drawable.hh).into(circleimageview);
 
 
                     } else {
-                        Picasso.get().load(data.getPhoto()).into(circleimageview);
+                        Picasso.with(getActivity().getApplicationContext()).load(data.getPhoto()).into(circleimageview);
 
 
 
@@ -720,11 +720,11 @@ public class profile extends Fragment {
                     n41.setText(data.getNumber4());
 
                     if (data.getPhoto().equals("null")) {
-                        Picasso.get().load(R.drawable.hh).into(circleimageview);
+                        Picasso.with(getActivity().getApplicationContext()).load(R.drawable.hh).into(circleimageview);
 
 
                     } else {
-                        Picasso.get().load(data.getPhoto()).into(circleimageview);
+                        Picasso.with(getActivity().getApplicationContext()).load(data.getPhoto()).into(circleimageview);
 
 
 

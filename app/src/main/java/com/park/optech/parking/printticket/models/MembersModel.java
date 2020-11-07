@@ -20,8 +20,15 @@ public class MembersModel
     private String img_path;
     private String ssn;
     private String tag_id;
+    private String snapshot;
 
+    public String getSnapshot() {
+        return snapshot;
+    }
 
+    public void setSnapshot(String snapshot) {
+        this.snapshot = snapshot;
+    }
 
     public String getTag_id() {
         return tag_id;

@@ -13,6 +13,15 @@ public class TicketsModel {
     private String members;
     private String tagId;
     private String sync;
+    private String exit;
+
+    public String getExit() {
+        return exit;
+    }
+
+    public void setExit(String exit) {
+        this.exit = exit;
+    }
 
     public String getTagId() {
         return tagId;
